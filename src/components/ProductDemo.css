@@ -1,0 +1,120 @@
+.product-demo {
+    padding: var(--spacing-section) 0;
+    background: var(--color-bg-dark);
+}
+
+.demo-wrapper {
+    display: flex;
+    justify-content: center;
+    perspective: 1000px;
+}
+
+.demo-screen {
+    width: 100%;
+    max-width: 900px;
+    background: #020608;
+    /* Slightly darker than bg */
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.screen-header {
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.dot.red {
+    background: #ff5f56;
+}
+
+.dot.yellow {
+    background: #ffbd2e;
+}
+
+.dot.green {
+    background: #27c93f;
+}
+
+.screen-content {
+    display: flex;
+    height: 500px;
+}
+
+.sidebar {
+    width: 200px;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+}
+
+.main-area {
+    flex: 1;
+    padding: 2rem;
+}
+
+.skeleton-line {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.skeleton-line.w-50 {
+    width: 50%;
+}
+
+.skeleton-line.w-70 {
+    width: 70%;
+}
+
+.skeleton-line.w-60 {
+    width: 60%;
+}
+
+.skeleton-block {
+    height: 150px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.skeleton-grid {
+    display: flex;
+    gap: 1rem;
+}
+
+.skeleton-card {
+    flex: 1;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.demo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 32, 39, 0.6);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.demo-screen:hover .demo-overlay {
+    opacity: 1;
+}
