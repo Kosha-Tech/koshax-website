@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="KoshaX logo">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3aa99f"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="#050d10"/>
+  <path d="M18 45V19h6v11l9-11h7l-10 12 11 14h-7l-10-13v13h-6Z" fill="url(#g)"/>
+  <path d="M41 31h5v4h-5v-4Zm0 8h5v4h-5v-4Z" fill="#f0f0f0"/>
+</svg>
