@@ -147,6 +147,10 @@
     color: #e29c9c;
 }
 
+.waitlist-iframe {
+    display: none;
+}
+
 .btn-secondary {
     background: transparent;
     color: var(--color-text-primary);

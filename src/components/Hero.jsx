@@ -12,6 +12,8 @@ const Hero = () => {
     const [widgetId, setWidgetId] = useState(null);
     const turnstileRef = useRef(null);
     const renderedRef = useRef(false);
+    const tokenInputRef = useRef(null);
+    const formRef = useRef(null);
 
     useEffect(() => {
         let cancelled = false;
@@ -52,45 +54,23 @@ const Hero = () => {
         };
     }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setStatus('loading');
-        setMessage('');
-
+    const handleSubmit = (e) => {
         const token = window?.turnstile?.getResponse?.(widgetId || undefined);
-        const hp = e.target?.hp?.value || '';
-
         if (!token) {
+            e.preventDefault();
             setStatus('error');
             setMessage('Please complete the Turnstile check.');
             return;
         }
 
-        try {
-            const res = await fetch(WAITLIST_ENDPOINT, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email,
-                    turnstileToken: token,
-                    hp,
-                    source: 'hero',
-                    userAgent: navigator.userAgent
-                })
-            });
-
-            const data = await res.json();
-            if (!data.ok) throw new Error(data.error || 'Failed to join waitlist');
-
-            setStatus('success');
-            setMessage('You are on the waitlist. Thank you!');
-            setEmail('');
-        } catch (err) {
-            setStatus('error');
-            setMessage(err.message || 'Something went wrong. Please try again.');
-        } finally {
-            window?.turnstile?.reset?.(widgetId || undefined);
+        if (tokenInputRef.current) {
+            tokenInputRef.current.value = token;
         }
+
+        setStatus('success');
+        setMessage('Request sent. Check your inbox soon!');
+        setEmail('');
+        window?.turnstile?.reset?.(widgetId || undefined);
     };
 
     return (
@@ -131,7 +111,15 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.8 }}
                 >
-                    <form className="waitlist-form" onSubmit={handleSubmit}>
+                    <iframe name="waitlist_iframe" className="waitlist-iframe" title="waitlist" />
+                    <form
+                        ref={formRef}
+                        className="waitlist-form"
+                        onSubmit={handleSubmit}
+                        method="POST"
+                        target="waitlist_iframe"
+                        action={WAITLIST_ENDPOINT}
+                    >
                         <div className="waitlist-row">
                             <input
                                 type="email"
@@ -151,6 +139,9 @@ const Hero = () => {
                         </div>
 
                         <input type="text" name="hp" style={{ display: 'none' }} autoComplete="off" />
+                        <input type="hidden" name="turnstileToken" ref={tokenInputRef} />
+                        <input type="hidden" name="source" value="hero" />
+                        <input type="hidden" name="userAgent" value={navigator.userAgent} />
 
                         {message && (
                             <div className={`waitlist-status ${status}`}>
