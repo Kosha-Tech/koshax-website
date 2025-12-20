@@ -14,6 +14,8 @@ const Hero = () => {
     const renderedRef = useRef(false);
     const tokenInputRef = useRef(null);
     const formRef = useRef(null);
+    const iframeRef = useRef(null);
+    const pendingSubmitRef = useRef(false);
 
     useEffect(() => {
         let cancelled = false;
@@ -54,6 +56,25 @@ const Hero = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const iframeEl = iframeRef.current;
+        if (!iframeEl) return;
+
+        const handleLoad = () => {
+            if (!pendingSubmitRef.current) return;
+            pendingSubmitRef.current = false;
+            setStatus('success');
+            setMessage('You are on the waitlist. Thank you!');
+            setEmail('');
+            window?.turnstile?.reset?.(widgetId || undefined);
+        };
+
+        iframeEl.addEventListener('load', handleLoad);
+        return () => {
+            iframeEl.removeEventListener('load', handleLoad);
+        };
+    }, [widgetId]);
+
     const handleSubmit = (e) => {
         const token = window?.turnstile?.getResponse?.(widgetId || undefined);
         if (!token) {
@@ -67,10 +88,9 @@ const Hero = () => {
             tokenInputRef.current.value = token;
         }
 
-        setStatus('success');
-        setMessage('Request sent. Check your inbox soon!');
-        setEmail('');
-        window?.turnstile?.reset?.(widgetId || undefined);
+        pendingSubmitRef.current = true;
+        setStatus('loading');
+        setMessage('Submitting...');
     };
 
     return (
@@ -111,7 +131,7 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.8 }}
                 >
-                    <iframe name="waitlist_iframe" className="waitlist-iframe" title="waitlist" />
+                    <iframe ref={iframeRef} name="waitlist_iframe" className="waitlist-iframe" title="waitlist" />
                     <form
                         ref={formRef}
                         className="waitlist-form"
