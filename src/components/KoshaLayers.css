@@ -24,6 +24,7 @@
     height: 600px;
     /* Increased height for bigger circles */
     position: relative;
+    overflow: hidden;
 }
 
 .circles-wrapper {
@@ -154,5 +155,43 @@
 
     .layers-visual {
         margin-bottom: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .layers-split-layout {
+        gap: 2.5rem;
+    }
+
+    .layers-visual {
+        height: 420px;
+    }
+
+    .layers-list {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 540px) {
+    .layers-visual {
+        height: 360px;
+    }
+
+    .layer-card {
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .layer-number {
+        width: 34px;
+        height: 34px;
+    }
+
+    .layer-info h4 {
+        font-size: 1rem;
+    }
+
+    .layer-info p {
+        font-size: 0.85rem;
     }
 }

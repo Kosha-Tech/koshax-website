@@ -14,7 +14,6 @@ const Footer = () => {
                         <h4>Product</h4>
                         <a href="#product">Features</a>
                         <a href="#pricing">Pricing</a>
-                        <a href="#">Demo</a>
                     </div>
                     <div className="link-column">
                         <h4>Company</h4>

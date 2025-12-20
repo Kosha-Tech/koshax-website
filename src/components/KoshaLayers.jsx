@@ -24,30 +24,36 @@ const KoshaLayers = () => {
                     <div className="layers-visual">
                         {/* Abstract Concentric Circles */}
                         <div className="circles-wrapper">
-                            {layers.map((layer, index) => (
-                                <motion.div
-                                    key={layer.id}
-                                    className="abstract-circle"
-                                    style={{
-                                        backgroundColor: layer.color,
-                                        zIndex: layer.id,
-                                        width: `${(index + 1) * 80 + 40}px`, /* Increased size multiplier */
-                                        height: `${(index + 1) * 80 + 40}px`
-                                    }}
-                                    initial={{ scale: 0.8, opacity: 0 }}
-                                    whileInView={{ scale: 1, opacity: 0.9 }}
-                                    animate={{
-                                        rotate: index % 2 === 0 ? 360 : -360,
-                                        scale: [1, 1.05, 1]
-                                    }}
-                                    transition={{
-                                        rotate: { duration: 15 + index * 5, repeat: Infinity, ease: "linear" }, // Distinct speeds
-                                        scale: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }, // Faster breathing
-                                        opacity: { duration: 1, delay: index * 0.1 }
-                                    }}
-                                >
-                                </motion.div>
-                            ))}
+                            {layers.map((layer, index) => {
+                                const minSize = (index + 1) * 50 + 20;
+                                const maxSize = (index + 1) * 80 + 40;
+                                const vwSize = (index + 1) * 16;
+
+                                return (
+                                    <motion.div
+                                        key={layer.id}
+                                        className="abstract-circle"
+                                        style={{
+                                            backgroundColor: layer.color,
+                                            zIndex: layer.id,
+                                            width: `clamp(${minSize}px, ${vwSize}vw, ${maxSize}px)`,
+                                            height: `clamp(${minSize}px, ${vwSize}vw, ${maxSize}px)`
+                                        }}
+                                        animate={{
+                                            rotate: index % 2 === 0 ? 360 : -360,
+                                            scale: [1, 1.05, 1],
+                                            opacity: 0.9
+                                        }}
+                                        initial={{ scale: 0.8, opacity: 0 }}
+                                        transition={{
+                                            rotate: { duration: 15 + index * 5, repeat: Infinity, ease: "linear" }, // Distinct speeds
+                                            scale: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }, // Faster breathing
+                                            opacity: { duration: 1, delay: index * 0.1 }
+                                        }}
+                                    >
+                                    </motion.div>
+                                );
+                            })}
 
                             {/* Static Center Label */}
                             <motion.div

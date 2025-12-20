@@ -68,14 +68,53 @@
 
 .hero-actions {
     display: flex;
-    gap: 1.5rem;
+    justify-content: center;
+    width: 100%;
+}
+
+.waitlist-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+    width: 100%;
+    max-width: 560px;
+}
+
+.waitlist-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background: var(--color-bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.5rem;
+    border-radius: 999px;
+}
+
+.waitlist-row input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+}
+
+.waitlist-row input::placeholder {
+    color: var(--color-text-secondary);
+}
+
+.turnstile-wrapper {
+    display: flex;
+    justify-content: center;
 }
 
 .btn-primary {
     background: var(--color-teal-accent);
     color: var(--color-bg-dark);
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
+    padding: 0.9rem 1.6rem;
+    border-radius: 999px;
     /* Pill shape for calm feel */
     font-size: 1rem;
     font-weight: 600;
@@ -87,6 +126,25 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 25px rgba(58, 169, 159, 0.4);
     background: #2a8f86;
+}
+
+.btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.waitlist-status {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+}
+
+.waitlist-status.success {
+    color: var(--color-teal-accent);
+}
+
+.waitlist-status.error {
+    color: #e29c9c;
 }
 
 .btn-secondary {
@@ -105,8 +163,53 @@
     border-color: rgba(255, 255, 255, 0.2);
 }
 
+@media (max-width: 900px) {
+    .hero {
+        padding-top: 180px;
+        padding-bottom: 90px;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-title {
-        font-size: 3.5rem;
+        font-size: 3.25rem;
+    }
+
+    .waitlist-form {
+        width: 100%;
+    }
+
+    .waitlist-row {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 16px;
+    }
+
+    .waitlist-row input {
+        padding: 0.9rem 1rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 540px) {
+    .hero {
+        padding-top: 150px;
+        padding-bottom: 70px;
+    }
+
+    .hero-title {
+        font-size: 2.75rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.05rem;
     }
 }

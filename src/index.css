@@ -38,6 +38,7 @@ body {
   color: var(--color-text-primary);
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 h1,
@@ -55,6 +56,12 @@ h6 {
   max-width: var(--spacing-container);
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 1.25rem;
+  }
 }
 
 a {
