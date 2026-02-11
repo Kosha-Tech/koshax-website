@@ -1,0 +1,188 @@
+.how-it-works {
+    padding: var(--spacing-section) 0;
+    background-color: var(--color-bg);
+}
+
+/* Header */
+.hiw-title {
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+
+.hiw-highlight {
+    color: var(--color-primary);
+}
+
+.hiw-subtitle {
+    text-align: center;
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    max-width: none;
+    margin: 0 auto 3.5rem;
+}
+
+/* Layout */
+.hiw-layout {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+/* Visual / Image */
+.hiw-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hiw-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+.hiw-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 16px;
+}
+
+.hiw-image-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(124, 58, 237, 0.1) 0%,
+        rgba(14, 165, 233, 0.06) 40%,
+        transparent 70%
+    );
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Steps */
+.hiw-steps {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.hiw-step {
+    display: flex;
+    gap: 1.25rem;
+}
+
+/* Connector (number + vertical line) */
+.hiw-step-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.hiw-step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
+}
+
+.hiw-step-line {
+    width: 2px;
+    flex: 1;
+    background: linear-gradient(to bottom, var(--color-primary), rgba(124, 58, 237, 0.15));
+    border-radius: 2px;
+    min-height: 20px;
+}
+
+/* Step content */
+.hiw-step-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-bottom: 2rem;
+}
+
+.hiw-step:last-child .hiw-step-content {
+    padding-bottom: 0;
+}
+
+.hiw-step-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.hiw-step-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.hiw-step-desc {
+    font-size: 0.92rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .hiw-layout {
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .hiw-image-wrapper {
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hiw-title {
+        font-size: 2.2rem;
+    }
+
+    .hiw-subtitle {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 540px) {
+    .hiw-title {
+        font-size: 1.8rem;
+    }
+
+    .hiw-step-content {
+        padding-bottom: 1.5rem;
+    }
+
+    .hiw-step-name {
+        font-size: 1rem;
+    }
+
+    .hiw-step-desc {
+        font-size: 0.85rem;
+    }
+}

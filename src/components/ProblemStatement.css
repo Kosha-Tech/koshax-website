@@ -1,0 +1,95 @@
+.problem-section {
+    padding: 5rem 0 2rem;
+    background-color: var(--color-bg);
+    overflow: hidden;
+}
+
+.problem-lead {
+    text-align: center;
+    font-size: 1.75rem;
+    color: var(--color-text-primary);
+    font-weight: 600;
+    line-height: 1.7;
+    max-width: none;
+    margin: 0 auto 1rem;
+}
+
+/* Chaos zone — relative container for scattered tags + punchline */
+.chaos-zone {
+    position: relative;
+    min-height: 280px;
+    margin: 0 auto;
+    max-width: 900px;
+}
+
+/* Scattered chaos tags */
+.chaos-tag {
+    position: absolute;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transform: rotate(var(--rotate, 0deg));
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Big punchline */
+.problem-punchline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    letter-spacing: -2px;
+    line-height: 1;
+    z-index: 2;
+}
+
+.punchline-accent {
+    color: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .problem-lead {
+        font-size: 1.1rem;
+    }
+
+    .chaos-zone {
+        min-height: 220px;
+    }
+
+    .problem-punchline {
+        font-size: 3.5rem;
+    }
+
+    .chaos-tag {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.7rem;
+    }
+}
+
+@media (max-width: 540px) {
+    .problem-punchline {
+        font-size: 2.5rem;
+        letter-spacing: -1px;
+    }
+
+    .chaos-zone {
+        min-height: 180px;
+    }
+
+    .chaos-tag:nth-child(n+6) {
+        display: none;
+    }
+}
