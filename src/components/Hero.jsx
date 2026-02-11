@@ -111,8 +111,8 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                    Get back control,<br />
-                    <span className="highlight-text">feel the power</span>
+                    Focus on what matters,<br />
+                    <span className="highlight-text">We'll handle the rest</span>
                 </motion.h1>
 
                 <motion.p
@@ -121,8 +121,7 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
                 >
-                    Your personal AI ecosystem for personal management, health, finance, travel, and relationships.
-                    From chaos to clarity, powered by intelligence.
+                    KoshaX is your everyday personal assistant for household, personal management, health, finance and travel
                 </motion.p>
 
                 <motion.div

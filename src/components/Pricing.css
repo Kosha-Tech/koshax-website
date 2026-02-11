@@ -6,6 +6,10 @@
     background-color: var(--color-bg);
 }
 
+.pricing-page .pricing {
+    padding-top: 8rem;
+}
+
 /* ========================
    HEADER
    ======================== */
@@ -25,8 +29,9 @@
 .pricing-subtitle {
     font-size: 1.15rem;
     color: var(--color-text-secondary);
-    max-width: 480px;
+    max-width: none;
     margin: 0 auto 2rem;
+    white-space: nowrap;
 }
 
 /* ========================
@@ -38,6 +43,10 @@
     gap: 0.75rem;
     font-size: 0.95rem;
     color: var(--color-text-secondary);
+    filter: blur(6px);
+    opacity: 0.4;
+    pointer-events: none;
+    user-select: none;
 }
 
 .billing-toggle span.active {
@@ -90,13 +99,46 @@
 /* ========================
    PRICING GRID
    ======================== */
+.pricing-grid-wrapper {
+    position: relative;
+    margin: 0 auto 5rem;
+    max-width: 1000px;
+}
+
+.pricing-grid-wrapper .pricing-grid {
+    filter: blur(10px);
+    opacity: 0.3;
+    pointer-events: none;
+    user-select: none;
+    margin: 0;
+}
+
+.coming-soon-overlay {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.coming-soon-badge {
+    background: var(--color-primary);
+    color: #ffffff;
+    padding: 1.5rem 3.5rem;
+    border-radius: 50px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    box-shadow: 0 10px 40px rgba(124, 58, 237, 0.4);
+    letter-spacing: 2px;
+    white-space: nowrap;
+}
+
 .pricing-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     align-items: start;
-    max-width: 1000px;
-    margin: 0 auto 5rem;
 }
 
 /* ========================
@@ -230,7 +272,7 @@
     color: #c4c9d2;
 }
 
-.feature-icon {
+.card-features .feature-icon {
     flex-shrink: 0;
     width: 18px;
     height: 18px;

@@ -120,6 +120,7 @@ const Pricing = () => {
                 </div>
 
                 {/* Cards */}
+                <div className="pricing-grid-wrapper">
                 <div className="pricing-grid">
                     {plans.map((plan, index) => (
                         <motion.div
@@ -164,6 +165,10 @@ const Pricing = () => {
                             </button>
                         </motion.div>
                     ))}
+                </div>
+                <div className="coming-soon-overlay">
+                    <div className="coming-soon-badge">Coming Soon</div>
+                </div>
                 </div>
 
                 {/* FAQ */}

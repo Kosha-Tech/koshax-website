@@ -1,23 +1,18 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import KoshaLayers from './components/KoshaLayers';
-import Features from './components/Features';
-import Testimonials from './components/Testimonials';
-import ProductDemo from './components/ProductDemo';
-import Pricing from './components/Pricing';
 import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
+import PricingPage from './pages/PricingPage';
 
 function App() {
   return (
     <div className="App">
       <Navbar />
-      <Hero />
-      <KoshaLayers />
-      <Features />
-      <Testimonials />
-      {/* <ProductDemo /> */}
-      <Pricing />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+      </Routes>
       <Footer />
     </div>
   );

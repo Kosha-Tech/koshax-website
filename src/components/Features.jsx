@@ -16,9 +16,9 @@ const features = [
     },
     {
         id: 3,
-        title: 'Finance',
-        description: 'Master your wealth. Track expenses, investments, and financial goals.',
-        icon: '💰'
+        title: 'Household',
+        description: 'Run your home like clockwork. Chores, groceries, maintenance, and bills — all sorted.',
+        icon: '🏠'
     },
     {
         id: 4,
@@ -31,14 +31,20 @@ const features = [
         title: 'Friends & Family',
         description: 'Deepen your connections. Manage contacts and meaningful moments.',
         icon: '❤️'
+    },
+    {
+        id: 6,
+        title: 'Finance',
+        description: 'Master your wealth. Track expenses, investments, and financial goals.',
+        icon: '💰'
     }
 ];
 
 const Features = () => {
     return (
-        <section className="features" id="product">
+        <section className="features">
             <div className="container">
-                <h2 className="section-title">Empower Your Digital Life</h2>
+                <h2 className="section-title">Your Life, <span style={{color: 'var(--color-primary)'}}>Beautifully Organized</span></h2>
                 <div className="features-grid">
                     {features.map((feature) => (
                         <div key={feature.id} className="feature-card">

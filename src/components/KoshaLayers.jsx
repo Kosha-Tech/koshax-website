@@ -22,12 +22,12 @@ const particles = Array.from({ length: 15 }, (_, i) => ({
 
 const KoshaLayers = () => {
     return (
-        <section className="kosha-layers-section">
+        <section className="kosha-layers-section" id="philosophy">
             <div className="container">
                 {/* Header Section */}
                 <div className="layers-header">
                     <h2 className="layers-title">The Five Layers of <span className="highlight-text">Digital Harmony</span></h2>
-                    <p className="layers-sub">Inspired by the ancient Kosha philosophy, KoshaX creates layers of protection and organization around your digital life.</p>
+                    <p className="layers-sub">Inspired by Vedantic philosophy, KoshaX weaves intelligent layers around your digital life - organized, structured, and whole.</p>
                 </div>
 
                 <div className="layers-split-layout">
@@ -118,14 +118,14 @@ const KoshaLayers = () => {
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 1, duration: 1 }}
                             >
-                                Kosha<span className="accent">X</span>
+                                <img src="/koshalogo.png" alt="KoshaX" className="center-logo-img" />
                             </motion.div>
                         </div>
                     </div>
 
                     <div className="layers-list-wrapper">
                         <div className="layers-list">
-                            {layers.map((layer) => (
+                            {[...layers].reverse().map((layer) => (
                                 <motion.div
                                     key={layer.id}
                                     className="layer-card"

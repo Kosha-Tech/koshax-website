@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -18,16 +20,26 @@ const Navbar = () => {
         };
     }, [scrolled]);
 
+    // Scroll to top when navigating to a new page
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
+
+    const productLink = location.pathname === '/' ? '#product' : '/#product';
+    const philosophyLink = location.pathname === '/' ? '#philosophy' : '/#philosophy';
+
     return (
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-            <div className="container navbar-container">
-                <div className="navbar-logo">
-                    Kosha<span>X</span>
+            <div className="navbar-inner">
+                <Link to="/" className="navbar-logo">
+                    <img src="/koshalogo.png" alt="KoshaX" className="navbar-logo-img" />
+                </Link>
+                <div className="navbar-center">
+                    <a href={philosophyLink}>Philosophy</a>
+                    <a href={productLink}>Product</a>
+                    <Link to="/pricing">Pricing</Link>
                 </div>
-                <ul className="navbar-links">
-                    <li><a href="#product">Product</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                </ul>
+                <a href="/#hero" className="navbar-cta">Join Waitlist</a>
             </div>
         </nav>
     );

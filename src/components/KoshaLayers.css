@@ -267,11 +267,10 @@
         0 0 20px rgba(124, 58, 237, 0.15);
 }
 
-.center-label .accent {
-    color: var(--color-primary);
-    text-shadow:
-        0 0 8px rgba(124, 58, 237, 0.5),
-        0 0 20px rgba(124, 58, 237, 0.3);
+.center-logo-img {
+    height: 28px;
+    width: auto;
+    display: block;
 }
 
 /* ========================
