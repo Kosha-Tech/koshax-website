@@ -1,6 +1,6 @@
 .features {
     padding: var(--spacing-section) 0;
-    background-color: var(--color-bg-dark);
+    background-color: var(--color-bg);
 }
 
 .section-title {
@@ -26,17 +26,16 @@
 .feature-card {
     background: var(--color-bg-card);
     padding: 1.5rem;
-    /* Reduced padding to fit 5 in a row */
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     transition: transform 0.3s ease, background 0.3s ease;
     text-align: center;
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--color-teal-accent);
+    background: rgba(124, 58, 237, 0.06);
+    border-color: var(--color-primary);
 }
 
 .feature-icon {

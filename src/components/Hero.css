@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: radial-gradient(circle at center, rgba(58, 169, 159, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
 }
 
 .hero-container {
@@ -20,8 +20,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(124, 58, 237, 0.06);
+    border: 1px solid rgba(124, 58, 237, 0.15);
     padding: 6px 16px;
     border-radius: 50px;
     font-size: 0.9rem;
@@ -32,30 +32,28 @@
 .badge-dot {
     width: 6px;
     height: 6px;
-    background-color: var(--color-teal-accent);
+    background-color: var(--color-primary);
     border-radius: 50%;
-    box-shadow: 0 0 8px var(--color-teal-accent);
+    box-shadow: 0 0 8px var(--color-primary);
 }
 
 .hero-title {
     font-size: 5rem;
     line-height: 1.1;
     margin-bottom: 1.5rem;
-    color: var(--color-text-primary);
+    color: #111827;
     font-weight: 700;
     letter-spacing: -1px;
 }
 
 .hero-title .highlight-text {
     font-family: inherit;
-    /* Ensure serif font */
     font-style: italic;
-    background: linear-gradient(to right, var(--color-teal-accent), var(--color-gold-text));
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-    /* Fallback */
 }
 
 .hero-subtitle {
@@ -85,10 +83,11 @@
     display: flex;
     gap: 1rem;
     align-items: center;
-    background: var(--color-bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 0.5rem;
     border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .waitlist-row input {
@@ -111,21 +110,20 @@
 }
 
 .btn-primary {
-    background: var(--color-teal-accent);
-    color: var(--color-bg-dark);
+    background: var(--color-primary);
+    color: #ffffff;
     padding: 0.9rem 1.6rem;
     border-radius: 999px;
-    /* Pill shape for calm feel */
     font-size: 1rem;
     font-weight: 600;
-    box-shadow: 0 4px 20px rgba(58, 169, 159, 0.3);
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
     transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(58, 169, 159, 0.4);
-    background: #2a8f86;
+    box-shadow: 0 6px 25px rgba(124, 58, 237, 0.4);
+    background: #6d28d9;
 }
 
 .btn-primary:disabled {
@@ -140,11 +138,11 @@
 }
 
 .waitlist-status.success {
-    color: var(--color-teal-accent);
+    color: var(--color-primary);
 }
 
 .waitlist-status.error {
-    color: #e29c9c;
+    color: #dc2626;
 }
 
 .waitlist-iframe {
@@ -154,7 +152,7 @@
 .btn-secondary {
     background: transparent;
     color: var(--color-text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     padding: 1rem 2.5rem;
     border-radius: 50px;
     font-size: 1rem;
@@ -163,8 +161,8 @@
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.25);
 }
 
 @media (max-width: 900px) {

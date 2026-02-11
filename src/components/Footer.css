@@ -1,8 +1,7 @@
 .footer {
-    background-color: #020608;
-    /* Darkest black */
+    background-color: #f5f3ff;
     padding: 4rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .footer-container {
@@ -20,7 +19,7 @@
 }
 
 .footer-logo span {
-    color: var(--color-teal-accent);
+    color: var(--color-primary);
 }
 
 .footer-logo p {
@@ -56,5 +55,5 @@
 }
 
 .link-column a:hover {
-    color: var(--color-teal-accent);
+    color: var(--color-primary);
 }

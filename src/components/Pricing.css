@@ -1,6 +1,6 @@
 .pricing {
     padding: var(--spacing-section) 0;
-    background-color: var(--color-bg-dark);
+    background-color: var(--color-bg);
 }
 
 .pricing-grid {
@@ -9,25 +9,24 @@
     gap: 2rem;
     flex-wrap: wrap;
     align-items: center;
-    /* Center vertically to allow highlight card to grow */
 }
 
 .pricing-card {
-    background: var(--color-bg-card);
+    background: #ffffff;
     padding: 2rem;
     border-radius: 12px;
     width: 300px;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .pricing-card.highlight {
-    background: rgba(58, 169, 159, 0.05);
-    /* Tint of teal */
-    border-color: var(--color-teal-accent);
+    background: var(--color-bg-alt);
+    border-color: var(--color-primary);
     transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.15);
 }
 
 .pricing-card h3 {
@@ -41,7 +40,7 @@
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 2rem;
-    color: var(--color-teal-accent);
+    color: var(--color-primary);
     font-family: var(--font-body);
 }
 
@@ -59,7 +58,7 @@
 
 .btn-outline {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     color: var(--color-text-primary);
     padding: 0.8rem 2rem;
     border-radius: 4px;
@@ -67,8 +66,8 @@
 }
 
 .btn-outline:hover {
-    border-color: var(--color-teal-accent);
-    color: var(--color-teal-accent);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
 }
 
 /* Coming Soon State */
@@ -96,13 +95,13 @@
 }
 
 .coming-soon-badge {
-    background: var(--color-teal-accent);
-    color: var(--color-bg-dark);
+    background: var(--color-primary);
+    color: #ffffff;
     padding: 1.5rem 3rem;
     border-radius: 50px;
     font-size: 2rem;
     font-weight: 700;
     font-family: var(--font-heading);
-    box-shadow: 0 10px 40px rgba(58, 169, 159, 0.4);
+    box-shadow: 0 10px 40px rgba(124, 58, 237, 0.4);
     letter-spacing: 2px;
 }

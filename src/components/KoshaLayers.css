@@ -1,6 +1,6 @@
 .kosha-layers-section {
     padding: var(--spacing-section) 0;
-    background-color: var(--color-bg-dark);
+    background-color: var(--color-bg);
 }
 
 .layers-header {
@@ -22,7 +22,6 @@
     justify-content: center;
     align-items: center;
     height: 600px;
-    /* Increased height for bigger circles */
     position: relative;
     overflow: hidden;
 }
@@ -44,18 +43,15 @@
     bottom: 0;
     margin: auto;
     border-radius: 50%;
-    /* Colors and sizes inline */
     opacity: 0.9;
-    /* Asymmetric border to make rotation visible */
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-top: 2px solid rgba(255, 255, 255, 0.8);
-    border-left: 2px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 2px solid rgba(124, 58, 237, 0.3);
+    border-left: 2px solid rgba(14, 165, 233, 0.2);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.08);
     display: flex;
     justify-content: center;
     align-items: center;
     will-change: transform;
-    /* Hardware acceleration */
 }
 
 .center-label {
@@ -66,16 +62,14 @@
     z-index: 10;
     font-family: var(--font-heading);
     font-size: 1.5rem;
-    /* Adjusted for full word */
     font-weight: 700;
     color: var(--color-text-primary);
     pointer-events: none;
-    /* Let clicks pass through to center layer if needed */
     letter-spacing: 1px;
 }
 
 .center-label .accent {
-    color: var(--color-teal-accent);
+    color: var(--color-primary);
 }
 
 /* Right Content Side */
@@ -92,7 +86,7 @@
 }
 
 .layers-title .highlight-text {
-    color: var(--color-teal-accent);
+    color: var(--color-primary);
 }
 
 .layers-sub {
@@ -119,7 +113,7 @@
     background: var(--color-bg-card);
     padding: 1.2rem;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     cursor: default;
     transition: background-color 0.3s ease;
 }
@@ -132,8 +126,7 @@
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    color: var(--color-bg-dark);
-    /* Number matches bg for visibility */
+    color: #ffffff;
     font-family: var(--font-heading);
 }
 

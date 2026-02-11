@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import './KoshaLayers.css';
 
 const layers = [
-    { id: 5, name: "Anandamaya", label: "Zero Digital Chaos", desc: "The bliss of perfect organization", color: "#e0c068" }, // Gold
-    { id: 4, name: "Vijnanamaya", label: "Intelligence", desc: "AI-powered insights and decisions", color: "#3aa99f" }, // Teal Accent
-    { id: 3, name: "Manomaya", label: "Data Storage", desc: "Organized information at your fingertips", color: "#2d7a74" }, // Teal Medium
-    { id: 2, name: "Pranamaya", label: "Connectivity", desc: "Seamless sync across all devices", color: "#1f504c" }, // Teal Dim
-    { id: 1, name: "Annamaya", label: "Digital Devices", desc: "Your physical hardware unified", color: "#163a37" }  // Teal Dark
+    { id: 5, name: "Anandamaya", label: "Zero Digital Chaos", desc: "The bliss of perfect organization", color: "#7c3aed" },
+    { id: 4, name: "Vijnanamaya", label: "Intelligence", desc: "AI-powered insights and decisions", color: "#8b5cf6" },
+    { id: 3, name: "Manomaya", label: "Data Storage", desc: "Organized information at your fingertips", color: "#0ea5e9" },
+    { id: 2, name: "Pranamaya", label: "Connectivity", desc: "Seamless sync across all devices", color: "#38bdf8" },
+    { id: 1, name: "Annamaya", label: "Digital Devices", desc: "Your physical hardware unified", color: "#7dd3fc" }
 ];
 
 const KoshaLayers = () => {
@@ -46,8 +46,8 @@ const KoshaLayers = () => {
                                         }}
                                         initial={{ scale: 0.8, opacity: 0 }}
                                         transition={{
-                                            rotate: { duration: 15 + index * 5, repeat: Infinity, ease: "linear" }, // Distinct speeds
-                                            scale: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }, // Faster breathing
+                                            rotate: { duration: 15 + index * 5, repeat: Infinity, ease: "linear" },
+                                            scale: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 },
                                             opacity: { duration: 1, delay: index * 0.1 }
                                         }}
                                     >
@@ -76,11 +76,11 @@ const KoshaLayers = () => {
                                     initial={{ opacity: 0, x: 20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.5, delay: (6 - layer.id) * 0.1 }}
-                                    whileHover={{ x: 10, backgroundColor: 'rgba(255,255,255,0.08)' }}
+                                    whileHover={{ x: 10, backgroundColor: 'rgba(124,58,237,0.06)' }}
                                 >
                                     <div className="layer-number" style={{ backgroundColor: layer.color }}>{layer.id}</div>
                                     <div className="layer-info">
-                                        <h4>{layer.name} • <span style={{ color: '#3aa99f' }}>{layer.label}</span></h4>
+                                        <h4>{layer.name} • <span style={{ color: '#7c3aed' }}>{layer.label}</span></h4>
                                         <p>{layer.desc}</p>
                                     </div>
                                 </motion.div>
