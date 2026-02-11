@@ -35,6 +35,35 @@
     height: 100%;
 }
 
+/* ========================
+   AMBIENT BACKGROUND AURA
+   ======================== */
+.ambient-wash {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 40% 40%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 60% 60%, rgba(14, 165, 233, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 60%);
+    animation: ambientRotate 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(30px);
+}
+
+@keyframes ambientRotate {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ========================
+   NEON GLOW RINGS
+   ======================== */
 .abstract-circle {
     position: absolute;
     top: 0;
@@ -43,17 +72,184 @@
     bottom: 0;
     margin: auto;
     border-radius: 50%;
-    opacity: 0.9;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    border-top: 2px solid rgba(124, 58, 237, 0.3);
-    border-left: 2px solid rgba(14, 165, 233, 0.2);
-    box-shadow: 0 0 20px rgba(124, 58, 237, 0.08);
+    background-color: transparent;
+    border: 2px solid;
     display: flex;
     justify-content: center;
     align-items: center;
     will-change: transform;
 }
 
+/* Neon multi-layer glow per ring — pulsing between subtle and intense */
+@keyframes neonPulse0 {
+    0%, 100% {
+        box-shadow:
+            0 0 6px rgba(124, 58, 237, 0.3),
+            0 0 15px rgba(124, 58, 237, 0.2),
+            0 0 35px rgba(124, 58, 237, 0.1),
+            inset 0 0 8px rgba(124, 58, 237, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 8px rgba(124, 58, 237, 0.5),
+            0 0 25px rgba(124, 58, 237, 0.35),
+            0 0 50px rgba(124, 58, 237, 0.2),
+            0 0 80px rgba(124, 58, 237, 0.08),
+            inset 0 0 15px rgba(124, 58, 237, 0.15);
+    }
+}
+@keyframes neonPulse1 {
+    0%, 100% {
+        box-shadow:
+            0 0 6px rgba(139, 92, 246, 0.3),
+            0 0 15px rgba(139, 92, 246, 0.2),
+            0 0 35px rgba(139, 92, 246, 0.1),
+            inset 0 0 8px rgba(139, 92, 246, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 8px rgba(139, 92, 246, 0.5),
+            0 0 25px rgba(139, 92, 246, 0.35),
+            0 0 50px rgba(139, 92, 246, 0.2),
+            0 0 80px rgba(139, 92, 246, 0.08),
+            inset 0 0 15px rgba(139, 92, 246, 0.15);
+    }
+}
+@keyframes neonPulse2 {
+    0%, 100% {
+        box-shadow:
+            0 0 6px rgba(14, 165, 233, 0.3),
+            0 0 15px rgba(14, 165, 233, 0.2),
+            0 0 35px rgba(14, 165, 233, 0.1),
+            inset 0 0 8px rgba(14, 165, 233, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 8px rgba(14, 165, 233, 0.5),
+            0 0 25px rgba(14, 165, 233, 0.35),
+            0 0 50px rgba(14, 165, 233, 0.2),
+            0 0 80px rgba(14, 165, 233, 0.08),
+            inset 0 0 15px rgba(14, 165, 233, 0.15);
+    }
+}
+@keyframes neonPulse3 {
+    0%, 100% {
+        box-shadow:
+            0 0 6px rgba(56, 189, 248, 0.3),
+            0 0 15px rgba(56, 189, 248, 0.2),
+            0 0 35px rgba(56, 189, 248, 0.1),
+            inset 0 0 8px rgba(56, 189, 248, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 8px rgba(56, 189, 248, 0.5),
+            0 0 25px rgba(56, 189, 248, 0.35),
+            0 0 50px rgba(56, 189, 248, 0.2),
+            0 0 80px rgba(56, 189, 248, 0.08),
+            inset 0 0 15px rgba(56, 189, 248, 0.15);
+    }
+}
+@keyframes neonPulse4 {
+    0%, 100% {
+        box-shadow:
+            0 0 6px rgba(125, 211, 252, 0.3),
+            0 0 15px rgba(125, 211, 252, 0.2),
+            0 0 35px rgba(125, 211, 252, 0.1),
+            inset 0 0 8px rgba(125, 211, 252, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 8px rgba(125, 211, 252, 0.5),
+            0 0 25px rgba(125, 211, 252, 0.35),
+            0 0 50px rgba(125, 211, 252, 0.2),
+            0 0 80px rgba(125, 211, 252, 0.08),
+            inset 0 0 15px rgba(125, 211, 252, 0.15);
+    }
+}
+
+.ring-glow-0 { animation: neonPulse0 4s ease-in-out infinite; }
+.ring-glow-1 { animation: neonPulse1 4s ease-in-out infinite 0.8s; }
+.ring-glow-2 { animation: neonPulse2 4s ease-in-out infinite 1.6s; }
+.ring-glow-3 { animation: neonPulse3 4s ease-in-out infinite 2.4s; }
+.ring-glow-4 { animation: neonPulse4 4s ease-in-out infinite 3.2s; }
+
+/* ========================
+   ORBITING ENERGY DOTS
+   ======================== */
+.orbit-dot {
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.orbit-dot-secondary {
+    top: auto;
+    bottom: -5px;
+    width: 8px;
+    height: 8px;
+}
+
+/* ========================
+   GLOWING CENTER CORE
+   ======================== */
+.center-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    z-index: 9;
+    pointer-events: none;
+}
+
+.core-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+}
+
+.core-ring-1 {
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+    animation: corePulse 3s ease-in-out infinite;
+}
+
+.core-ring-2 {
+    width: 70px;
+    height: 70px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.25) 0%, rgba(124, 58, 237, 0.1) 50%, transparent 70%);
+    animation: corePulse 3s ease-in-out infinite 0.5s;
+}
+
+.core-ring-3 {
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(124, 58, 237, 0.3) 40%, transparent 70%);
+    animation: corePulse 2s ease-in-out infinite 0.2s;
+    box-shadow:
+        0 0 10px rgba(124, 58, 237, 0.4),
+        0 0 25px rgba(124, 58, 237, 0.2),
+        0 0 50px rgba(14, 165, 233, 0.15);
+}
+
+@keyframes corePulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
+}
+
+/* Center label */
 .center-label {
     position: absolute;
     top: 50%;
@@ -66,13 +262,54 @@
     color: var(--color-text-primary);
     pointer-events: none;
     letter-spacing: 1px;
+    text-shadow:
+        0 0 10px rgba(124, 58, 237, 0.3),
+        0 0 20px rgba(124, 58, 237, 0.15);
 }
 
 .center-label .accent {
     color: var(--color-primary);
+    text-shadow:
+        0 0 8px rgba(124, 58, 237, 0.5),
+        0 0 20px rgba(124, 58, 237, 0.3);
 }
 
-/* Right Content Side */
+/* ========================
+   FLOATING PARTICLES
+   ======================== */
+.floating-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: floatParticle linear infinite;
+    z-index: 1;
+}
+
+@keyframes floatParticle {
+    0% {
+        bottom: -5%;
+        transform: translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateX(var(--drift, 15px));
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        bottom: 105%;
+        transform: translateX(0);
+        opacity: 0;
+    }
+}
+
+/* ========================
+   RIGHT CONTENT SIDE
+   ======================== */
 .layers-list-wrapper {
     flex: 1;
     display: flex;
@@ -141,6 +378,9 @@
     color: var(--color-text-secondary);
 }
 
+/* ========================
+   RESPONSIVE
+   ======================== */
 @media (max-width: 968px) {
     .layers-split-layout {
         flex-direction: column;
