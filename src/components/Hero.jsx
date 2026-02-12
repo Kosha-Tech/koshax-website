@@ -108,7 +108,19 @@ const Hero = () => {
         };
     }, [widgetId]);
 
+    const countryDigits = countryCode.replace(/\D/g, '');
+    const maxSubscriberDigits = 15 - countryDigits.length;
+    const e164Number = `+${countryDigits}${phone}`;
+
     const handleSubmit = (e) => {
+        const totalDigits = countryDigits.length + phone.length;
+        if (totalDigits < 7 || totalDigits > 15) {
+            e.preventDefault();
+            setStatus('error');
+            setMessage('Please enter a valid phone number.');
+            return;
+        }
+
         const token = window?.turnstile?.getResponse?.(widgetId || undefined);
         if (!token) {
             e.preventDefault();
@@ -176,7 +188,12 @@ const Hero = () => {
                             <select
                                 className="country-code-select"
                                 value={countryCode}
-                                onChange={(e) => setCountryCode(e.target.value)}
+                                onChange={(e) => {
+                                    const newCode = e.target.value;
+                                    const newMax = 15 - newCode.replace(/\D/g, '').length;
+                                    setCountryCode(newCode);
+                                    setPhone((prev) => prev.slice(0, newMax));
+                                }}
                                 name="countryCode"
                             >
                                 {countryCodes.map((c) => (
@@ -190,7 +207,7 @@ const Hero = () => {
                                 name="phone"
                                 placeholder="Phone number"
                                 value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
+                                onChange={(e) => { const digits = e.target.value.replace(/\D/g, ''); if (digits.length <= maxSubscriberDigits) setPhone(digits); }}
                                 required
                             />
                             <button type="submit" className="btn-primary" disabled={status === 'loading'}>
@@ -205,6 +222,7 @@ const Hero = () => {
 
                         <input type="text" name="hp" style={{ display: 'none' }} autoComplete="off" />
                         <input type="hidden" name="turnstileToken" ref={tokenInputRef} />
+                        <input type="hidden" name="e164Phone" value={e164Number} />
                         <input type="hidden" name="source" value="hero" />
                         <input type="hidden" name="userAgent" value={navigator.userAgent} />
 
