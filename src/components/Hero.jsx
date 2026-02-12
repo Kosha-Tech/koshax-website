@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import './Hero.css';
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || 'YOUR_SITE_KEY';
-const WAITLIST_ENDPOINT = import.meta.env.VITE_WAITLIST_ENDPOINT || 'https://script.google.com/macros/s/AKfycbzAG0a2KLbHzuimP26OP2O5HzN4G6F3_m7OqHwnmyJ6xM050SGDWYyo-w_ITMnjLfmXDQ/exec';
+const WAITLIST_ENDPOINT = import.meta.env.VITE_WAITLIST_ENDPOINT;
 
 const countryCodes = [
     { code: '+91', country: 'IN', flag: '🇮🇳' },
