@@ -109,6 +109,14 @@ const Hero = () => {
     }, [widgetId]);
 
     const handleSubmit = (e) => {
+        const digits = phone.replace(/\D/g, '');
+        if (digits.length < 7 || digits.length > 15) {
+            e.preventDefault();
+            setStatus('error');
+            setMessage('Please enter a valid phone number (7–15 digits).');
+            return;
+        }
+
         const token = window?.turnstile?.getResponse?.(widgetId || undefined);
         if (!token) {
             e.preventDefault();
@@ -190,7 +198,7 @@ const Hero = () => {
                                 name="phone"
                                 placeholder="Phone number"
                                 value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
+                                onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
                                 required
                             />
                             <button type="submit" className="btn-primary" disabled={status === 'loading'}>
