@@ -27,8 +27,6 @@ const Navbar = () => {
     }, [location.pathname]);
 
     const productLink = location.pathname === '/' ? '#product' : '/#product';
-    const philosophyLink = location.pathname === '/' ? '#philosophy' : '/#philosophy';
-
     return (
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
             <div className="navbar-inner">
@@ -43,7 +41,7 @@ const Navbar = () => {
                     <img src="/koshalogo.png" alt="KoshaX" className="navbar-logo-img" />
                 </a>
                 <div className="navbar-center">
-                    <a href={philosophyLink}>Philosophy</a>
+                    <Link to="/philosophy">Philosophy</Link>
                     <a href={productLink}>Product</a>
                     <Link to="/pricing">Pricing</Link>
                 </div>
