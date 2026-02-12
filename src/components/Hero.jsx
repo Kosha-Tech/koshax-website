@@ -198,7 +198,7 @@ const Hero = () => {
                                 name="phone"
                                 placeholder="Phone number"
                                 value={phone}
-                                onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                                onChange={(e) => { const digits = e.target.value.replace(/\D/g, ''); if (digits.length <= 15) setPhone(digits); }}
                                 required
                             />
                             <button type="submit" className="btn-primary" disabled={status === 'loading'}>
