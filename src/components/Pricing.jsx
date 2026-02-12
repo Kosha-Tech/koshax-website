@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Pricing.css';
 
@@ -76,6 +76,22 @@ const faqs = [
 const Pricing = () => {
     const [annual, setAnnual] = useState(true);
     const [openFaq, setOpenFaq] = useState(null);
+    const [activeCard, setActiveCard] = useState(0);
+    const gridRef = useRef(null);
+
+    useEffect(() => {
+        const grid = gridRef.current;
+        if (!grid) return;
+        const handleScroll = () => {
+            const scrollLeft = grid.scrollLeft;
+            const cardWidth = grid.firstChild?.offsetWidth || 280;
+            const gap = 16;
+            const index = Math.round(scrollLeft / (cardWidth + gap));
+            setActiveCard(index);
+        };
+        grid.addEventListener('scroll', handleScroll, { passive: true });
+        return () => grid.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <section className="pricing" id="pricing">
@@ -121,7 +137,7 @@ const Pricing = () => {
 
                 {/* Cards */}
                 <div className="pricing-grid-wrapper">
-                <div className="pricing-grid">
+                <div className="pricing-grid" ref={gridRef}>
                     {plans.map((plan, index) => (
                         <motion.div
                             key={plan.name}
@@ -168,6 +184,20 @@ const Pricing = () => {
                 </div>
                 <div className="coming-soon-overlay">
                     <div className="coming-soon-badge">Coming Soon</div>
+                </div>
+                <div className="carousel-dots">
+                    {plans.map((_, i) => (
+                        <span
+                            key={i}
+                            className={`carousel-dot ${activeCard === i ? 'active' : ''}`}
+                            onClick={() => {
+                                const grid = gridRef.current;
+                                if (!grid) return;
+                                const cardWidth = grid.firstChild?.offsetWidth || 280;
+                                grid.scrollTo({ left: i * (cardWidth + 16), behavior: 'smooth' });
+                            }}
+                        />
+                    ))}
                 </div>
                 </div>
 

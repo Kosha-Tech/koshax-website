@@ -1,7 +1,6 @@
 .testimonials {
     padding: var(--spacing-section) 0;
     background-color: var(--color-bg);
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
@@ -31,4 +30,13 @@
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
+    margin-bottom: 0.2rem;
+}
+
+.testimonial-profile {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    font-style: normal;
+    font-weight: 300;
 }

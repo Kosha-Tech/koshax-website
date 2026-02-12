@@ -5,8 +5,41 @@ import './Hero.css';
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || 'YOUR_SITE_KEY';
 const WAITLIST_ENDPOINT = import.meta.env.VITE_WAITLIST_ENDPOINT || 'YOUR_APPS_SCRIPT_WEB_APP_URL';
 
+const countryCodes = [
+    { code: '+91', country: 'IN', flag: '🇮🇳' },
+    { code: '+1', country: 'US', flag: '🇺🇸' },
+    { code: '+44', country: 'GB', flag: '🇬🇧' },
+    { code: '+61', country: 'AU', flag: '🇦🇺' },
+    { code: '+971', country: 'AE', flag: '🇦🇪' },
+    { code: '+65', country: 'SG', flag: '🇸🇬' },
+    { code: '+49', country: 'DE', flag: '🇩🇪' },
+    { code: '+33', country: 'FR', flag: '🇫🇷' },
+    { code: '+81', country: 'JP', flag: '🇯🇵' },
+    { code: '+86', country: 'CN', flag: '🇨🇳' },
+    { code: '+82', country: 'KR', flag: '🇰🇷' },
+    { code: '+55', country: 'BR', flag: '🇧🇷' },
+    { code: '+7', country: 'RU', flag: '🇷🇺' },
+    { code: '+27', country: 'ZA', flag: '🇿🇦' },
+    { code: '+234', country: 'NG', flag: '🇳🇬' },
+    { code: '+62', country: 'ID', flag: '🇮🇩' },
+    { code: '+60', country: 'MY', flag: '🇲🇾' },
+    { code: '+63', country: 'PH', flag: '🇵🇭' },
+    { code: '+66', country: 'TH', flag: '🇹🇭' },
+    { code: '+39', country: 'IT', flag: '🇮🇹' },
+    { code: '+34', country: 'ES', flag: '🇪🇸' },
+    { code: '+31', country: 'NL', flag: '🇳🇱' },
+    { code: '+46', country: 'SE', flag: '🇸🇪' },
+    { code: '+41', country: 'CH', flag: '🇨🇭' },
+    { code: '+64', country: 'NZ', flag: '🇳🇿' },
+    { code: '+353', country: 'IE', flag: '🇮🇪' },
+    { code: '+972', country: 'IL', flag: '🇮🇱' },
+    { code: '+94', country: 'LK', flag: '🇱🇰' },
+    { code: '+977', country: 'NP', flag: '🇳🇵' },
+];
+
 const Hero = () => {
-    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [countryCode, setCountryCode] = useState('+91');
     const [status, setStatus] = useState('idle'); // idle | loading | success | error
     const [message, setMessage] = useState('');
     const [widgetId, setWidgetId] = useState(null);
@@ -65,7 +98,7 @@ const Hero = () => {
             pendingSubmitRef.current = false;
             setStatus('success');
             setMessage('You are on the waitlist. Thank you!');
-            setEmail('');
+            setPhone('');
             window?.turnstile?.reset?.(widgetId || undefined);
         };
 
@@ -94,7 +127,7 @@ const Hero = () => {
     };
 
     return (
-        <section className="hero">
+        <section className="hero" id="waitlist">
             <div className="container hero-container">
                 <motion.div
                     className="hero-badge"
@@ -140,16 +173,29 @@ const Hero = () => {
                         action={WAITLIST_ENDPOINT}
                     >
                         <div className="waitlist-row">
+                            <select
+                                className="country-code-select"
+                                value={countryCode}
+                                onChange={(e) => setCountryCode(e.target.value)}
+                                name="countryCode"
+                            >
+                                {countryCodes.map((c) => (
+                                    <option key={c.code + c.country} value={c.code}>
+                                        {c.flag} {c.country} {c.code}
+                                    </option>
+                                ))}
+                            </select>
                             <input
-                                type="email"
-                                name="email"
-                                placeholder="Enter your email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                type="tel"
+                                name="phone"
+                                placeholder="Phone number"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
                                 required
                             />
                             <button type="submit" className="btn-primary" disabled={status === 'loading'}>
-                                {status === 'loading' ? 'Joining...' : 'Join the waitlist'}
+                                <span className="btn-text-full">{status === 'loading' ? 'Joining...' : 'Join the waitlist'}</span>
+                                <span className="btn-text-short">{status === 'loading' ? '...' : 'Join Waitlist'}</span>
                             </button>
                         </div>
 

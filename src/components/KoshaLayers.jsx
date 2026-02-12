@@ -38,9 +38,7 @@ const KoshaLayers = () => {
                             <div className="ambient-wash" />
 
                             {layers.map((layer, index) => {
-                                const minSize = (index + 1) * 50 + 20;
-                                const maxSize = (index + 1) * 80 + 40;
-                                const vwSize = (index + 1) * 16;
+                                const size = (index + 1) * 90;
 
                                 return (
                                     <motion.div
@@ -51,8 +49,8 @@ const KoshaLayers = () => {
                                             '--ring-rgb': layer.rgb,
                                             '--ring-color': layer.color,
                                             zIndex: layer.id,
-                                            width: `clamp(${minSize}px, ${vwSize}vw, ${maxSize}px)`,
-                                            height: `clamp(${minSize}px, ${vwSize}vw, ${maxSize}px)`
+                                            width: `${size}px`,
+                                            height: `${size}px`
                                         }}
                                         animate={{
                                             rotate: index % 2 === 0 ? 360 : -360,

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -31,15 +32,22 @@ const Navbar = () => {
     return (
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
             <div className="navbar-inner">
-                <Link to="/" className="navbar-logo">
+                <a href="/" className="navbar-logo" onClick={(e) => {
+                    e.preventDefault();
+                    if (location.pathname === '/') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        navigate('/');
+                    }
+                }}>
                     <img src="/koshalogo.png" alt="KoshaX" className="navbar-logo-img" />
-                </Link>
+                </a>
                 <div className="navbar-center">
                     <a href={philosophyLink}>Philosophy</a>
                     <a href={productLink}>Product</a>
                     <Link to="/pricing">Pricing</Link>
                 </div>
-                <a href="/#hero" className="navbar-cta">Join Waitlist</a>
+                <a href={location.pathname === '/' ? '#waitlist' : '/#waitlist'} className="navbar-cta">Join Waitlist</a>
             </div>
         </nav>
     );
