@@ -1,5 +1,5 @@
 .problem-section {
-    padding: 5rem 0 2rem;
+    padding: var(--spacing-section) 0;
     background-color: var(--color-bg);
     overflow: hidden;
 }
@@ -10,7 +10,7 @@
     color: var(--color-text-primary);
     font-weight: 600;
     line-height: 1.7;
-    max-width: none;
+    max-width: 100%;
     margin: 0 auto 1rem;
 }
 
@@ -31,7 +31,7 @@
     border-radius: 6px;
     font-size: 0.85rem;
     color: var(--color-text-secondary);
-    font-weight: 500;
+    font-weight: 300;
     white-space: nowrap;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transform: rotate(var(--rotate, 0deg));
@@ -47,7 +47,7 @@
     width: 100%;
     text-align: center;
     font-family: var(--font-heading);
-    font-size: 5rem;
+    font-size: 6rem;
     font-weight: 800;
     color: var(--color-text-primary);
     letter-spacing: -2px;

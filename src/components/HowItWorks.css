@@ -1,6 +1,7 @@
 .how-it-works {
     padding: var(--spacing-section) 0;
     background-color: var(--color-bg);
+    scroll-margin-top: 70px;
 }
 
 /* Header */
@@ -161,7 +162,7 @@
 
 @media (max-width: 768px) {
     .hiw-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 
     .hiw-subtitle {
@@ -171,7 +172,7 @@
 
 @media (max-width: 540px) {
     .hiw-title {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
     }
 
     .hiw-step-content {

@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import './ProblemStatement.css';
 
 const chaosTags = [
-    { text: '17 open tabs', rotate: -8, top: '18%', left: '5%' },
-    { text: 'Forgot the password', rotate: 5, top: '10%', left: '28%' },
-    { text: 'Which app was it?', rotate: -3, top: '25%', left: '48%' },
+    { text: 'Too many calls', rotate: -8, top: '18%', left: '5%' },
+    { text: 'Meal planning', rotate: 5, top: '10%', left: '28%' },
+    { text: 'Low energy', rotate: -3, top: '25%', left: '48%' },
     { text: 'Files everywhere', rotate: 7, top: '8%', left: '68%' },
     { text: 'Missed the deadline', rotate: -6, top: '30%', left: '15%' },
     { text: 'Lost that note', rotate: 4, top: '35%', left: '38%' },
@@ -24,7 +24,7 @@ const ProblemStatement = () => {
                     transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
                 >
-                    More systems. More data. But still just one mind trying to make sense of it all.
+                    More systems. More data. Just one mind to make sense of it all.
                 </motion.p>
 
                 <div className="chaos-zone">
@@ -53,7 +53,7 @@ const ProblemStatement = () => {
                         transition={{ duration: 0.6, delay: 0.8 }}
                         viewport={{ once: true }}
                     >
-                        It's digital <span className="punchline-accent">chaos.</span>
+                        It's <span className="punchline-accent">Pandemonium</span>
                     </motion.h2>
                 </div>
             </div>

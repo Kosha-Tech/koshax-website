@@ -41,7 +41,7 @@
 }
 
 .navbar-logo-img {
-    height: 22px;
+    height: 30px;
     width: auto;
     display: block;
 }
@@ -55,9 +55,9 @@
 
 .navbar-center a {
     color: var(--color-text-secondary);
-    font-size: 0.88rem;
-    font-weight: 500;
-    padding: 0.4rem 0.9rem;
+    font-size: 1.1rem;
+    font-weight: 300;
+    padding: 0.55rem 1.25rem;
     border-radius: 100px;
     transition: color 0.2s, background 0.2s;
     white-space: nowrap;
@@ -91,37 +91,41 @@
 @media (max-width: 768px) {
     .navbar {
         top: 10px;
-        width: calc(100% - 1.5rem);
-        padding: 0.4rem 0.4rem 0.4rem 1rem;
-        border-radius: 20px;
+        left: 0;
+        right: 0;
+        transform: none;
+        width: auto;
+        max-width: none;
+        margin: 0 1.25rem;
+        padding: 0.6rem 0.6rem 0.6rem 1rem;
+        border-radius: 16px;
     }
 
     .navbar-inner {
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-between;
         gap: 0.5rem;
-    }
-
-    .navbar-logo {
-        order: -1;
-    }
-
-    .navbar-center a {
-        font-size: 0.82rem;
-        padding: 0.35rem 0.7rem;
     }
 
     .navbar-cta {
         font-size: 0.8rem;
         padding: 0.4rem 1rem;
     }
+
+    .navbar-center {
+        order: 1;
+        width: 100%;
+        justify-content: center;
+        gap: 0.25rem;
+    }
+
+    .navbar-center a {
+        font-size: 0.82rem;
+        padding: 0.35rem 0.7rem;
+    }
 }
 
 @media (max-width: 480px) {
-    .navbar-center {
-        gap: 0;
-    }
-
     .navbar-center a {
         font-size: 0.78rem;
         padding: 0.3rem 0.5rem;

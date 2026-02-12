@@ -17,13 +17,13 @@ const layers = [
     },
     {
         id: 3,
-        name: 'Intelligence',
+        name: 'Personalised Intelligence',
         desc: 'AI agents that observe, understand, and act - turning context into meaningful decisions.',
         icon: '🧠'
     },
     {
         id: 2,
-        name: 'Context Graph',
+        name: 'Your Knowledge Base',
         desc: 'Your data, stitched into a living graph - structured, secure, and always up to date.',
         icon: '🕸️'
     },
