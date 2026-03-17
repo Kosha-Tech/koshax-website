@@ -38,9 +38,9 @@ const Footer = () => {
                 <div className="footer-bottom">
                     <p className="footer-copyright">&copy; 2025 KoshaX Technologies Private Limited. All rights reserved.</p>
                     <div className="footer-legal">
-                        <a href="/privacy-policy.html">Privacy Policy</a>
-                        <a href="/terms-and-conditions.html">Terms &amp; Conditions</a>
-                        <a href="#">Cookie Settings</a>
+                        <Link to="/privacy-policy">Privacy Policy</Link>
+                        <Link to="/terms-and-conditions">Terms &amp; Conditions</Link>
+
                     </div>
                 </div>
             </div>
