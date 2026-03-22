@@ -40,7 +40,8 @@ const Footer = () => {
                     <div className="footer-legal">
                         <Link to="/privacy-policy">Privacy Policy</Link>
                         <Link to="/terms-and-conditions">Terms &amp; Conditions</Link>
-
+                        <a href="/care.html">Care</a>
+                        <a href="#">Cookie Settings</a>
                     </div>
                 </div>
             </div>
