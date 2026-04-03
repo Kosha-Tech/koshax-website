@@ -17,6 +17,7 @@
       "namespace": "android_app",
       "package_name": "com.koshax.ai.staging",
       "sha256_cert_fingerprints": [
+        "27:26:E0:55:0D:53:18:C1:A1:3C:07:B5:8A:45:A8:08:93:F6:FC:75:C5:FA:70:96:F9:0A:FD:24:AB:CB:21:4F",
         "49:D7:3B:9A:23:60:FB:AE:FF:8A:FC:EB:7D:78:01:77:D7:60:F7:AB:D6:74:07:B2:89:23:B5:34:7F:AD:68:7C"
       ]
     }
