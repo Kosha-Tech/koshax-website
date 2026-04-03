@@ -167,6 +167,14 @@ const PrivacyPolicyPage = () => {
 
           <h3>Business Transfers</h3>
           <p>If KoshaX undergoes a merger, acquisition, restructuring, or sale of assets, user information may be transferred as part of the transaction subject to appropriate confidentiality protections.</p>
+
+          <h3>Third-Party Services</h3>
+          <ul>
+            <li>OpenAI - AI/LLM processing</li>
+            <li>Google Gemini - AI/LLM processing</li>
+            <li>Karix - WhatsApp messaging services</li>
+            <li>AWS - Cloud Infrastructure</li>
+          </ul>
         </div>
 
         <div className="pp-card" id="transfers">
