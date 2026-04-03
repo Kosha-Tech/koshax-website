@@ -1,3 +1,4 @@
+
 [
   {
     "relation": ["delegate_permission/common.handle_all_urls"],
@@ -5,10 +6,21 @@
       "namespace": "android_app",
       "package_name": "com.koshax.ai",
       "sha256_cert_fingerprints": [
-        "65:3E:21:F1:81:35:C1:37:68:CC:55:48:B6:F5:8D:93:09:D7:8E:C1:1F:15:DD:5C:17:DC:01:6A:F9:0C:1A:4B",
+      "65:3E:21:F1:81:35:C1:37:68:CC:55:48:B6:F5:8D:93:09:D7:8E:C1:1F:15:DD:5C:17:DC:01:6A:F9:0C:1A:4B",
         "49:D7:3B:9A:23:60:FB:AE:FF:8A:FC:EB:7D:78:01:77:D7:60:F7:AB:D6:74:07:B2:89:23:B5:34:7F:AD:68:7C",
         "62:73:EB:DE:64:AD:90:5A:1A:B8:1E:45:14:BA:7E:2C:8F:88:4F:30:01:D4:BB:89:DA:FF:F3:BE:2B:F5:F2:28"
       ]
     }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.koshax.ai.staging",
+      "sha256_cert_fingerprints": [
+        "49:D7:3B:9A:23:60:FB:AE:FF:8A:FC:EB:7D:78:01:77:D7:60:F7:AB:D6:74:07:B2:89:23:B5:34:7F:AD:68:7C",
+      ]
+    }
   }
 ]
+
