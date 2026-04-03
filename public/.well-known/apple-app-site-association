@@ -5,6 +5,14 @@
       {
         "appID": "Z8MN57GVQJ.com.koshax.app",
         "paths": ["*"]
+      },
+      {
+        "appID": "Z8MN57GVQJ.com.koshax.app.stg",
+        "paths": ["*"]
+      },
+      {
+        "appID": "Z8MN57GVQJ.com.koshax.app.staging",
+        "paths": ["*"]
       }
     ]
   }
