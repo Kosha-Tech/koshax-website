@@ -100,6 +100,7 @@ const Hero = () => {
             setMessage('You are on the waitlist. Thank you!');
             setPhone('');
             window?.turnstile?.reset?.(widgetId || undefined);
+            window?.fbq?.('track', 'Lead', { content_name: 'Waitlist', source: 'hero' });
         };
 
         iframeEl.addEventListener('load', handleLoad);

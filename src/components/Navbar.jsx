@@ -45,7 +45,11 @@ const Navbar = () => {
                     <a href={productLink}>Product</a>
                     <Link to="/pricing">Pricing</Link>
                 </div>
-                <a href={location.pathname === '/' ? '#waitlist' : '/#waitlist'} className="navbar-cta">Join Waitlist</a>
+                <a
+                    href={location.pathname === '/' ? '#waitlist' : '/#waitlist'}
+                    className="navbar-cta"
+                    onClick={() => window?.fbq?.('trackCustom', 'ClickJoinWaitlistCTA', { location: 'navbar' })}
+                >Join Waitlist</a>
             </div>
         </nav>
     );
