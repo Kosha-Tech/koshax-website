@@ -7,6 +7,7 @@ import PricingPage from './pages/PricingPage';
 import PhilosophyPage from './pages/PhilosophyPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsPage from './pages/TermsPage';
+import DownloadPage from './pages/DownloadPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/philosophy" element={<PhilosophyPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/terms-and-conditions" element={<TermsPage />} />
+        <Route path="/download" element={<DownloadPage />} />
       </Routes>
       <Footer />
     </div>
