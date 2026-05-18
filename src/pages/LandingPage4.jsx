@@ -287,7 +287,7 @@ export default function LandingPage4() {
             Download the app for a Life OS that will improve signal/noise.
           </p>
           <DownloadButton />
-          <p className="lp1-copyright">© 2026 Kosha. Your Life OS.</p>
+          <p className="lp1-copyright">© 2026 Kosha. The operating system for modern life.</p>
         </div>
       </section>
     </div>

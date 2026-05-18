@@ -98,7 +98,7 @@ export default function LandingPage3() {
 
             {/* Left */}
             <div className="lp1-hero-left">
-              <p className="lp1-eyebrow">Your Life OS</p>
+              <p className="lp1-eyebrow">Your Life Admin</p>
               <h1 className="lp1-hero-title">
                 Running a life is a job. It's time to take control.
               </h1>
@@ -243,7 +243,7 @@ export default function LandingPage3() {
             <h2 className="lp1-section-title">
               Everything a life admin does,
               <br />
-              now in one app.
+              now at your fingertips.
             </h2>
           </div>
 
@@ -298,7 +298,7 @@ export default function LandingPage3() {
             Download the app. Stop running your life from sticky notes and WhatsApp groups.
           </p>
           <DownloadButton />
-          <p className="lp1-copyright">© 2026 Kosha. The operating system for modern life.</p>
+          <p className="lp1-copyright">© 2026 Kosha. The admin for modern life.</p>
         </div>
       </section>
     </div>
