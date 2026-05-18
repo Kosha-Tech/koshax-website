@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleDownloadClick } from '../utils/downloadRedirect';
+import { handleDownloadClick, trackPixel } from '../utils/downloadRedirect';
 import './LandingPage1.css';
 import './LandingPage2.css';
 
@@ -29,35 +29,35 @@ const FAMILY = [
   {
     emoji: '👩', name: 'Priya', role: 'You',
     bars: [
-      { label: 'Sleep', fill: 82, color: '#4ade80' },
+      { label: 'Bp',    fill: 82, color: '#4ade80' },
       { label: 'Steps', fill: 65, color: '#60a5fa' },
     ],
   },
   {
     emoji: '👨', name: 'Rahul', role: 'Partner',
     bars: [
-      { label: 'Sleep', fill: 55, color: '#fcd34d' },
-      { label: 'Steps', fill: 90, color: '#4ade80' },
+      { label: 'Diabetes', fill: 55, color: '#fcd34d' },
+      { label: 'Steps',    fill: 90, color: '#4ade80' },
     ],
   },
   {
     emoji: '👦', name: 'Aarav', role: 'Son, 8yr',
     bars: [
-      { label: 'Sleep', fill: 88, color: '#4ade80' },
-      { label: 'Water', fill: 45, color: '#fcd34d' },
+      { label: 'Vacc.',  fill: 75, color: '#4ade80' },
+      { label: 'Screen', fill: 60, color: '#fcd34d' },
     ],
   },
   {
     emoji: '👧', name: 'Meera', role: 'Daughter, 5yr',
     bars: [
-      { label: 'Sleep', fill: 92, color: '#4ade80' },
-      { label: 'Water', fill: 70, color: '#4ade80' },
+      { label: 'Vacc.',    fill: 90, color: '#4ade80' },
+      { label: 'Activity', fill: 80, color: '#60a5fa' },
     ],
   },
 ];
 
 const EVENTS = [
-  { dot: '#4ade80', label: 'Meera — MMR Booster', date: 'May 18' },
+  { dot: '#4ade80', label: 'Meera — Annual Checkup', date: 'May 18' },
   { dot: '#fcd34d', label: 'Rahul — Dental Checkup', date: 'May 24' },
   { dot: '#60a5fa', label: 'Aarav — Eye Test', date: 'Jun 2' },
 ];
@@ -87,10 +87,10 @@ function SectionBadge({ label = 'HOW IT WORKS' }) {
   );
 }
 
-function DownloadButton({ location }) {
+function DownloadButton({ location = 'hero' }) {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { source: `lp2-${location}` })}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { variant: 'lp2', angle: 'family-health', location })}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp2/arrow-right.svg" alt="" />
@@ -100,6 +100,10 @@ function DownloadButton({ location }) {
 }
 
 export default function LandingPage2() {
+  useEffect(() => {
+    trackPixel('ViewLandingPage', { variant: 'lp2', angle: 'family-health' });
+  }, []);
+
   return (
     <div className="lp1 lp2">
       {/* Nav */}
@@ -130,7 +134,7 @@ export default function LandingPage2() {
                 cracks.
               </p>
               <div className="lp1-hero-cta">
-                <DownloadButton location="hero" />
+                <DownloadButton />
               </div>
             </div>
 
@@ -225,9 +229,9 @@ export default function LandingPage2() {
                       <img src="/lp2/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
                     </div>
                     <div className="lp1-notif-body">
-                      <div className="lp1-notif-title">Meera's MMR booster is due May 18</div>
+                      <div className="lp1-notif-title">Meera's annual checkup is due</div>
                       <div className="lp1-notif-sub">
-                        Dr. Kapoor, 10:30 AM — slot auto-held from calendar
+                        Dr. Kapoor, 10:30 AM
                       </div>
                     </div>
                   </div>
@@ -238,7 +242,7 @@ export default function LandingPage2() {
                     <div className="lp1-notif-body">
                       <div className="lp1-notif-title">Aarav's vaccination is due Thursday</div>
                       <div className="lp1-notif-sub">
-                        Dr. Sharma, 4:30 PM — slot auto-held from calendar
+                        Dr. Sharma, 4:30 PM
                       </div>
                     </div>
                   </div>
@@ -287,8 +291,8 @@ export default function LandingPage2() {
               <div>
                 <h3 className="lp1-feature-title">Wellness Trends</h3>
                 <p className="lp1-feature-text">
-                  Track sleep, hydration, screen time, and activity across your family. Spot patterns
-                  before they become problems.
+                  Track BP, glucose, hydration, and lab report trends across every family member.
+                  Spot patterns before they become problems.
                 </p>
               </div>
             </div>

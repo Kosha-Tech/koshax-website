@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleDownloadClick } from '../utils/downloadRedirect';
+import { handleDownloadClick, trackPixel } from '../utils/downloadRedirect';
 import './LandingPage1.css';
 
 const MEMORY_CARDS = [
@@ -70,10 +70,10 @@ const CHAOS_TAGS = [
   { emoji: '🏥', text: 'Doctor said something important', bg: '#fde8e8', color: '#a83232' },
 ];
 
-function DownloadButton({ location }) {
+function DownloadButton({ location = 'hero' }) {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { source: `lp1-${location}` })}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { variant: 'lp1', angle: 'memory-recall', location })}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp1/arrow-right.svg" alt="" />
@@ -92,6 +92,10 @@ function SectionBadge({ label = 'HOW IT WORKS' }) {
 }
 
 export default function LandingPage1() {
+  useEffect(() => {
+    trackPixel('ViewLandingPage', { variant: 'lp1', angle: 'memory-recall' });
+  }, []);
+
   return (
     <div className="lp1">
       {/* Nav */}
@@ -122,7 +126,7 @@ export default function LandingPage1() {
               remembers every detail so your brain doesn't have to.
             </p>
             <div className="lp1-hero-cta">
-              <DownloadButton location="hero" />
+              <DownloadButton />
             </div>
           </div>
 
@@ -247,10 +251,10 @@ export default function LandingPage1() {
             <div className="lp1-feature-card">
               <div className="lp1-feature-icon">🔐</div>
               <div>
-                <h3 className="lp1-feature-title">Secure Vault</h3>
+                <h3 className="lp1-feature-title">Safe Storage</h3>
                 <p className="lp1-feature-text">
-                  Your sensitive info stays encrypted and private. Passwords, policy numbers, medical
-                  records — everything locked down, accessible only to you.
+                  Your info stays encrypted and private. Documents, policy numbers, medical records —
+                  everything safe, accessible only to you.
                 </p>
               </div>
             </div>

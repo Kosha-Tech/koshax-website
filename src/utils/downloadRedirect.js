@@ -10,11 +10,14 @@ export function detectPlatform() {
   return 'other';
 }
 
-export function handleDownloadClick(navigate, { source } = {}) {
+export function trackPixel(event, params = {}) {
+  window?.fbq?.('trackCustom', event, params);
+}
+
+export function handleDownloadClick(navigate, meta = {}) {
   const platform = detectPlatform();
-  const payload = { source, platform };
-  window?.fbq?.('trackCustom', 'ClickDownloadCTA', payload);
-  window?.gtag?.('event', 'click_download_cta', payload);
+  trackPixel('ClickDownloadCTA', { ...meta, platform });
+  window?.gtag?.('event', 'click_download_cta', { ...meta, platform });
   if (platform === 'ios') {
     window.location.href = APP_STORE_URL;
   } else if (platform === 'android') {

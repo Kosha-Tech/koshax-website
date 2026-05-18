@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleDownloadClick } from '../utils/downloadRedirect';
+import { handleDownloadClick, trackPixel } from '../utils/downloadRedirect';
 import './LandingPage1.css';
 import './LandingPage3.css';
 
@@ -56,10 +56,10 @@ const SCHEDULE = [
   { time: '4:30 PM',  label: "Meera's dance class pickup",        bg: '#ede9fe', color: '#7c3aed', border: '#7c3aed' },
 ];
 
-function DownloadButton({ location }) {
+function DownloadButton({ location = 'hero' }) {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { source: `lp3-${location}` })}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { variant: 'lp3', angle: 'life-admin', location })}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp3/arrow-right.svg" alt="" />
@@ -78,6 +78,10 @@ function SectionBadge({ label = 'HOW IT WORKS' }) {
 }
 
 export default function LandingPage3() {
+  useEffect(() => {
+    trackPixel('ViewLandingPage', { variant: 'lp3', angle: 'life-admin' });
+  }, []);
+
   return (
     <div className="lp1 lp3">
       {/* Nav */}
@@ -107,7 +111,7 @@ export default function LandingPage3() {
                 someone has to keep track of it all. Kosha is the admin tool you never knew you needed.
               </p>
               <div className="lp1-hero-cta">
-                <DownloadButton location="hero" />
+                <DownloadButton />
               </div>
             </div>
 
@@ -223,7 +227,7 @@ export default function LandingPage3() {
                     <img src="/lp3/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
                   </div>
                   <div className="lp1-notif-body">
-                    <div className="lp1-notif-title">Electricity bill auto-paid</div>
+                    <div className="lp1-notif-title">Electricity bill paid</div>
                     <div className="lp1-notif-sub">
                       ₹2,340 via autopay — receipt saved to Documents
                     </div>
