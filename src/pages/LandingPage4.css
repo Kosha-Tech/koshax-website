@@ -4,11 +4,10 @@
 .lp4-hero-right {
   flex: 1;
   min-width: 0;
+  position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  padding-top: 20px;
-  margin-top: -80px;
 }
 
 /* ── App panel ───────────────────────────────────────────────────────────── */
@@ -16,15 +15,14 @@
   position: relative;
   width: 480px;
   flex-shrink: 0;
-  background: #c8d9f5;
-  border: 7px solid #fff;
-  border-radius: 32px 32px 20px 20px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 28px;
+  background: #fff;
+  border: 1px solid #eff1f5;
+  border-radius: 14px;
+  box-shadow: 0px 1px 1px rgba(16, 24, 40, 0.05);
+  padding: 17px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* Panel header */
@@ -39,7 +37,7 @@
   font-family: 'Instrument Sans', 'Onest', sans-serif;
   font-weight: 400;
   font-size: 13px;
-  color: #fff;
+  color: #4a5578;
   line-height: 1.3;
 }
 
@@ -47,9 +45,9 @@
   font-family: 'Inter', 'Onest', sans-serif;
   font-weight: 700;
   font-size: 24px;
-  color: #fff;
+  color: #111322;
   letter-spacing: -0.34px;
-  line-height: 1.2;
+  line-height: 38px;
 }
 
 .lp4-avatar {
@@ -71,19 +69,21 @@
 .lp4-panel-body {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* Today's Focus card */
 .lp4-focus-card {
-  background: rgba(255, 255, 255, 0.7);
+  background: #f9f9fb;
   border-radius: 14px;
   padding: 16px;
+  height: 119px;
   display: flex;
   flex-direction: column;
   gap: 4px;
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .lp4-focus-label {
@@ -114,7 +114,7 @@
 
 /* Task rows */
 .lp4-task-row {
-  background: rgba(255, 255, 255, 0.7);
+  background: #f9f9fb;
   border-radius: 14px;
   padding: 12px 16px;
   display: flex;
@@ -165,20 +165,19 @@
   flex-shrink: 0;
 }
 
-/* Floating streak badge */
+/* Floating streak badge — top-right of panel */
 .lp4-streak-badge {
   position: absolute;
-  top: -18px;
-  right: -20px;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 14px;
-  padding: 14px 16px;
+  top: -20px;
+  right: -37px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  gap: 12px;
+  box-shadow: 0px 4px 3px rgba(16, 24, 40, 0.03), 0px 12px 8px rgba(16, 24, 40, 0.08);
+  white-space: nowrap;
 }
 
 .lp4-streak-fire {
@@ -201,20 +200,18 @@
   color: #8a8078;
 }
 
-/* Floating progress badge */
+/* Floating progress badge — bottom-left of panel */
 .lp4-progress-badge {
   position: absolute;
-  bottom: 20px;
-  left: -20px;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 14px;
-  padding: 14px 16px;
+  bottom: 36px;
+  left: -60px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  gap: 12px;
+  box-shadow: 0px 4px 3px rgba(16, 24, 40, 0.03), 0px 12px 8px rgba(16, 24, 40, 0.08);
 }
 
 .lp4-progress-label {
@@ -292,8 +289,7 @@
 
 @media (max-width: 768px) {
   .lp4-panel {
-    border-width: 5px;
-    padding: 20px;
+    padding: 14px;
   }
 
   .lp4-streak-badge {
@@ -322,8 +318,6 @@
 
 @media (max-width: 480px) {
   .lp4-panel {
-    border-width: 4px;
-    border-radius: 24px 24px 16px 16px;
-    padding: 16px;
+    padding: 12px;
   }
 }

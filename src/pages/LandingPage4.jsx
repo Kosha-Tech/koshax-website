@@ -23,6 +23,10 @@ const CHAOS_TAGS = [
   { emoji: '📄', text: 'Tax documents', bg: '#fff9c4', color: '#9e8600' },
   { emoji: '🛵', text: 'Delivery tracking', bg: '#e8f5e8', color: '#2e7d32' },
   { emoji: '🔋', text: 'Device warranties', bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '🎯', text: 'Pending decisions', bg: '#fce4ec', color: '#ad1457' },
+  { emoji: '🏠', text: 'Home repairs list', bg: '#fff3e0', color: '#c77700' },
+  { emoji: '📌', text: 'Things to remember', bg: '#f3e8fd', color: '#7b2eb5' },
+  { emoji: '⏰', text: 'Overdue reminders', bg: '#fde8e8', color: '#a83232' },
 ];
 
 const TASKS = [
@@ -49,11 +53,11 @@ function DownloadButton() {
   );
 }
 
-function SectionBadge() {
+function SectionBadge({ label = 'HOW IT WORKS' }) {
   return (
     <div className="lp1-section-badge">
       <img src="/lp4/section-icon.svg" alt="" />
-      <span>HOW IT WORKS</span>
+      <span>{label}</span>
     </div>
   );
 }
@@ -63,9 +67,12 @@ export default function LandingPage4() {
     <div className="lp1 lp4">
       {/* Nav */}
       <nav className="lp1-nav">
-        <div className="lp1-logo">
-          <img src="/lp4/logo-mark.svg" alt="" className="lp1-logo-mark" />
-          <span className="lp1-logo-name">KOSHA</span>
+        <div className="lp1-nav-inner">
+          <div className="lp1-logo">
+            <img src="/lp4/logo-mark.svg" alt="" className="lp1-logo-mark" />
+            <span className="lp1-logo-name">KOSHA</span>
+          </div>
+          <div className="lp1-nav-links" />
         </div>
       </nav>
 
@@ -76,7 +83,7 @@ export default function LandingPage4() {
 
             {/* Left */}
             <div className="lp1-hero-left">
-              <p className="lp1-eyebrow">Your Second Brain</p>
+              <p className="lp1-eyebrow">Your Life OS</p>
               <h1 className="lp1-hero-title">
                 Focus on what<br />matters.
               </h1>
@@ -162,7 +169,7 @@ export default function LandingPage4() {
 
           <div className="lp1-chaos-wrapper">
             <div className="lp1-chaos-tags">
-              {[...CHAOS_TAGS, ...CHAOS_TAGS].map((tag, i) => (
+              {CHAOS_TAGS.map((tag, i) => (
                 <div key={i} className="lp1-chaos-tag" style={{ background: tag.bg, color: tag.color }}>
                   <span>{tag.emoji}</span>
                   <span>{tag.text}</span>
@@ -174,13 +181,33 @@ export default function LandingPage4() {
                 <img src="/lp4/phone-bg.png" alt="" className="lp1-phone-wallpaper" />
                 <div className="lp1-phone-date">Thu 14 May</div>
                 <div className="lp1-phone-time">09:45</div>
-                <div className="lp1-phone-notif">
-                  <div className="lp1-notif-icon-wrap">
-                    <img src="/lp4/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
+                <div className="lp2-phone-notifs">
+                  <div className="lp1-phone-notif lp2-phone-notif">
+                    <div className="lp1-notif-icon-wrap">
+                      <img src="/lp4/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
+                    </div>
+                    <div className="lp1-notif-body">
+                      <div className="lp1-notif-title">Aarav's vaccination is due Thursday</div>
+                      <div className="lp1-notif-sub">Dr. Mehra, 4:30 PM — slot auto-held from calendar</div>
+                    </div>
                   </div>
-                  <div className="lp1-notif-body">
-                    <div className="lp1-notif-title">Aarav's vaccination is due Thursday</div>
-                    <div className="lp1-notif-sub">Dr. Mehra, 4:30 PM — slot auto-held from calendar</div>
+                  <div className="lp1-phone-notif lp2-phone-notif">
+                    <div className="lp1-notif-icon-wrap">
+                      <img src="/lp4/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
+                    </div>
+                    <div className="lp1-notif-body">
+                      <div className="lp1-notif-title">Tax filing deadline in 5 days</div>
+                      <div className="lp1-notif-sub">Documents ready — just needs your review & sign</div>
+                    </div>
+                  </div>
+                  <div className="lp1-phone-notif lp2-phone-notif">
+                    <div className="lp1-notif-icon-wrap">
+                      <img src="/lp4/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
+                    </div>
+                    <div className="lp1-notif-body">
+                      <div className="lp1-notif-title">Car service overdue by 800km</div>
+                      <div className="lp1-notif-sub">Nearest service centre has a Saturday morning slot</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -193,9 +220,9 @@ export default function LandingPage4() {
       <section className="lp1-features-outer">
         <div className="lp1-features-inner">
           <div className="lp1-section-header">
-            <SectionBadge />
+            <SectionBadge label="FEATURES" />
             <h2 className="lp1-section-title">
-              Less overwhelm. More<br />clarity. Every single day.
+              Less Chaos, More clarity.<br />Every single day.
             </h2>
           </div>
 
@@ -251,16 +278,16 @@ export default function LandingPage4() {
             {[1, 2, 3, 4, 5].map((n) => (
               <img key={n} src="/lp4/star.svg" alt="★" className="lp1-star" />
             ))}
-            <span className="lp1-trusted-label">Trusted by 2,500+ teams</span>
+            <span className="lp1-trusted-label">Trusted by Average Indians</span>
           </div>
           <h2 className="lp1-footer-title">
-            Free your brain.<br />Remember everything.
+            Remove the noise.<br />Focus on the signal.
           </h2>
           <p className="lp1-footer-subtitle">
-            Join the waitlist for a second brain that never forgets.
+            Download the app for a Life OS that will improve signal/noise.
           </p>
           <DownloadButton />
-          <p className="lp1-copyright">© 2026 Kosha. Your second brain.</p>
+          <p className="lp1-copyright">© 2026 Kosha. Your Life OS.</p>
         </div>
       </section>
     </div>
