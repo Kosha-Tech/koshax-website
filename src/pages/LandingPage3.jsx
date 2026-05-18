@@ -5,24 +5,22 @@ import './LandingPage1.css';
 import './LandingPage3.css';
 
 const CHAOS_TAGS = [
-  { emoji: '📧', text: '47 unread emails', bg: '#fde8e8', color: '#a83232' },
-  { emoji: '📅', text: '3 calendar conflicts', bg: '#e8f0fe', color: '#2e5bb5' },
-  { emoji: '💬', text: 'WhatsApp groups (89)', bg: '#e8f5e8', color: '#2e7d32' },
-  { emoji: '📱', text: 'Social notifications', bg: '#f3e8fd', color: '#7b2eb5' },
-  { emoji: '🎒', text: 'School circulars', bg: '#fff9c4', color: '#9e8600' },
-  { emoji: '📰', text: 'News alerts', bg: '#fff3e0', color: '#c77700' },
-  { emoji: '📝', text: 'Scattered to-dos', bg: '#e0f2f1', color: '#00695c' },
-  { emoji: '💊', text: 'Medication reminders', bg: '#fce4ec', color: '#ad1457' },
-  { emoji: '🏦', text: 'Bank notifications', bg: '#fde8e8', color: '#a83232' },
-  { emoji: '🚗', text: 'Car service due', bg: '#e8f0fe', color: '#2e5bb5' },
-  { emoji: '🛒', text: 'Grocery lists', bg: '#e8f5e8', color: '#2e7d32' },
-  { emoji: '🎂', text: 'Birthday reminders', bg: '#f3e8fd', color: '#7b2eb5' },
-  { emoji: '📋', text: 'Insurance renewal', bg: '#fff3e0', color: '#c77700' },
-  { emoji: '📞', text: 'Missed calls', bg: '#e0f2f1', color: '#00695c' },
-  { emoji: '🏥', text: "Aarav's checkup", bg: '#fce4ec', color: '#ad1457' },
-  { emoji: '📄', text: 'Tax documents', bg: '#fff9c4', color: '#9e8600' },
-  { emoji: '🛵', text: 'Delivery tracking', bg: '#e8f5e8', color: '#2e7d32' },
-  { emoji: '🔋', text: 'Device warranties', bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '💡', text: 'Electricity bill due',      bg: '#e8f5e8', color: '#2e7d32' },
+  { emoji: '📝', text: 'Field trip form unsigned',  bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '❄️', text: 'AC service overdue',        bg: '#f3e8fd', color: '#7b2eb5' },
+  { emoji: '🛒', text: 'Grocery run pending',       bg: '#fff9c4', color: '#9e8600' },
+  { emoji: '🦷', text: 'Dentist appointment',       bg: '#fce4ec', color: '#ad1457' },
+  { emoji: '🎁', text: "Mom's birthday gift",       bg: '#fff3e0', color: '#c77700' },
+  { emoji: '📱', text: 'Phone plan renewal',        bg: '#e8f5e8', color: '#2e7d32' },
+  { emoji: '👗', text: 'Uniform alteration',        bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '🔧', text: 'Leaky tap, call plumber',  bg: '#f3e8fd', color: '#7b2eb5' },
+  { emoji: '🚗', text: 'Car insurance renewal',    bg: '#fff9c4', color: '#9e8600' },
+  { emoji: '💊', text: 'Prescription refill',       bg: '#fce4ec', color: '#ad1457' },
+  { emoji: '📦', text: 'Return Amazon order',       bg: '#f5f5f5', color: '#616161' },
+  { emoji: '🏠', text: 'Society maintenance',       bg: '#e8f5e8', color: '#2e7d32' },
+  { emoji: '📚', text: 'Buy notebooks for term',   bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '🐕', text: 'Vet appointment',           bg: '#fff9c4', color: '#9e8600' },
+  { emoji: '📋', text: 'Tax documents',             bg: '#f5f5f5', color: '#616161' },
 ];
 
 const TASKS = [
@@ -70,11 +68,11 @@ function DownloadButton() {
   );
 }
 
-function SectionBadge() {
+function SectionBadge({ label = 'HOW IT WORKS' }) {
   return (
     <div className="lp1-section-badge">
       <img src="/lp3/section-icon.svg" alt="" />
-      <span>HOW IT WORKS</span>
+      <span>{label}</span>
     </div>
   );
 }
@@ -84,9 +82,12 @@ export default function LandingPage3() {
     <div className="lp1 lp3">
       {/* Nav */}
       <nav className="lp1-nav">
-        <div className="lp1-logo">
-          <img src="/lp3/logo-mark.svg" alt="" className="lp1-logo-mark" />
-          <span className="lp1-logo-name">KOSHA</span>
+        <div className="lp1-nav-inner">
+          <div className="lp1-logo">
+            <img src="/lp3/logo-mark.svg" alt="" className="lp1-logo-mark" />
+            <span className="lp1-logo-name">KOSHA</span>
+          </div>
+          <div className="lp1-nav-links" />
         </div>
       </nav>
 
@@ -95,10 +96,11 @@ export default function LandingPage3() {
         <div className="lp1-hero-card">
           <div className="lp1-hero-card-content">
 
-            {/* Left — no eyebrow on LP3 */}
+            {/* Left */}
             <div className="lp1-hero-left">
-              <h1 className="lp1-hero-title lp3-hero-title">
-                Running a life is a job. Finally, there's an app for it.
+              <p className="lp1-eyebrow">Your Life OS</p>
+              <h1 className="lp1-hero-title">
+                Running a life is a job. It's time to take control.
               </h1>
               <p className="lp1-hero-subtitle">
                 Bills, school forms, grocery runs, vet appointments, car servicing, birthday gifts,
@@ -111,16 +113,6 @@ export default function LandingPage3() {
 
             {/* Right — task manager panel */}
             <div className="lp3-hero-right">
-              {/* Floating top-left: task completed notification */}
-              <div className="lp3-notif-badge lp3-notif-top">
-                <span className="lp3-notif-dot" style={{ background: '#b45309' }} />
-                <div>
-                  <div className="lp3-notif-title">Rahul completed a task</div>
-                  <div className="lp3-notif-sub">Electricity bill — paid ✓</div>
-                </div>
-              </div>
-
-              {/* Main panel */}
               <div className="lp3-panel">
                 {/* Panel header */}
                 <div className="lp3-panel-header">
@@ -190,11 +182,6 @@ export default function LandingPage3() {
                 </div>
               </div>
 
-              {/* Floating bottom-right: completion % */}
-              <div className="lp3-stat-badge">
-                <div className="lp3-stat-pct">89%</div>
-                <div className="lp3-stat-label">Tasks completed this week</div>
-              </div>
             </div>
 
           </div>
@@ -207,7 +194,7 @@ export default function LandingPage3() {
           <div className="lp1-section-header">
             <SectionBadge />
             <h2 className="lp1-section-title">
-              From life chaos to a system that runs itself.
+              From life chaos to a system that runs with clarity.
             </h2>
           </div>
 
@@ -236,9 +223,9 @@ export default function LandingPage3() {
                     <img src="/lp3/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
                   </div>
                   <div className="lp1-notif-body">
-                    <div className="lp1-notif-title">Aarav's vaccination is due Thursday</div>
+                    <div className="lp1-notif-title">Electricity bill auto-paid</div>
                     <div className="lp1-notif-sub">
-                      Dr. Mehra, 4:30 PM — slot auto-held from calendar
+                      ₹2,340 via autopay — receipt saved to Documents
                     </div>
                   </div>
                 </div>
@@ -252,9 +239,9 @@ export default function LandingPage3() {
       <section className="lp1-features-outer">
         <div className="lp1-features-inner">
           <div className="lp1-section-header">
-            <SectionBadge />
+            <SectionBadge label="FEATURES" />
             <h2 className="lp1-section-title">
-              Everything a life admin does
+              Everything a life admin does,
               <br />
               now in one app.
             </h2>
@@ -302,13 +289,13 @@ export default function LandingPage3() {
             {[1, 2, 3, 4, 5].map((n) => (
               <img key={n} src="/lp3/star.svg" alt="★" className="lp1-star" />
             ))}
-            <span className="lp1-trusted-label">Trusted by 2,500+ teams</span>
+            <span className="lp1-trusted-label">Trusted by Average Indians</span>
           </div>
           <h2 className="lp1-footer-title">
             You deserve an admin that never drops the ball
           </h2>
           <p className="lp1-footer-subtitle">
-            Join the waitlist. Stop running your life from sticky notes and WhatsApp groups.
+            Download the app. Stop running your life from sticky notes and WhatsApp groups.
           </p>
           <DownloadButton />
           <p className="lp1-copyright">© 2026 Kosha. The operating system for modern life.</p>

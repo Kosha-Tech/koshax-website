@@ -1,5 +1,11 @@
 /* ─── LP2 — Family Wellness hero ───────────────────────────────────────── */
 
+/* Narrower footer title for LP2 */
+.lp2 .lp1-footer-title {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
 /* Scale features section title so both sentences sit on exactly 2 lines */
 .lp2 .lp1-section-title {
   font-size: clamp(28px, 3.2vw, 46px);
