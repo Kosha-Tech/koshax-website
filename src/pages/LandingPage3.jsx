@@ -223,7 +223,7 @@ export default function LandingPage3() {
                     <img src="/lp3/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
                   </div>
                   <div className="lp1-notif-body">
-                    <div className="lp1-notif-title">Electricity bill auto-paid</div>
+                    <div className="lp1-notif-title">Electricity bill paid</div>
                     <div className="lp1-notif-sub">
                       ₹2,340 via autopay — receipt saved to Documents
                     </div>

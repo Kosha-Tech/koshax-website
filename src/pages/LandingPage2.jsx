@@ -29,35 +29,35 @@ const FAMILY = [
   {
     emoji: '👩', name: 'Priya', role: 'You',
     bars: [
-      { label: 'Sleep', fill: 82, color: '#4ade80' },
+      { label: 'Bp',    fill: 82, color: '#4ade80' },
       { label: 'Steps', fill: 65, color: '#60a5fa' },
     ],
   },
   {
     emoji: '👨', name: 'Rahul', role: 'Partner',
     bars: [
-      { label: 'Sleep', fill: 55, color: '#fcd34d' },
-      { label: 'Steps', fill: 90, color: '#4ade80' },
+      { label: 'Diabetes', fill: 55, color: '#fcd34d' },
+      { label: 'Steps',    fill: 90, color: '#4ade80' },
     ],
   },
   {
     emoji: '👦', name: 'Aarav', role: 'Son, 8yr',
     bars: [
-      { label: 'Sleep', fill: 88, color: '#4ade80' },
-      { label: 'Water', fill: 45, color: '#fcd34d' },
+      { label: 'Vacc.',  fill: 75, color: '#4ade80' },
+      { label: 'Screen', fill: 60, color: '#fcd34d' },
     ],
   },
   {
     emoji: '👧', name: 'Meera', role: 'Daughter, 5yr',
     bars: [
-      { label: 'Sleep', fill: 92, color: '#4ade80' },
-      { label: 'Water', fill: 70, color: '#4ade80' },
+      { label: 'Vacc.',    fill: 90, color: '#4ade80' },
+      { label: 'Activity', fill: 80, color: '#60a5fa' },
     ],
   },
 ];
 
 const EVENTS = [
-  { dot: '#4ade80', label: 'Meera — MMR Booster', date: 'May 18' },
+  { dot: '#4ade80', label: 'Meera — Annual Checkup', date: 'May 18' },
   { dot: '#fcd34d', label: 'Rahul — Dental Checkup', date: 'May 24' },
   { dot: '#60a5fa', label: 'Aarav — Eye Test', date: 'Jun 2' },
 ];
@@ -225,9 +225,9 @@ export default function LandingPage2() {
                       <img src="/lp2/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
                     </div>
                     <div className="lp1-notif-body">
-                      <div className="lp1-notif-title">Meera's MMR booster is due May 18</div>
+                      <div className="lp1-notif-title">Meera's annual checkup is due</div>
                       <div className="lp1-notif-sub">
-                        Dr. Kapoor, 10:30 AM — slot auto-held from calendar
+                        Dr. Kapoor, 10:30 AM
                       </div>
                     </div>
                   </div>
@@ -238,7 +238,7 @@ export default function LandingPage2() {
                     <div className="lp1-notif-body">
                       <div className="lp1-notif-title">Aarav's vaccination is due Thursday</div>
                       <div className="lp1-notif-sub">
-                        Dr. Sharma, 4:30 PM — slot auto-held from calendar
+                        Dr. Sharma, 4:30 PM
                       </div>
                     </div>
                   </div>
@@ -287,8 +287,8 @@ export default function LandingPage2() {
               <div>
                 <h3 className="lp1-feature-title">Wellness Trends</h3>
                 <p className="lp1-feature-text">
-                  Track sleep, hydration, screen time, and activity across your family. Spot patterns
-                  before they become problems.
+                  Track BP, glucose, hydration, and lab report trends across every family member.
+                  Spot patterns before they become problems.
                 </p>
               </div>
             </div>

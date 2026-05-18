@@ -247,10 +247,10 @@ export default function LandingPage1() {
             <div className="lp1-feature-card">
               <div className="lp1-feature-icon">🔐</div>
               <div>
-                <h3 className="lp1-feature-title">Secure Vault</h3>
+                <h3 className="lp1-feature-title">Safe Storage</h3>
                 <p className="lp1-feature-text">
-                  Your sensitive info stays encrypted and private. Passwords, policy numbers, medical
-                  records — everything locked down, accessible only to you.
+                  Your info stays encrypted and private. Documents, policy numbers, medical records —
+                  everything safe, accessible only to you.
                 </p>
               </div>
             </div>
