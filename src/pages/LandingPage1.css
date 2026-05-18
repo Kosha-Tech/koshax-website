@@ -18,25 +18,48 @@
   padding: 40px 100px;
 }
 
+.lp1-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
 .lp1-logo {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .lp1-logo-mark {
-  width: 18px;
-  height: 18px;
+  width: 17.863px;
+  height: 17.613px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .lp1-logo-name {
   font-family: 'Inter', 'Onest', sans-serif;
   font-weight: 700;
+  font-style: normal;
   font-size: 16.3px;
   color: #2d3282;
   letter-spacing: -0.34px;
-  line-height: 1;
+  line-height: 17px;
+  white-space: nowrap;
+}
+
+.lp1-nav-links {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 /* ─── Download button ───────────────────────────────────────────────────── */
@@ -151,9 +174,10 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 19px;
+  gap: 19.248px;
   padding-bottom: 24px;
   min-width: 0;
+  overflow: hidden;
 }
 
 .lp1-eyebrow {
@@ -170,7 +194,7 @@
   font-family: 'Onest', sans-serif;
   font-weight: 500;
   font-size: clamp(40px, 4.3vw, 62.5px);
-  line-height: 0.98;
+  line-height: 61.447px;
   color: #2d3282;
   letter-spacing: -3.07px;
   margin: 0;
@@ -321,6 +345,8 @@
   height: 580px;
   overflow: hidden;
   z-index: 1;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
 }
 
 .lp1-chaos-tags {
@@ -550,6 +576,10 @@
   color: #4a5578;
   line-height: 1.4;
   margin: 0;
+}
+
+.lp1-feature-quote {
+  margin-bottom: 8px;
 }
 
 /* ─── Footer CTA ────────────────────────────────────────────────────────── */

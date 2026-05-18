@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { handleDownloadClick } from '../utils/downloadRedirect';
 import './LandingPage1.css';
 import './LandingPage4.css';
 
@@ -39,7 +40,7 @@ const STATS = [
 function DownloadButton() {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => navigate('/download')}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate)}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp4/arrow-right.svg" alt="" />

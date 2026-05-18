@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { handleDownloadClick } from '../utils/downloadRedirect';
 import './LandingPage1.css';
 
 const MEMORY_CARDS = [
@@ -38,38 +39,41 @@ const MEMORY_CARDS = [
   {
     emoji: '🏫',
     bg: 'rgba(52,211,153,0.12)',
-    title: "Meera's Class Teacher",
-    subtitle: 'Ms. Anita Kapoor · Section 2B · Parent-teacher: May 20',
+    title: "Meera's Quarterly PTM",
+    subtitle: 'Ms. Anita Kapoor · Section 2B · Thu, May 22 · 10:00 AM',
     detail: null,
-    time: 'Updated today',
+    time: 'In 4 days',
   },
 ];
 
 const CHAOS_TAGS = [
-  { emoji: '📧', text: '47 unread emails', bg: '#fde8e8', color: '#a83232' },
-  { emoji: '📅', text: '3 calendar conflicts', bg: '#e8f0fe', color: '#2e5bb5' },
-  { emoji: '💬', text: 'WhatsApp groups (89)', bg: '#e8f5e8', color: '#2e7d32' },
-  { emoji: '📱', text: 'Social notifications', bg: '#f3e8fd', color: '#7b2eb5' },
-  { emoji: '🎒', text: 'School circulars', bg: '#fff9c4', color: '#9e8600' },
-  { emoji: '📰', text: 'News alerts', bg: '#fff3e0', color: '#c77700' },
-  { emoji: '📝', text: 'Scattered to-dos', bg: '#e0f2f1', color: '#00695c' },
-  { emoji: '💊', text: 'Medication reminders', bg: '#fce4ec', color: '#ad1457' },
-  { emoji: '🏦', text: 'Bank notifications', bg: '#fde8e8', color: '#a83232' },
-  { emoji: '🚗', text: 'Car service due', bg: '#e8f0fe', color: '#2e5bb5' },
-  { emoji: '🛒', text: 'Grocery lists', bg: '#e8f5e8', color: '#2e7d32' },
-  { emoji: '🎂', text: 'Birthday reminders', bg: '#f3e8fd', color: '#7b2eb5' },
-  { emoji: '📋', text: 'Insurance renewal', bg: '#fff3e0', color: '#c77700' },
-  { emoji: '📞', text: 'Missed calls', bg: '#e0f2f1', color: '#00695c' },
-  { emoji: '🏥', text: "Aarav's checkup", bg: '#fce4ec', color: '#ad1457' },
-  { emoji: '📄', text: 'Tax documents', bg: '#fff9c4', color: '#9e8600' },
-  { emoji: '🛵', text: 'Delivery tracking', bg: '#e8f5e8', color: '#2e7d32' },
-  { emoji: '🔋', text: 'Device warranties', bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '🧠', text: '"What was that password?"', bg: '#fde8e8', color: '#a83232' },
+  { emoji: '📱', text: 'Screenshots in camera roll', bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '📄', text: 'Insurance docs in a drawer', bg: '#fff9c4', color: '#9e8600' },
+  { emoji: '💬', text: 'Address shared on WhatsApp', bg: '#e8f5e8', color: '#2e7d32' },
+  { emoji: '📋', text: 'Booking confirmations in email', bg: '#f3e8fd', color: '#7b2eb5' },
+  { emoji: '🤔', text: '"Which clinic was it?"', bg: '#fde8e8', color: '#a83232' },
+  { emoji: '📝', text: 'Notes app, page 47', bg: '#e8f5e8', color: '#2e7d32' },
+  { emoji: '📒', text: 'Warranty cards somewhere', bg: '#fff3e0', color: '#c77700' },
+  { emoji: '📞', text: "Plumber's number in old chat", bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '🍕', text: '"That place we ate in Goa"', bg: '#fce4ec', color: '#ad1457' },
+  { emoji: '🏦', text: 'Account details in PDF', bg: '#fff9c4', color: '#9e8600' },
+  { emoji: '🔑', text: 'Locker combo on a sticky note', bg: '#e8f5e8', color: '#2e7d32' },
+  { emoji: '😰', text: '"When does it expire?"', bg: '#fde8e8', color: '#a83232' },
+  { emoji: '💳', text: 'Card PIN written down', bg: '#fff3e0', color: '#c77700' },
+  { emoji: '📸', text: 'Photo of a prescription', bg: '#e0f2f1', color: '#00695c' },
+  { emoji: '🏠', text: "Landlord's number buried", bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '💊', text: 'Medicine name on old slip', bg: '#fce4ec', color: '#ad1457' },
+  { emoji: '🎒', text: "Kid's school ID number", bg: '#fff9c4', color: '#9e8600' },
+  { emoji: '🚗', text: 'Car pollution due date', bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '📅', text: '"Was it the 3rd or the 13th?"', bg: '#f3e8fd', color: '#7b2eb5' },
+  { emoji: '🏥', text: 'Doctor said something important', bg: '#fde8e8', color: '#a83232' },
 ];
 
 function DownloadButton() {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => navigate('/download')}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate)}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp1/arrow-right.svg" alt="" />
@@ -78,11 +82,11 @@ function DownloadButton() {
   );
 }
 
-function SectionBadge() {
+function SectionBadge({ label = 'HOW IT WORKS' }) {
   return (
     <div className="lp1-section-badge">
       <img src="/lp1/section-icon.svg" alt="" />
-      <span>HOW IT WORKS</span>
+      <span>{label}</span>
     </div>
   );
 }
@@ -92,9 +96,12 @@ export default function LandingPage1() {
     <div className="lp1">
       {/* Nav */}
       <nav className="lp1-nav">
-        <div className="lp1-logo">
-          <img src="/lp1/logo-mark.svg" alt="" className="lp1-logo-mark" />
-          <span className="lp1-logo-name">KOSHA</span>
+        <div className="lp1-nav-inner">
+          <div className="lp1-logo">
+            <img src="/lp1/logo-mark.svg" alt="" className="lp1-logo-mark" />
+            <span className="lp1-logo-name">KOSHA</span>
+          </div>
+          <div className="lp1-nav-links" />
         </div>
       </nav>
 
@@ -111,8 +118,8 @@ export default function LandingPage1() {
               Ever again.
             </h1>
             <p className="lp1-hero-subtitle">
-              Passwords, policy numbers, that restaurant you loved on vacation, your kid's locker
-              combo, Grandma's address, Kosha remembers every detail so your brain doesn't have to.
+              From health reports to policy numbers, your favourite restaurant to kid's PTM, Kosha
+              remembers every detail so your brain doesn't have to.
             </p>
             <div className="lp1-hero-cta">
               <DownloadButton />
@@ -170,12 +177,8 @@ export default function LandingPage1() {
           <div className="lp1-chaos-wrapper">
             {/* Tag cloud */}
             <div className="lp1-chaos-tags">
-              {[...CHAOS_TAGS, ...CHAOS_TAGS].map((tag, i) => (
-                <div
-                  key={i}
-                  className="lp1-chaos-tag"
-                  style={{ background: tag.bg, color: tag.color }}
-                >
+              {CHAOS_TAGS.map((tag, i) => (
+                <div key={i} className="lp1-chaos-tag" style={{ background: tag.bg, color: tag.color }}>
                   <span>{tag.emoji}</span>
                   <span>{tag.text}</span>
                 </div>
@@ -195,7 +198,7 @@ export default function LandingPage1() {
                   <div className="lp1-notif-body">
                     <div className="lp1-notif-title">Aarav's vaccination is due Thursday</div>
                     <div className="lp1-notif-sub">
-                      Dr. Mehra, 4:30 PM — slot auto-held from calendar
+                      Dr. Sharma, 4:30 PM — slot auto-held from calendar
                     </div>
                   </div>
                 </div>
@@ -209,11 +212,11 @@ export default function LandingPage1() {
       <section className="lp1-features-outer">
         <div className="lp1-features-inner">
           <div className="lp1-section-header">
-            <SectionBadge />
+            <SectionBadge label="FEATURES" />
             <h2 className="lp1-section-title">
               Every detail, instantly
               <br />
-              findable. Always.
+              available. Always.
             </h2>
           </div>
 
@@ -223,9 +226,9 @@ export default function LandingPage1() {
               <div>
                 <h3 className="lp1-feature-title">Instant Capture</h3>
                 <p className="lp1-feature-text">
-                  Snap a photo, type a note, or forward an email. Kosha auto-files and tags
-                  everything — medical details, travel plans, account info — so it's findable in
-                  seconds.
+                  Capture a photo, jot down a note, or connect your email. Kosha automatically
+                  organizes and tags it all — medical records, travel itineraries, account details —
+                  so you can find anything in seconds.
                 </p>
               </div>
             </div>
@@ -233,9 +236,11 @@ export default function LandingPage1() {
               <div className="lp1-feature-icon">🔍</div>
               <div>
                 <h3 className="lp1-feature-title">Ask, Don't Search</h3>
+                <p className="lp1-feature-text lp1-feature-quote">
+                  <em>"What's my insurance number?" "When does the warranty expire?"</em>
+                </p>
                 <p className="lp1-feature-text">
-                  "What's my insurance number?" "When does the warranty expire?" Just ask in plain
-                  language and get the answer instantly — no digging through folders.
+                  Just ask in plain language and get the answer instantly — no digging through folders or apps.
                 </p>
               </div>
             </div>
@@ -244,7 +249,7 @@ export default function LandingPage1() {
               <div>
                 <h3 className="lp1-feature-title">Secure Vault</h3>
                 <p className="lp1-feature-text">
-                  Sensitive info stays encrypted and private. Passwords, policy numbers, medical
+                  Your sensitive info stays encrypted and private. Passwords, policy numbers, medical
                   records — everything locked down, accessible only to you.
                 </p>
               </div>
@@ -260,7 +265,7 @@ export default function LandingPage1() {
             {[1, 2, 3, 4, 5].map((n) => (
               <img key={n} src="/lp1/star.svg" alt="★" className="lp1-star" />
             ))}
-            <span className="lp1-trusted-label">Trusted by 2,500+ teams</span>
+            <span className="lp1-trusted-label">Trusted by Average Indian</span>
           </div>
           <h2 className="lp1-footer-title">
             Free your brain.
@@ -268,7 +273,7 @@ export default function LandingPage1() {
             Remember everything.
           </h2>
           <p className="lp1-footer-subtitle">
-            Join the waitlist for a second brain that never forgets.
+            Download the app for a second brain that never forgets.
           </p>
           <DownloadButton />
           <p className="lp1-copyright">© 2026 Kosha. Your second brain.</p>
