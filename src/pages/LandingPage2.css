@@ -1,95 +1,100 @@
-/* ─── LP2 overrides & new components ───────────────────────────────────── */
+/* ─── LP2 — Family Wellness hero ───────────────────────────────────────── */
 
-/* ─── Hero right – dashboard panel ─────────────────────────────────────── */
+/* Scale features section title so both sentences sit on exactly 2 lines */
+.lp2 .lp1-section-title {
+  font-size: clamp(28px, 3.2vw, 46px);
+  letter-spacing: -1.8px;
+}
+
+/* ── Email waitlist CTA ─────────────────────────────────────────────────── */
+.lp2-cta-form {
+  display: flex;
+  align-items: center;
+  width: 400px;
+  background: #fff;
+  border: 1px solid #b9c0d4;
+  border-radius: 52px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.lp2-email-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Onest', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  color: #4a5578;
+  padding: 2px 2px 2px 20px;
+  line-height: 21px;
+}
+
+.lp2-email-input::placeholder {
+  color: #4a5578;
+}
+
+.lp2-waitlist-btn {
+  flex-shrink: 0;
+  border: none;
+  cursor: pointer;
+  font-family: 'Onest', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 40px;
+  background: linear-gradient(163.45deg, #3b82f6 0%, #a78bfa 100%);
+  white-space: nowrap;
+  line-height: 28px;
+  transition: opacity 0.2s;
+}
+
+.lp2-waitlist-btn:hover {
+  opacity: 0.9;
+}
+
+/* ── Hero right column ───────────────────────────────────────────────────── */
 .lp2-hero-right {
   flex: 1;
   min-width: 0;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  min-height: 500px;
   margin-top: -80px;
 }
 
-/* Floating reminder bubble */
-.lp2-reminder-bubble {
-  position: absolute;
-  top: 150px;
-  left: 28px;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 14px;
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  z-index: 10;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-}
-
-.lp2-reminder-icon {
-  width: 32px;
-  height: 32px;
-  background: #fff;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-
-.lp2-reminder-title {
-  font-family: 'Instrument Sans', 'Onest', sans-serif;
-  font-weight: 600;
-  font-size: 15px;
-  color: #111322;
-  line-height: 1.2;
-}
-
-.lp2-reminder-sub {
-  font-family: 'Onest', sans-serif;
-  font-weight: 400;
-  font-size: 13px;
-  color: #222;
-  line-height: 1.3;
-  white-space: nowrap;
-}
-
-/* ─── Dashboard panel ───────────────────────────────────────────────────── */
+/* ── Family Wellness card ────────────────────────────────────────────────── */
 .lp2-dashboard {
-  position: relative;
-  z-index: 5;
-  width: 460px;
-  flex-shrink: 0;
-  background: #c8d9f5;
-  border: 7px solid #fff;
-  border-radius: 32px 32px 20px 20px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 28px;
+  width: 100%;
+  max-width: 508px;
+  background: #fff;
+  border: 1px solid #eff1f5;
+  border-radius: 14px;
+  padding: 17px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  box-shadow: 0px 32px 32px rgba(16, 24, 40, 0.14);
+  flex-shrink: 0;
 }
 
-/* Panel header */
+/* Dashboard header */
 .lp2-dash-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 4px;
 }
 
 .lp2-dash-title {
   font-family: 'Inter', 'Onest', sans-serif;
   font-weight: 700;
-  font-size: 13px;
-  color: #fff;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
+  font-size: 24px;
+  color: #111322;
+  letter-spacing: -0.34px;
+  line-height: 38px;
 }
 
 .lp2-dash-tabs {
@@ -102,37 +107,38 @@
   font-family: 'Onest', sans-serif;
   font-weight: 500;
   font-size: 12px;
-  padding: 5px 13px;
+  padding: 6px 14px;
   border-radius: 100px;
   white-space: nowrap;
+  line-height: normal;
 }
 
 .lp2-tab-active {
-  background: rgba(255, 255, 255, 0.42);
-  color: #222;
+  background: #444ce7;
+  color: #fff;
 }
 
 .lp2-tab-muted {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #7fa694;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #4a5578;
 }
 
 /* 2×2 family grid */
 .lp2-family-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 14px;
 }
 
 .lp2-family-card {
-  background: rgba(255, 255, 255, 0.72);
+  background: #f9f9fb;
   border-radius: 14px;
-  padding: 14px;
+  padding: 16px;
+  height: 114px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  gap: 12px;
+  box-sizing: border-box;
 }
 
 .lp2-family-card-header {
@@ -142,7 +148,7 @@
 }
 
 .lp2-family-emoji {
-  font-size: 26px;
+  font-size: 28px;
   line-height: 1;
   flex-shrink: 0;
 }
@@ -157,7 +163,7 @@
 .lp2-family-name {
   font-family: 'Instrument Sans', 'Onest', sans-serif;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 16px;
   color: #111322;
   white-space: nowrap;
 }
@@ -165,7 +171,7 @@
 .lp2-family-role {
   font-family: 'Onest', sans-serif;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 13px;
   color: #222;
   white-space: nowrap;
 }
@@ -173,7 +179,7 @@
 .lp2-family-bars {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
 }
 
 .lp2-bar-row {
@@ -185,16 +191,16 @@
 .lp2-bar-label {
   font-family: 'Onest', sans-serif;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 13px;
   color: #222;
-  width: 40px;
+  width: 48px;
   flex-shrink: 0;
 }
 
 .lp2-bar-track {
   flex: 1;
   height: 4px;
-  background: rgba(255, 255, 255, 0.06);
+  background: #e8eaed;
   border-radius: 100px;
   overflow: hidden;
 }
@@ -206,34 +212,31 @@
 
 /* Upcoming events */
 .lp2-events-card {
-  background: rgba(255, 255, 255, 0.72);
+  background: #f9f9fb;
   border-radius: 14px;
-  padding: 14px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  gap: 12px;
 }
 
 .lp2-events-title {
   font-family: 'Instrument Sans', 'Onest', sans-serif;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 16px;
   color: #111322;
 }
 
 .lp2-events-list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
 .lp2-event-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 0;
+  gap: 12px;
+  padding: 10px 0;
 }
 
 .lp2-event-divider {
@@ -263,34 +266,66 @@
   white-space: nowrap;
 }
 
+/* Stacked notifications in phone */
+.lp2-phone-notifs {
+  position: absolute;
+  top: calc(50% - 8px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 258px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 3;
+}
+
+.lp2-phone-notif {
+  position: static !important;
+  top: unset !important;
+  left: unset !important;
+  transform: none !important;
+  width: 100% !important;
+}
+
+/* Urgent tag inside phone notification */
+.lp2-notif-tag {
+  display: inline-block;
+  margin-top: 5px;
+  background: #dc2626;
+  color: #fff;
+  font-family: 'Onest', sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+
 /* ─── Responsive ────────────────────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .lp2-hero-right {
     width: 100%;
-    min-height: 420px;
+    justify-content: center;
+    margin-top: 0;
   }
 
   .lp2-dashboard {
+    max-width: 100%;
+  }
+
+  .lp2-cta-form {
     width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
+    max-width: 400px;
   }
 }
 
 @media (max-width: 768px) {
-  .lp2-dashboard {
-    padding: 20px;
-    border-width: 5px;
+  .lp2-cta-form {
+    max-width: 100%;
   }
 
-  .lp2-reminder-bubble {
-    top: 16px;
-    left: 16px;
-    padding: 10px 12px;
-  }
-
-  .lp2-reminder-sub {
-    white-space: normal;
+  .lp2-waitlist-btn {
+    font-size: 15px;
+    padding: 10px 16px;
   }
 }
 
@@ -300,8 +335,6 @@
   }
 
   .lp2-dashboard {
-    width: 100%;
-    padding: 16px;
-    border-width: 4px;
+    padding: 14px;
   }
 }

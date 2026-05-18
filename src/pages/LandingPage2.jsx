@@ -1,28 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { handleDownloadClick } from '../utils/downloadRedirect';
 import './LandingPage1.css';
 import './LandingPage2.css';
 
 const CHAOS_TAGS = [
-  { emoji: '📧', text: '47 unread emails', bg: '#fde8e8', color: '#a83232' },
-  { emoji: '📅', text: '3 calendar conflicts', bg: '#e8f0fe', color: '#2e5bb5' },
-  { emoji: '💬', text: 'WhatsApp groups (89)', bg: '#e8f5e8', color: '#2e7d32' },
-  { emoji: '📱', text: 'Social notifications', bg: '#f3e8fd', color: '#7b2eb5' },
-  { emoji: '🎒', text: 'School circulars', bg: '#fff9c4', color: '#9e8600' },
-  { emoji: '📰', text: 'News alerts', bg: '#fff3e0', color: '#c77700' },
-  { emoji: '📝', text: 'Scattered to-dos', bg: '#e0f2f1', color: '#00695c' },
-  { emoji: '💊', text: 'Medication reminders', bg: '#fce4ec', color: '#ad1457' },
-  { emoji: '🏦', text: 'Bank notifications', bg: '#fde8e8', color: '#a83232' },
-  { emoji: '🚗', text: 'Car service due', bg: '#e8f0fe', color: '#2e5bb5' },
-  { emoji: '🛒', text: 'Grocery lists', bg: '#e8f5e8', color: '#2e7d32' },
-  { emoji: '🎂', text: 'Birthday reminders', bg: '#f3e8fd', color: '#7b2eb5' },
-  { emoji: '📋', text: 'Insurance renewal', bg: '#fff3e0', color: '#c77700' },
-  { emoji: '📞', text: 'Missed calls', bg: '#e0f2f1', color: '#00695c' },
-  { emoji: '🏥', text: "Aarav's checkup", bg: '#fce4ec', color: '#ad1457' },
-  { emoji: '📄', text: 'Tax documents', bg: '#fff9c4', color: '#9e8600' },
-  { emoji: '🛵', text: 'Delivery tracking', bg: '#e8f5e8', color: '#2e7d32' },
-  { emoji: '🔋', text: 'Device warranties', bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '📋', text: 'Vaccination cards', bg: '#fff9c4', color: '#9e8600' },
+  { emoji: '💊', text: 'Medication schedules', bg: '#fce4ec', color: '#ad1457' },
+  { emoji: '📱', text: '4 different health apps', bg: '#e8f5e8', color: '#2e7d32' },
+  { emoji: '🧠', text: '"I think his allergy was..."', bg: '#f3e8fd', color: '#7b2eb5' },
+  { emoji: '🩸', text: 'Lab reports in email', bg: '#fde8e8', color: '#a83232' },
+  { emoji: '🦷', text: 'Dental records somewhere', bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '👁️', text: 'Eye test prescription', bg: '#e8f5e8', color: '#2e7d32' },
+  { emoji: '🤔', text: '"When was the last checkup?"', bg: '#f3e8fd', color: '#7b2eb5' },
+  { emoji: '📞', text: 'Clinic phone numbers', bg: '#e0f2f1', color: '#00695c' },
+  { emoji: '🧪', text: 'Allergy test results', bg: '#e8f5e8', color: '#2e7d32' },
+  { emoji: '💉', text: 'Booster due dates', bg: '#fde8e8', color: '#a83232' },
+  { emoji: '📄', text: 'Insurance claim papers', bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '😰', text: '"Did we give the dose?"', bg: '#f3e8fd', color: '#7b2eb5' },
+  { emoji: '🏥', text: 'Doctor visit notes', bg: '#e8f0fe', color: '#2e5bb5' },
+  { emoji: '💬', text: 'WhatsApp prescription pics', bg: '#e0f2f1', color: '#00695c' },
+  { emoji: '🗂️', text: 'School medical forms', bg: '#fff3e0', color: '#c77700' },
+  { emoji: '📈', text: "Child's growth charts", bg: '#e8f5e8', color: '#2e7d32' },
+  { emoji: '🩺', text: "Pediatrician's advice", bg: '#fce4ec', color: '#ad1457' },
 ];
 
 const FAMILY = [
@@ -62,6 +62,31 @@ const EVENTS = [
   { dot: '#60a5fa', label: 'Aarav — Eye Test', date: 'Jun 2' },
 ];
 
+function WaitlistForm() {
+  const [email, setEmail] = useState('');
+  return (
+    <div className="lp2-cta-form">
+      <input
+        className="lp2-email-input"
+        type="email"
+        placeholder="Email Address"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <button className="lp2-waitlist-btn">Join the Waitlist</button>
+    </div>
+  );
+}
+
+function SectionBadge({ label = 'HOW IT WORKS' }) {
+  return (
+    <div className="lp1-section-badge">
+      <img src="/lp2/section-icon.svg" alt="" />
+      <span>{label}</span>
+    </div>
+  );
+}
+
 function DownloadButton() {
   const navigate = useNavigate();
   return (
@@ -74,23 +99,17 @@ function DownloadButton() {
   );
 }
 
-function SectionBadge() {
-  return (
-    <div className="lp1-section-badge">
-      <img src="/lp2/section-icon.svg" alt="" />
-      <span>HOW IT WORKS</span>
-    </div>
-  );
-}
-
 export default function LandingPage2() {
   return (
     <div className="lp1 lp2">
       {/* Nav */}
       <nav className="lp1-nav">
-        <div className="lp1-logo">
-          <img src="/lp2/logo-mark.svg" alt="" className="lp1-logo-mark" />
-          <span className="lp1-logo-name">KOSHA</span>
+        <div className="lp1-nav-inner">
+          <div className="lp1-logo">
+            <img src="/lp2/logo-mark.svg" alt="" className="lp1-logo-mark" />
+            <span className="lp1-logo-name">KOSHA</span>
+          </div>
+          <div className="lp1-nav-links" />
         </div>
       </nav>
 
@@ -115,20 +134,11 @@ export default function LandingPage2() {
               </div>
             </div>
 
-            {/* Right – family wellness dashboard */}
+            {/* Right – Family Wellness card */}
             <div className="lp2-hero-right">
-              {/* Floating reminder pill */}
-              <div className="lp2-reminder-bubble">
-                <div className="lp2-reminder-icon">💊</div>
-                <div className="lp2-reminder-text">
-                  <div className="lp2-reminder-title">Reminder</div>
-                  <div className="lp2-reminder-sub">Aarav's allergy meds at 8 PM</div>
-                </div>
-              </div>
-
-              {/* Dashboard panel */}
               <div className="lp2-dashboard">
-                {/* Panel header */}
+
+                {/* Header */}
                 <div className="lp2-dash-header">
                   <span className="lp2-dash-title">Family Wellness</span>
                   <div className="lp2-dash-tabs">
@@ -154,10 +164,7 @@ export default function LandingPage2() {
                           <div key={b.label} className="lp2-bar-row">
                             <span className="lp2-bar-label">{b.label}</span>
                             <div className="lp2-bar-track">
-                              <div
-                                className="lp2-bar-fill"
-                                style={{ width: `${b.fill}%`, background: b.color }}
-                              />
+                              <div className="lp2-bar-fill" style={{ width: `${b.fill}%`, background: b.color }} />
                             </div>
                           </div>
                         ))}
@@ -171,10 +178,7 @@ export default function LandingPage2() {
                   <div className="lp2-events-title">Upcoming Health Events</div>
                   <div className="lp2-events-list">
                     {EVENTS.map((e, i) => (
-                      <div
-                        key={i}
-                        className={`lp2-event-row ${i < EVENTS.length - 1 ? 'lp2-event-divider' : ''}`}
-                      >
+                      <div key={i} className={`lp2-event-row ${i < EVENTS.length - 1 ? 'lp2-event-divider' : ''}`}>
                         <span className="lp2-event-dot" style={{ background: e.dot }} />
                         <span className="lp2-event-label">{e.label}</span>
                         <span className="lp2-event-date">{e.date}</span>
@@ -182,6 +186,7 @@ export default function LandingPage2() {
                     ))}
                   </div>
                 </div>
+
               </div>
             </div>
 
@@ -201,32 +206,40 @@ export default function LandingPage2() {
 
           <div className="lp1-chaos-wrapper">
             <div className="lp1-chaos-tags">
-              {[...CHAOS_TAGS, ...CHAOS_TAGS].map((tag, i) => (
-                <div
-                  key={i}
-                  className="lp1-chaos-tag"
-                  style={{ background: tag.bg, color: tag.color }}
-                >
+              {CHAOS_TAGS.map((tag, i) => (
+                <div key={i} className="lp1-chaos-tag" style={{ background: tag.bg, color: tag.color }}>
                   <span>{tag.emoji}</span>
                   <span>{tag.text}</span>
                 </div>
               ))}
             </div>
 
-            {/* Phone mockup */}
             <div className="lp1-phone-frame">
               <div className="lp1-phone-body">
                 <img src="/lp2/phone-bg.png" alt="" className="lp1-phone-wallpaper" />
                 <div className="lp1-phone-date">Thu 14 May</div>
                 <div className="lp1-phone-time">09:45</div>
-                <div className="lp1-phone-notif">
-                  <div className="lp1-notif-icon-wrap">
-                    <img src="/lp2/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
+                <div className="lp2-phone-notifs">
+                  <div className="lp1-phone-notif lp2-phone-notif">
+                    <div className="lp1-notif-icon-wrap">
+                      <img src="/lp2/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
+                    </div>
+                    <div className="lp1-notif-body">
+                      <div className="lp1-notif-title">Meera's MMR booster is due May 18</div>
+                      <div className="lp1-notif-sub">
+                        Dr. Kapoor, 10:30 AM — slot auto-held from calendar
+                      </div>
+                    </div>
                   </div>
-                  <div className="lp1-notif-body">
-                    <div className="lp1-notif-title">Aarav's vaccination is due Thursday</div>
-                    <div className="lp1-notif-sub">
-                      Dr. Mehra, 4:30 PM — slot auto-held from calendar
+                  <div className="lp1-phone-notif lp2-phone-notif">
+                    <div className="lp1-notif-icon-wrap">
+                      <img src="/lp2/app-icon.svg" alt="Kosha" className="lp1-notif-icon" />
+                    </div>
+                    <div className="lp1-notif-body">
+                      <div className="lp1-notif-title">Aarav's vaccination is due Thursday</div>
+                      <div className="lp1-notif-sub">
+                        Dr. Sharma, 4:30 PM — slot auto-held from calendar
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -240,7 +253,7 @@ export default function LandingPage2() {
       <section className="lp1-features-outer">
         <div className="lp1-features-inner">
           <div className="lp1-section-header">
-            <SectionBadge />
+            <SectionBadge label="FEATURES" />
             <h2 className="lp1-section-title">
               Everything your family needs.
               <br />
@@ -250,33 +263,32 @@ export default function LandingPage2() {
 
           <div className="lp1-feature-cards">
             <div className="lp1-feature-card">
-              <div className="lp1-feature-icon">⚡</div>
+              <div className="lp1-feature-icon">📋</div>
               <div>
-                <h3 className="lp1-feature-title">Instant Capture</h3>
+                <h3 className="lp1-feature-title">Health Records Vault</h3>
                 <p className="lp1-feature-text">
-                  Snap a photo, type a note, or forward an email. Kosha auto-files and tags
-                  everything — medical details, travel plans, account info — so it's findable in
-                  seconds.
+                  Store vaccination records, prescriptions, lab reports, and allergy info for every
+                  family member in one secure, searchable place.
                 </p>
               </div>
             </div>
             <div className="lp1-feature-card">
-              <div className="lp1-feature-icon">🔍</div>
+              <div className="lp1-feature-icon">🔔</div>
               <div>
-                <h3 className="lp1-feature-title">Ask, Don't Search</h3>
+                <h3 className="lp1-feature-title">Smart Health Alerts</h3>
                 <p className="lp1-feature-text">
-                  "What's my insurance number?" "When does the warranty expire?" Just ask in plain
-                  language and get the answer instantly — no digging through folders.
+                  Never miss a vaccination due date, medication refill, or annual checkup. Kosha
+                  tracks it all and nudges you at the right time.
                 </p>
               </div>
             </div>
             <div className="lp1-feature-card">
-              <div className="lp1-feature-icon">🔐</div>
+              <div className="lp1-feature-icon">📊</div>
               <div>
-                <h3 className="lp1-feature-title">Secure Vault</h3>
+                <h3 className="lp1-feature-title">Wellness Trends</h3>
                 <p className="lp1-feature-text">
-                  Sensitive info stays encrypted and private. Passwords, policy numbers, medical
-                  records — everything locked down, accessible only to you.
+                  Track sleep, hydration, screen time, and activity across your family. Spot patterns
+                  before they become problems.
                 </p>
               </div>
             </div>
@@ -291,15 +303,13 @@ export default function LandingPage2() {
             {[1, 2, 3, 4, 5].map((n) => (
               <img key={n} src="/lp2/star.svg" alt="★" className="lp1-star" />
             ))}
-            <span className="lp1-trusted-label">Trusted by 2,500+ teams</span>
+            <span className="lp1-trusted-label">Trusted by Average Indians</span>
           </div>
           <h2 className="lp1-footer-title">
-            Free your brain.
-            <br />
-            Remember everything.
+            Give your family the care it deserves
           </h2>
           <p className="lp1-footer-subtitle">
-            Join the waitlist for a second brain that never forgets.
+            Download the app and be the first to experience a smarter way to manage your family's health.
           </p>
           <DownloadButton />
           <p className="lp1-copyright">© 2026 Kosha. Your second brain.</p>
