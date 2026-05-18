@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleDownloadClick } from '../utils/downloadRedirect';
+import { handleDownloadClick, trackPixel } from '../utils/downloadRedirect';
 import './LandingPage1.css';
 
 const MEMORY_CARDS = [
@@ -70,10 +70,10 @@ const CHAOS_TAGS = [
   { emoji: '🏥', text: 'Doctor said something important', bg: '#fde8e8', color: '#a83232' },
 ];
 
-function DownloadButton() {
+function DownloadButton({ location = 'hero' }) {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate)}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { variant: 'lp1', angle: 'memory-recall', location })}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp1/arrow-right.svg" alt="" />
@@ -92,6 +92,10 @@ function SectionBadge({ label = 'HOW IT WORKS' }) {
 }
 
 export default function LandingPage1() {
+  useEffect(() => {
+    trackPixel('ViewLandingPage', { variant: 'lp1', angle: 'memory-recall' });
+  }, []);
+
   return (
     <div className="lp1">
       {/* Nav */}
@@ -275,7 +279,7 @@ export default function LandingPage1() {
           <p className="lp1-footer-subtitle">
             Download the app for a second brain that never forgets.
           </p>
-          <DownloadButton />
+          <DownloadButton location="footer" />
           <p className="lp1-copyright">© 2026 Kosha. Your second brain.</p>
         </div>
       </section>

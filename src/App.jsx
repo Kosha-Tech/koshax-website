@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -13,7 +13,7 @@ import LandingPage2 from './pages/LandingPage2';
 import LandingPage3 from './pages/LandingPage3';
 import LandingPage4 from './pages/LandingPage4';
 
-const STANDALONE_ROUTES = ['/lp1', '/lp2', '/lp3', '/lp4'];
+const STANDALONE_ROUTES = ['/memory', '/family-health', '/life-admin', '/focus'];
 
 function App() {
   const location = useLocation();
@@ -29,10 +29,15 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/terms-and-conditions" element={<TermsPage />} />
         <Route path="/download" element={<DownloadPage />} />
-        <Route path="/lp1" element={<LandingPage1 />} />
-        <Route path="/lp2" element={<LandingPage2 />} />
-        <Route path="/lp3" element={<LandingPage3 />} />
-        <Route path="/lp4" element={<LandingPage4 />} />
+        <Route path="/memory" element={<LandingPage1 />} />
+        <Route path="/family-health" element={<LandingPage2 />} />
+        <Route path="/life-admin" element={<LandingPage3 />} />
+        <Route path="/focus" element={<LandingPage4 />} />
+        {/* Legacy redirects */}
+        <Route path="/lp1" element={<Navigate to="/memory" replace />} />
+        <Route path="/lp2" element={<Navigate to="/family-health" replace />} />
+        <Route path="/lp3" element={<Navigate to="/life-admin" replace />} />
+        <Route path="/lp4" element={<Navigate to="/focus" replace />} />
       </Routes>
       {!isStandalone && <Footer />}
     </div>
