@@ -87,10 +87,10 @@ function SectionBadge({ label = 'HOW IT WORKS' }) {
   );
 }
 
-function DownloadButton() {
+function DownloadButton({ location }) {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate)}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { source: `lp2-${location}` })}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp2/arrow-right.svg" alt="" />
@@ -130,7 +130,7 @@ export default function LandingPage2() {
                 cracks.
               </p>
               <div className="lp1-hero-cta">
-                <DownloadButton />
+                <DownloadButton location="hero" />
               </div>
             </div>
 
@@ -311,7 +311,7 @@ export default function LandingPage2() {
           <p className="lp1-footer-subtitle">
             Download the app and be the first to experience a smarter way to manage your family's health.
           </p>
-          <DownloadButton />
+          <DownloadButton location="footer" />
           <p className="lp1-copyright">© 2026 Kosha. Your Health Assistant.</p>
         </div>
       </section>

@@ -56,10 +56,10 @@ const SCHEDULE = [
   { time: '4:30 PM',  label: "Meera's dance class pickup",        bg: '#ede9fe', color: '#7c3aed', border: '#7c3aed' },
 ];
 
-function DownloadButton() {
+function DownloadButton({ location }) {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate)}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { source: `lp3-${location}` })}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp3/arrow-right.svg" alt="" />
@@ -107,7 +107,7 @@ export default function LandingPage3() {
                 someone has to keep track of it all. Kosha is the admin tool you never knew you needed.
               </p>
               <div className="lp1-hero-cta">
-                <DownloadButton />
+                <DownloadButton location="hero" />
               </div>
             </div>
 
@@ -297,7 +297,7 @@ export default function LandingPage3() {
           <p className="lp1-footer-subtitle">
             Download the app. Stop running your life from sticky notes and WhatsApp groups.
           </p>
-          <DownloadButton />
+          <DownloadButton location="footer" />
           <p className="lp1-copyright">© 2026 Kosha. The admin for modern life.</p>
         </div>
       </section>

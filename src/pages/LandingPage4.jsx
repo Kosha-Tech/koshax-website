@@ -41,10 +41,10 @@ const STATS = [
   { value: '45min', label: 'Saved daily on average' },
 ];
 
-function DownloadButton() {
+function DownloadButton({ location }) {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate)}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { source: `lp4-${location}` })}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp4/arrow-right.svg" alt="" />
@@ -93,7 +93,7 @@ export default function LandingPage4() {
                 where they belong.
               </p>
               <div className="lp1-hero-cta">
-                <DownloadButton />
+                <DownloadButton location="hero" />
               </div>
             </div>
 
@@ -286,7 +286,7 @@ export default function LandingPage4() {
           <p className="lp1-footer-subtitle">
             Download the app for a Life OS that will improve signal/noise.
           </p>
-          <DownloadButton />
+          <DownloadButton location="footer" />
           <p className="lp1-copyright">© 2026 Kosha. The operating system for modern life.</p>
         </div>
       </section>

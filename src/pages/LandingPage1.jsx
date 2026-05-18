@@ -70,10 +70,10 @@ const CHAOS_TAGS = [
   { emoji: '🏥', text: 'Doctor said something important', bg: '#fde8e8', color: '#a83232' },
 ];
 
-function DownloadButton() {
+function DownloadButton({ location }) {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate)}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { source: `lp1-${location}` })}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp1/arrow-right.svg" alt="" />
@@ -122,7 +122,7 @@ export default function LandingPage1() {
               remembers every detail so your brain doesn't have to.
             </p>
             <div className="lp1-hero-cta">
-              <DownloadButton />
+              <DownloadButton location="hero" />
             </div>
           </div>
 
@@ -275,7 +275,7 @@ export default function LandingPage1() {
           <p className="lp1-footer-subtitle">
             Download the app for a second brain that never forgets.
           </p>
-          <DownloadButton />
+          <DownloadButton location="footer" />
           <p className="lp1-copyright">© 2026 Kosha. Your second brain.</p>
         </div>
       </section>
