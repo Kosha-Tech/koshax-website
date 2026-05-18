@@ -120,7 +120,7 @@ export default function LandingPage2() {
 
             {/* Left */}
             <div className="lp1-hero-left">
-              <p className="lp1-eyebrow">Your Second Brain</p>
+              <p className="lp1-eyebrow">Your Health Assistant</p>
               <h1 className="lp1-hero-title">
                 Your whole family's health. One calm place
               </h1>
@@ -312,7 +312,7 @@ export default function LandingPage2() {
             Download the app and be the first to experience a smarter way to manage your family's health.
           </p>
           <DownloadButton />
-          <p className="lp1-copyright">© 2026 Kosha. Your second brain.</p>
+          <p className="lp1-copyright">© 2026 Kosha. Your Health Assistant.</p>
         </div>
       </section>
     </div>
