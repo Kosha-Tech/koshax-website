@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleDownloadClick } from '../utils/downloadRedirect';
+import { handleDownloadClick, trackPixel } from '../utils/downloadRedirect';
 import './LandingPage1.css';
 import './LandingPage4.css';
 
@@ -41,10 +41,10 @@ const STATS = [
   { value: '45min', label: 'Saved daily on average' },
 ];
 
-function DownloadButton() {
+function DownloadButton({ location = 'hero' }) {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate)}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { variant: 'lp4', angle: 'focus-productivity', location })}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp4/arrow-right.svg" alt="" />
@@ -63,6 +63,10 @@ function SectionBadge({ label = 'HOW IT WORKS' }) {
 }
 
 export default function LandingPage4() {
+  useEffect(() => {
+    trackPixel('ViewLandingPage', { variant: 'lp4', angle: 'focus-productivity' });
+  }, []);
+
   return (
     <div className="lp1 lp4">
       {/* Nav */}
@@ -286,7 +290,7 @@ export default function LandingPage4() {
           <p className="lp1-footer-subtitle">
             Download the app for a Life OS that will improve signal/noise.
           </p>
-          <DownloadButton />
+          <DownloadButton location="footer" />
           <p className="lp1-copyright">© 2026 Kosha. The operating system for modern life.</p>
         </div>
       </section>

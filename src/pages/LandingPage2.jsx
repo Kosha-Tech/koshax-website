@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleDownloadClick } from '../utils/downloadRedirect';
+import { handleDownloadClick, trackPixel } from '../utils/downloadRedirect';
 import './LandingPage1.css';
 import './LandingPage2.css';
 
@@ -87,10 +87,10 @@ function SectionBadge({ label = 'HOW IT WORKS' }) {
   );
 }
 
-function DownloadButton() {
+function DownloadButton({ location = 'hero' }) {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate)}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { variant: 'lp2', angle: 'family-health', location })}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp2/arrow-right.svg" alt="" />
@@ -100,6 +100,10 @@ function DownloadButton() {
 }
 
 export default function LandingPage2() {
+  useEffect(() => {
+    trackPixel('ViewLandingPage', { variant: 'lp2', angle: 'family-health' });
+  }, []);
+
   return (
     <div className="lp1 lp2">
       {/* Nav */}
@@ -311,7 +315,7 @@ export default function LandingPage2() {
           <p className="lp1-footer-subtitle">
             Download the app and be the first to experience a smarter way to manage your family's health.
           </p>
-          <DownloadButton />
+          <DownloadButton location="footer" />
           <p className="lp1-copyright">© 2026 Kosha. Your Health Assistant.</p>
         </div>
       </section>

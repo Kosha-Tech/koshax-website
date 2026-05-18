@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleDownloadClick } from '../utils/downloadRedirect';
+import { handleDownloadClick, trackPixel } from '../utils/downloadRedirect';
 import './LandingPage1.css';
 import './LandingPage3.css';
 
@@ -56,10 +56,10 @@ const SCHEDULE = [
   { time: '4:30 PM',  label: "Meera's dance class pickup",        bg: '#ede9fe', color: '#7c3aed', border: '#7c3aed' },
 ];
 
-function DownloadButton() {
+function DownloadButton({ location = 'hero' }) {
   const navigate = useNavigate();
   return (
-    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate)}>
+    <button className="lp1-download-btn" onClick={() => handleDownloadClick(navigate, { variant: 'lp3', angle: 'life-admin', location })}>
       <span className="lp1-download-btn-label">Download App</span>
       <span className="lp1-download-btn-circle">
         <img src="/lp3/arrow-right.svg" alt="" />
@@ -78,6 +78,10 @@ function SectionBadge({ label = 'HOW IT WORKS' }) {
 }
 
 export default function LandingPage3() {
+  useEffect(() => {
+    trackPixel('ViewLandingPage', { variant: 'lp3', angle: 'life-admin' });
+  }, []);
+
   return (
     <div className="lp1 lp3">
       {/* Nav */}
@@ -297,7 +301,7 @@ export default function LandingPage3() {
           <p className="lp1-footer-subtitle">
             Download the app. Stop running your life from sticky notes and WhatsApp groups.
           </p>
-          <DownloadButton />
+          <DownloadButton location="footer" />
           <p className="lp1-copyright">© 2026 Kosha. The admin for modern life.</p>
         </div>
       </section>

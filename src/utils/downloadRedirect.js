@@ -10,7 +10,12 @@ export function detectPlatform() {
   return 'other';
 }
 
-export function handleDownloadClick(navigate) {
+export function trackPixel(event, params = {}) {
+  window?.fbq?.('trackCustom', event, params);
+}
+
+export function handleDownloadClick(navigate, meta = {}) {
+  trackPixel('ClickDownloadCTA', meta);
   const platform = detectPlatform();
   if (platform === 'ios') {
     window.location.href = APP_STORE_URL;
