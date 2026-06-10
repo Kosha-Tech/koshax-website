@@ -1,0 +1,72 @@
+---
+// Final CTA (§8) — the closing call, now framed as a contained dark banner (§3)
+// rather than a full-bleed band: rounded indigo card with breathing room around it.
+// Copy verbatim. NOTE: "50,000+" ties to the same stat TODO as the hero (§8/§12).
+---
+
+<section class="section final-cta">
+  <div class="container">
+    <div class="final-cta__banner section--dark">
+      <div class="final-cta__copy" data-sr>
+        <h2 class="final-cta__title">The intentional life starts here.</h2>
+        <p class="final-cta__sub">
+          Join 50,000+ people who’ve stopped letting life admin win.
+        </p>
+        <div class="final-cta__actions">
+          <a
+            class="btn btn--primary download-trigger"
+            href="https://kosha.app/get?utm_source=cta"
+            data-placement="cta"
+          >
+            Download free
+          </a>
+          <p class="final-cta__micro">Free to start · No credit card · Read-only &amp; private</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Contained banner — dark indigo card with padding, not a full-width band */
+  .final-cta__banner {
+    border-radius: var(--radius-lg);
+    padding: clamp(2.5rem, 7vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+    text-align: center;
+  }
+
+  .final-cta__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .final-cta__title {
+    font-size: var(--t-h2);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0 0 1rem;
+    max-width: 18ch;
+  }
+
+  .final-cta__sub {
+    color: color-mix(in srgb, var(--paper-raised) 78%, transparent);
+    font-size: 1.15rem;
+    margin: 0 0 2rem;
+    max-width: 42ch;
+  }
+
+  .final-cta__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .final-cta__micro {
+    font-size: 0.9rem;
+    color: color-mix(in srgb, var(--paper-raised) 65%, transparent);
+    margin: 0;
+  }
+</style>

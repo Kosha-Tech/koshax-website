@@ -1,0 +1,72 @@
+---
+// Trust strip (§8) — quiet credibility line directly below the hero.
+// Mono, understated; no fake press logos (§8/§12: never fake it).
+// TODO (§12): each badge should link to proof (store listing, verified-app
+// page, privacy section, certificate) once those destinations exist.
+const items = [
+  { glyph: '★', text: '4.8 App Store' },
+  { glyph: '★', text: '4.7 Google Play' },
+  { glyph: '🔒', text: 'Read-only email access' },
+  { glyph: '✓', text: 'Google API verified' },
+  { glyph: '🛡', text: 'DPDP + GDPR compliant' },
+  { glyph: '🔐', text: '256-bit encryption' },
+];
+---
+
+<section class="trust" aria-label="Trust & compliance">
+  <div class="container">
+    <ul class="trust__list" data-sr>
+      {
+        items.map((it) => (
+          <li class="trust__item">
+            <span class="trust__glyph" aria-hidden="true">{it.glyph}</span>
+            {it.text}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .trust {
+    border-block: 1px solid var(--line);
+    background: var(--paper-raised);
+  }
+
+  .trust__list {
+    list-style: none;
+    margin: 0;
+    padding: 1.1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem clamp(1rem, 3vw, 2.25rem);
+  }
+
+  .trust__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  /* Hairline middot separators between items (not after the last) */
+  .trust__item:not(:last-child)::after {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--line);
+    margin-left: clamp(0.4rem, 1.5vw, 1.1rem);
+  }
+
+  .trust__glyph {
+    color: var(--gold); /* the one whisper of gold — the verification marks */
+    font-size: 0.8rem;
+  }
+</style>

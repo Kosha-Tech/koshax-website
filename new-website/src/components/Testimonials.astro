@@ -1,0 +1,212 @@
+---
+// Testimonials · eyebrow "Real people, real results" (§8).
+// Copy verbatim. §12: use REAL testimonials — these are from the copy deck.
+// Presented as a lovi-style single-row marquee: cards drift continuously,
+// pause on hover, and fade out softly at both edges.
+const lead = 'I didn’t realise how much mental space this was taking.';
+const quotes = [
+  {
+    title: 'Found it in 10 seconds',
+    text: 'Found my health insurance renewal doc in 10 seconds. I used to spend 20 minutes hunting through Gmail.',
+    name: 'Riya K.',
+    meta: 'Apr 12th, 2025 / App Store',
+  },
+  {
+    title: 'Nudges that feel human',
+    text: 'I’ve tried every habit app. Kosha is the first that didn’t make me feel like a failure when I missed a day.',
+    name: 'Arjun M.',
+    meta: 'Mar 3rd, 2025 / Play Store',
+  },
+  {
+    title: 'The noise just stopped',
+    text: 'The spam filter alone is worth it. I had no idea how many times a day I was being interrupted until it just… stopped.',
+    name: 'Sneha N.',
+    meta: 'Feb 21st, 2025 / App Store',
+  },
+  {
+    title: 'Everything, one search away',
+    text: 'My passport, my PAN, my rent agreement — all one search away. I deleted three other apps the week I started.',
+    name: 'Vikram S.',
+    meta: 'Jan 30th, 2025 / Play Store',
+  },
+  {
+    title: 'Saved me a fine',
+    text: 'It quietly reminded me my car insurance lapsed in two days. That one nudge saved me a fine and a very bad morning.',
+    name: 'Ananya R.',
+    meta: 'Jan 8th, 2025 / App Store',
+  },
+  {
+    title: 'I just have it now',
+    text: 'I’m the person everyone in my family asks “where’s that document?” Now I just have it. Every single time.',
+    name: 'Karthik V.',
+    meta: 'Dec 14th, 2024 / App Store',
+  },
+  {
+    title: 'The only alert I read',
+    text: 'The morning brief is the only notification I actually read. It’s mine, it’s short, and it never tries to sell me anything.',
+    name: 'Meera J.',
+    meta: 'Nov 27th, 2024 / Play Store',
+  },
+  {
+    title: 'Sorted by lunch',
+    text: 'Onboarding took four minutes. By lunch it had already pulled every bill and receipt out of my inbox for me.',
+    name: 'Rohan D.',
+    meta: 'Nov 5th, 2024 / App Store',
+  },
+  {
+    title: 'Switched phones, no panic',
+    text: 'I switched phones last month. Everything was just there. No frantic forwarding of files to myself at 1am.',
+    name: 'Priya T.',
+    meta: 'Oct 18th, 2024 / Play Store',
+  },
+  {
+    title: 'A calmer version of my brain',
+    text: 'It feels less like an app and more like a calm, organised version of my own brain. I trust it with the boring stuff now.',
+    name: 'Aditya B.',
+    meta: 'Oct 2nd, 2024 / App Store',
+  },
+];
+---
+
+<section class="section section--tint testimonials" id="testimonials">
+  <div class="container">
+    <div class="section__head testimonials__head" data-sr>
+      <p class="eyebrow">Real people, real results</p>
+      <blockquote class="testimonials__lead">“{lead}”</blockquote>
+    </div>
+  </div>
+
+  <div class="testimonials__marquee" data-sr>
+    {/* Duplicated set so the loop is seamless; the clone is aria-hidden. */}
+    <ul class="marquee__track">
+      {
+        quotes.map((q) => (
+          <li class="testimonials__card card">
+            <span class="testimonials__name">{q.name}</span>
+            <span class="testimonials__meta">{q.meta}</span>
+            <h3 class="testimonials__title">{q.title}</h3>
+            <blockquote class="testimonials__quote">{q.text}</blockquote>
+          </li>
+        ))
+      }
+      {
+        quotes.map((q) => (
+          <li class="testimonials__card card" aria-hidden="true">
+            <span class="testimonials__name">{q.name}</span>
+            <span class="testimonials__meta">{q.meta}</span>
+            <h3 class="testimonials__title">{q.title}</h3>
+            <blockquote class="testimonials__quote">{q.text}</blockquote>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* width/centering inherited from .section__head for site-wide consistency */
+  .testimonials__lead {
+    font-family: var(--font-display);
+    font-size: var(--t-h2);
+    font-weight: 500;
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0.85rem 0 0;
+  }
+
+  /* Marquee shell — full-bleed, with soft fade masks on both edges (lovi). */
+  .testimonials__marquee {
+    position: relative;
+    margin-top: clamp(2rem, 4vw, 3rem);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    );
+  }
+
+  .marquee__track {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0; /* breathing room for the hover-lift shadow */
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    gap: clamp(0.6rem, 1.2vw, 0.9rem); /* tight spacing between cards */
+    will-change: transform;
+    animation: marquee-scroll 60s linear infinite;
+  }
+
+  /* Pause the marquee when the visitor hovers anywhere over it. */
+  .testimonials__marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      /* Half the track = exactly one full (un-cloned) set. */
+      transform: translateX(-50%);
+    }
+  }
+
+  .testimonials__card {
+    flex: 0 0 auto;
+    width: clamp(18rem, 27vw, 21rem);
+    padding: clamp(1.5rem, 2.4vw, 2rem);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .testimonials__name {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .testimonials__meta {
+    margin-top: 0.15rem;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--ink-soft);
+  }
+
+  .testimonials__title {
+    margin: 1.1rem 0 0.6rem;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+
+  .testimonials__quote {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  /* Respect reduced-motion: freeze the marquee, let it scroll manually. */
+  @media (prefers-reduced-motion: reduce) {
+    .testimonials__marquee {
+      overflow-x: auto;
+    }
+
+    .marquee__track {
+      animation: none;
+    }
+  }
+</style>

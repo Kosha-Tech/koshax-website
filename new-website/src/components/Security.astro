@@ -1,0 +1,159 @@
+---
+// Built right (security) · eyebrow "Built right" (§8).
+// §12 honesty: ISO 27001 / SOC 2 carry a `*` until actually certified —
+// the asterisk maps to a footnote. Don't present uncertified as held.
+const features = [
+  {
+    glyph: '🔒',
+    name: 'Privacy by design',
+    desc: 'Email access is strictly read-only. Nothing you share with Kosha is sold, stored on third-party servers, or used to train models. Your personal life is yours — Kosha just helps you navigate it.',
+  },
+  {
+    glyph: '🌐',
+    name: 'Works where life happens',
+    desc: 'On the go or winding down at home, Kosha is there — iOS, Android, and wherever your day takes you. One experience across every device and channel.',
+  },
+];
+
+const certs = [
+  { label: 'Google API verified', pending: false },
+  { label: 'DPDP Act 2023', pending: false },
+  { label: 'GDPR', pending: false },
+  { label: 'ISO 27001', pending: true },
+  { label: 'SOC 2 Type II', pending: true },
+];
+const hasPending = certs.some((c) => c.pending);
+---
+
+<section class="section security" id="security">
+  <div class="container">
+    <div class="security__grid">
+      <div class="security__intro" data-sr>
+        <p class="eyebrow">Built right</p>
+        <h2 class="section__title">Designed around trust, not engagement.</h2>
+      </div>
+
+      <ul class="security__features" data-sr data-sr-delay="1">
+        {
+          features.map((f) => (
+            <li class="security__feature">
+              <span class="security__glyph" aria-hidden="true">{f.glyph}</span>
+              <div>
+                <h3 class="security__name">{f.name}</h3>
+                <p class="security__desc">{f.desc}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="security__certs" data-sr>
+      <ul class="security__cert-row">
+        {
+          certs.map((c) => (
+            <li class="security__cert">
+              <span class="security__cert-mark" aria-hidden="true">✓</span>
+              {c.label}{c.pending && <sup class="security__pending">*</sup>}
+            </li>
+          ))
+        }
+      </ul>
+      {
+        hasPending && (
+          <p class="security__footnote">
+            <span aria-hidden="true">*</span> Certification in progress — not yet held. Listed for transparency, never as a claim.
+          </p>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .security__grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .security__features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .security__feature {
+    display: flex;
+    gap: 0.9rem;
+  }
+
+  .security__glyph {
+    flex: none;
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+
+  .security__name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0 0 0.4rem;
+  }
+
+  .security__desc {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .security__certs {
+    border-top: 1px solid var(--line);
+    padding-top: 1.75rem;
+  }
+
+  .security__cert-row {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+  }
+
+  .security__cert {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink);
+  }
+
+  .security__cert-mark {
+    color: var(--gold); /* gold whisper — the verification marks */
+  }
+
+  .security__pending {
+    color: var(--clay);
+    font-size: 0.7em;
+  }
+
+  .security__footnote {
+    margin: 1.25rem 0 0;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+
+  @media (max-width: 760px) {
+    .security__grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

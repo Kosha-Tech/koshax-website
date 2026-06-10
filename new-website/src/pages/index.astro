@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Problem from '../components/Problem.astro';
+import Solutions from '../components/Solutions.astro';
+import Persona from '../components/Persona.astro';
+import Security from '../components/Security.astro';
+import Setup from '../components/Setup.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Footer from '../components/Footer.astro';
+// Build order (§13): tokens + fonts → nav + Settle hero →
+// problem → CAPTURE → FILTER (dark) → ANTICIPATE → persona → security →
+// setup → testimonials → FAQ → final CTA (dark) → footer.
+---
+
+<Layout>
+  <Nav />
+  <main>
+    <Hero />
+    <Problem />
+    <Solutions />
+    <Persona />
+    <Security />
+    <Setup />
+    <Testimonials />
+    <Faq />
+    <FinalCta />
+  </main>
+  <Footer />
+</Layout>

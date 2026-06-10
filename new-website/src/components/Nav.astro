@@ -1,0 +1,591 @@
+---
+// Nav — lovi.care-style fixed, transparent bar with a progressive-blur backdrop.
+// Logo left · four section jump-links (centre) · App Store CTA right.
+// Links scrollspy: the link for the section currently in view gets `.is-active`.
+// Mobile (≤768px): links collapse into a hamburger-toggled dropdown panel.
+// Logo: the blue Kosha mark from /Assets, served from /public.
+
+const links = [
+  { id: 'capture', label: 'Capture' },
+  { id: 'filter', label: 'Filter' },
+  { id: 'anticipate', label: 'Anticipate' },
+  { id: 'security', label: 'Security' },
+];
+---
+
+<header class="nav" data-reveal="nav">
+  <!-- Progressive blur — stacked layers of increasing blur, masked so the frost
+       is strongest at the top edge and fades to clear at the bottom. No tint. -->
+  <div class="nav__blur" aria-hidden="true">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <div class="nav__inner">
+    <a class="nav__brand" href="/" aria-label="Kosha — home">
+      <!-- Blue logo on light sections, white logo on dark sections. The nav
+           toggles `.nav--on-dark` as it scrolls over a dark band. -->
+      <img
+        class="nav__logo nav__logo--blue"
+        src="/kosha-logo-blue.svg"
+        alt="Kosha"
+        width="364"
+        height="60"
+        decoding="async"
+      />
+      <img
+        class="nav__logo nav__logo--white"
+        src="/kosha-logo-white.svg"
+        alt=""
+        aria-hidden="true"
+        width="364"
+        height="60"
+        decoding="async"
+      />
+    </a>
+
+    <nav class="nav__links" id="nav-links" aria-label="Primary">
+      {
+        links.map((l) => (
+          <a class="nav__link" href={`#${l.id}`} data-spy={l.id}>
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="nav__right">
+      <a
+        class="nav__cta download-trigger"
+        href="https://kosha.app/get?utm_source=nav"
+        data-placement="nav"
+        aria-label="Download on the App Store"
+      >
+        <svg class="nav__cta-apple" viewBox="0 0 384 512" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"
+          ></path>
+        </svg>
+        <span class="nav__cta-text">
+          <span class="nav__cta-small">Download on the</span>
+          <span class="nav__cta-big">App Store</span>
+        </span>
+      </a>
+
+      <button
+        class="nav__toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="nav-links"
+      >
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Offset anchor jumps so targets aren't hidden under the fixed bar. */
+  :global(html) {
+    scroll-padding-top: 90px;
+  }
+
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+  }
+
+  /* Progressive blur backdrop — heaviest blur at the top, fading to clear. */
+  .nav__blur {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 110px;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .nav__blur > div {
+    position: absolute;
+    inset: 0;
+  }
+
+  .nav__blur > div:nth-child(1) {
+    backdrop-filter: blur(0.5px);
+    -webkit-backdrop-filter: blur(0.5px);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, #000 16%, transparent 33%);
+    mask-image: linear-gradient(to top, #000 0%, #000 16%, transparent 33%);
+  }
+  .nav__blur > div:nth-child(2) {
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    -webkit-mask-image: linear-gradient(to top, transparent 8%, #000 25%, #000 41%, transparent 58%);
+    mask-image: linear-gradient(to top, transparent 8%, #000 25%, #000 41%, transparent 58%);
+  }
+  .nav__blur > div:nth-child(3) {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    -webkit-mask-image: linear-gradient(to top, transparent 16%, #000 33%, #000 50%, transparent 66%);
+    mask-image: linear-gradient(to top, transparent 16%, #000 33%, #000 50%, transparent 66%);
+  }
+  .nav__blur > div:nth-child(4) {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    -webkit-mask-image: linear-gradient(to top, transparent 33%, #000 50%, #000 66%, transparent 83%);
+    mask-image: linear-gradient(to top, transparent 33%, #000 50%, #000 66%, transparent 83%);
+  }
+  .nav__blur > div:nth-child(5) {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    -webkit-mask-image: linear-gradient(to top, transparent 50%, #000 66%, #000 83%, transparent 100%);
+    mask-image: linear-gradient(to top, transparent 50%, #000 66%, #000 83%, transparent 100%);
+  }
+  .nav__blur > div:nth-child(6) {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    -webkit-mask-image: linear-gradient(to top, transparent 66%, #000 83%, #000 100%);
+    mask-image: linear-gradient(to top, transparent 66%, #000 83%, #000 100%);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 26px clamp(20px, 4vw, 48px) 12px;
+  }
+
+  /* Brand mark — the blue Kosha logo, sized by height. */
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+    flex: none;
+  }
+
+  .nav__logo {
+    height: 26px;
+    width: auto;
+    display: block;
+  }
+
+  /* Logo swap by theme — blue by default, white when over a dark section. */
+  .nav__logo--white {
+    display: none;
+  }
+  .nav--on-dark .nav__logo--blue {
+    display: none;
+  }
+  .nav--on-dark .nav__logo--white {
+    display: block;
+  }
+
+  /* ---------- Jump links (centre, desktop) ---------- */
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.6vw, 2.2rem);
+  }
+
+  .nav__link {
+    position: relative;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 0.35rem 0;
+    white-space: nowrap;
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .nav__link:hover {
+    color: var(--ink);
+  }
+
+  /* Underline draws in (gold/periwinkle accent) on hover + active. */
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-fast) var(--ease);
+  }
+
+  .nav__link:hover::after,
+  .nav__link:focus-visible::after,
+  .nav__link.is-active::after {
+    transform: scaleX(1);
+  }
+
+  /* Active = the section currently in view. */
+  .nav__link.is-active {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ---------- Right cluster: CTA + mobile toggle ---------- */
+  .nav__right {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex: none;
+  }
+
+  .nav__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: none;
+    padding: 0.5rem 1.05rem;
+    border-radius: 12px;
+    background: var(--ink);
+    color: #fff;
+    text-decoration: none;
+    box-shadow:
+      0 0.6px 0.6px -1px rgba(0, 0, 0, 0.16),
+      0 2.3px 2.3px -2.2px rgba(0, 0, 0, 0.15),
+      0 10px 10px -3.25px rgba(0, 0, 0, 0.09);
+    transition:
+      transform var(--dur-fast) var(--ease),
+      box-shadow var(--dur-fast) var(--ease),
+      background var(--dur-fast) var(--ease);
+  }
+
+  .nav__cta:hover {
+    transform: translateY(-1px);
+    background: var(--ink-body);
+    box-shadow:
+      0 1px 1px -1px rgba(0, 0, 0, 0.18),
+      0 4px 4px -2px rgba(0, 0, 0, 0.16),
+      0 16px 16px -3px rgba(0, 0, 0, 0.12);
+  }
+
+  .nav__cta:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .nav__cta-apple {
+    width: 22px;
+    height: 22px;
+    flex: none;
+  }
+
+  .nav__cta-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+    text-align: left;
+  }
+
+  .nav__cta-small {
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  .nav__cta-big {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  /* Hamburger — hidden on desktop. */
+  .nav__toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--paper) 70%, transparent);
+    cursor: pointer;
+    align-items: center;
+  }
+
+  .nav__toggle-bar {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--ink);
+    transition:
+      transform var(--dur-fast) var(--ease),
+      opacity var(--dur-fast) var(--ease);
+  }
+
+  /* Hamburger → X when open. */
+  .nav.is-open .nav__toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav.is-open .nav__toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .nav.is-open .nav__toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* ============================================================
+     Light theme — applied (.nav--on-dark) while the bar floats over a
+     dark section: white logo (above), white links, inverted CTA, white
+     hamburger. Toggled by the scroll observer in the script below.
+     ============================================================ */
+  .nav--on-dark .nav__link {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .nav--on-dark .nav__link:hover,
+  .nav--on-dark .nav__link.is-active {
+    color: #fff;
+  }
+  .nav--on-dark .nav__link::after {
+    background: #fff;
+  }
+
+  /* Invert the CTA so the navy button stays legible on a navy band. */
+  .nav--on-dark .nav__cta {
+    background: #fff;
+    color: var(--ink);
+  }
+  .nav--on-dark .nav__cta:hover {
+    background: rgba(255, 255, 255, 0.88);
+  }
+
+  .nav--on-dark .nav__toggle {
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .nav--on-dark .nav__toggle-bar {
+    background: #fff;
+  }
+
+  /* Smooth the theme flip rather than hard-cutting colours. */
+  .nav__cta,
+  .nav__link,
+  .nav__toggle,
+  .nav__toggle-bar {
+    transition:
+      color var(--dur-fast) var(--ease),
+      background var(--dur-fast) var(--ease),
+      border-color var(--dur-fast) var(--ease),
+      transform var(--dur-fast) var(--ease),
+      box-shadow var(--dur-fast) var(--ease);
+  }
+
+  /* ---------- Mobile (≤768px): links become a dropdown panel ---------- */
+  @media (max-width: 768px) {
+    .nav__toggle {
+      display: inline-flex;
+    }
+
+    .nav__links {
+      position: absolute;
+      top: calc(100% - 2px);
+      left: clamp(20px, 4vw, 48px);
+      right: clamp(20px, 4vw, 48px);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.15rem;
+      padding: 0.5rem;
+      background: color-mix(in srgb, var(--paper) 94%, transparent);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition:
+        opacity var(--dur-fast) var(--ease),
+        transform var(--dur-fast) var(--ease),
+        visibility var(--dur-fast) var(--ease);
+    }
+
+    .nav.is-open .nav__links {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+
+    .nav__link {
+      padding: 0.8rem 0.85rem;
+      border-radius: 12px;
+      font-size: 1rem;
+    }
+
+    /* No sliding underline in the stacked menu — use a fill instead. */
+    .nav__link::after {
+      display: none;
+    }
+
+    .nav__link:hover,
+    .nav__link.is-active {
+      background: var(--accent-tint);
+      color: var(--ink);
+    }
+
+    /* The dropdown panel is a light popover even over a dark section, so
+       keep its links dark — only the bar's logo + hamburger go white. */
+    .nav--on-dark .nav__link {
+      color: var(--ink-soft);
+    }
+    .nav--on-dark .nav__link:hover,
+    .nav--on-dark .nav__link.is-active {
+      color: var(--ink);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .nav__logo {
+      height: 22px;
+    }
+    .nav__cta {
+      padding: 0.45rem 0.85rem;
+    }
+    .nav__cta-big {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav__cta,
+    .nav__link::after,
+    .nav__toggle-bar,
+    .nav__links {
+      transition: none;
+    }
+    .nav__cta:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // ----- Mobile menu toggle -----
+  const header = document.querySelector<HTMLElement>('.nav');
+  const toggle = document.querySelector<HTMLButtonElement>('.nav__toggle');
+  const navLinks = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('.nav__link[data-spy]')
+  );
+
+  const setOpen = (open: boolean) => {
+    if (!header || !toggle) return;
+    header.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+
+  toggle?.addEventListener('click', () => {
+    setOpen(!header?.classList.contains('is-open'));
+  });
+
+  // Close the menu after picking a destination.
+  navLinks.forEach((link) => link.addEventListener('click', () => setOpen(false)));
+
+  // Close on outside click / Escape.
+  document.addEventListener('click', (e) => {
+    if (!header?.classList.contains('is-open')) return;
+    if (header.contains(e.target as Node)) return;
+    setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  // ----- Scrollspy: highlight the link for the section in view -----
+  const byId = new Map(navLinks.map((l) => [l.dataset.spy, l]));
+  const sections = navLinks
+    .map((l) => document.getElementById(l.dataset.spy ?? ''))
+    .filter((s): s is HTMLElement => Boolean(s));
+
+  const visible = new Set<HTMLElement>();
+
+  const setActive = (id: string | null) => {
+    navLinks.forEach((l) => {
+      const on = l.dataset.spy === id;
+      l.classList.toggle('is-active', on);
+      if (on) l.setAttribute('aria-current', 'true');
+      else l.removeAttribute('aria-current');
+    });
+  };
+
+  if (sections.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const el = entry.target as HTMLElement;
+          if (entry.isIntersecting) visible.add(el);
+          else visible.delete(el);
+        }
+        // Of the sections currently in the activation band, pick the topmost.
+        let best: HTMLElement | null = null;
+        let bestTop = Infinity;
+        visible.forEach((sec) => {
+          const top = Math.abs(sec.getBoundingClientRect().top);
+          if (top < bestTop) {
+            bestTop = top;
+            best = sec;
+          }
+        });
+        setActive(best ? best.id : null);
+      },
+      // Activation band: a section counts once its top passes below the nav
+      // and before it leaves the upper ~45% of the viewport.
+      { rootMargin: '-90px 0px -55% 0px', threshold: [0, 0.01] }
+    );
+    sections.forEach((s) => io.observe(s));
+  }
+
+  // ----- Adaptive theme: go light while the bar floats over a dark section -----
+  const darkSections = Array.from(
+    document.querySelectorAll<HTMLElement>('.section--dark')
+  );
+
+  if (header && darkSections.length) {
+    // Probe a point inside the bar; if a dark section spans it, the bar is
+    // over dark and switches to the light theme.
+    const probeY = () => header.getBoundingClientRect().height * 0.5 || 32;
+
+    const isOverDark = () => {
+      const y = probeY();
+      return darkSections.some((s) => {
+        const r = s.getBoundingClientRect();
+        return r.top <= y && r.bottom >= y;
+      });
+    };
+
+    let ticking = false;
+    const sync = () => {
+      ticking = false;
+      header.classList.toggle('nav--on-dark', isOverDark());
+    };
+    const schedule = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(sync);
+    };
+
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    sync(); // set initial state on load
+  }
+</script>

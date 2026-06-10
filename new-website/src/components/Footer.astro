@@ -1,0 +1,157 @@
+---
+// Footer (§8). Link map per §9.
+// Social row intentionally OMITTED: §8/§9 say link only profiles that are live
+// and prune any that 404. None exist yet — add Instagram/X/LinkedIn here once
+// the real profiles are up.
+// NOTE: /privacy, /terms, /security are intended real pages (§9) — privacy is
+// REQUIRED for store submission and must be created before launch.
+const explore = [
+  { label: 'Use cases', href: '#use-cases' },
+  { label: 'How it works', href: '#how-it-works' },
+  { label: 'FAQ', href: '#faq' },
+  { label: 'Contact', href: 'mailto:hello@kosha.app' },
+];
+const legal = [
+  { label: 'Privacy policy', href: '/privacy' },
+  { label: 'Terms of use', href: '/terms' },
+  { label: 'Security', href: '/security' },
+];
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a class="footer__mark" href="/" aria-label="Kosha — home">
+        <img
+          class="footer__logo"
+          src="/kosha-logo-blue.svg"
+          alt="Kosha"
+          width="364"
+          height="60"
+          decoding="async"
+        />
+      </a>
+      <p class="footer__blurb">
+        Your personal operating system. Focus on the things that actually matter.
+      </p>
+    </div>
+
+    <nav class="footer__col" aria-label="Explore">
+      <h2 class="footer__heading">Explore</h2>
+      <ul>
+        {explore.map((l) => <li><a class="footer__link" href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav class="footer__col" aria-label="Legal">
+      <h2 class="footer__heading">Legal</h2>
+      <ul>
+        {legal.map((l) => <li><a class="footer__link" href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>© 2026 Kosha. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line);
+    padding-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: 2.5rem;
+  }
+
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    margin-bottom: 3rem;
+  }
+
+  .footer__mark {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+    margin-bottom: 1rem;
+  }
+  .footer__logo {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
+
+  .footer__blurb {
+    color: var(--ink-soft);
+    max-width: 38ch;
+    margin: 0;
+  }
+
+  .footer__heading {
+    font-family: var(--font-mono);
+    font-size: var(--t-eyebrow);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-soft);
+    font-weight: 400;
+    margin: 0 0 1rem;
+  }
+
+  .footer__col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .footer__link {
+    position: relative;
+    color: var(--ink);
+    font-size: 0.95rem;
+  }
+  .footer__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur) var(--ease);
+  }
+  .footer__link:hover::after,
+  .footer__link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .footer__bottom {
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+  }
+  .footer__bottom p {
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .footer__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer__link::after {
+      transition: none;
+    }
+  }
+</style>

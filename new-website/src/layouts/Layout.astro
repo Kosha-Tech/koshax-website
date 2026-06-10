@@ -1,0 +1,64 @@
+---
+// Base layout — self-hosts fonts via Fontsource (§3/§11: no third-party
+// font request = on-brand for privacy + faster). <html lang="en-IN"> per §10.
+
+// Headings: Space Grotesk (variable, 300–700) — a geometric grotesk with
+// distinctive character for display type.
+import '@fontsource-variable/space-grotesk';
+// Data/ledger "mono" role + small labels: Lexend (variable, 100–900).
+import '@fontsource-variable/lexend';
+// Body copy: Inter (variable) — a neutral, highly legible UI sans tuned for
+// long-form reading at small sizes.
+import '@fontsource-variable/inter';
+
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Kosha — Focus on what really matters',
+  description = 'Kosha is the quiet assistant for everything outside work. It finds your important documents, blocks spam before it reaches you, and remembers the deadlines you shouldn’t have to.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // Scroll reveal (§7) — only when motion is allowed. With no JS or
+      // reduced motion, content stays visible (no `.sr-ready` on <html>).
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = document.querySelectorAll<HTMLElement>('[data-sr]');
+
+      if (!reduce && targets.length && 'IntersectionObserver' in window) {
+        document.documentElement.classList.add('sr-ready');
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
+        );
+        targets.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

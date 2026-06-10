@@ -1,0 +1,154 @@
+---
+// Setup (#how-it-works) · eyebrow "Getting started" (§8).
+// §5: setup steps ARE a real sequence → numbering 1 · 2 · 3 is meaningful here
+// (unlike problems/solutions). Copy verbatim from §8.
+const steps = [
+  {
+    n: '1',
+    title: 'Download Kosha',
+    body: 'Free on iOS and Android. No account required to explore. No credit card ever.',
+    img: '/setup-step-1.png',
+  },
+  {
+    n: '2',
+    title: 'Connect your email',
+    body:
+      'One tap. Read-only access means Kosha can find your documents — but never write, send, or share anything on your behalf.',
+    img: '/setup-step-2.png',
+  },
+  {
+    n: '3',
+    title: 'Let Kosha take it from here',
+    body:
+      'Quiet reminders. Zero overwhelm. From day one, your personal life starts running itself.',
+    img: '/setup-step-3.png',
+  },
+];
+---
+
+<section class="section setup" id="how-it-works">
+  <div class="container">
+    <div class="section__head section__head--center" data-sr>
+      <p class="eyebrow">Getting started</p>
+      <h2 class="section__title">Up and running in under two minutes.</h2>
+      <p class="lede setup__lede">
+        Download, connect your email, and let Kosha quietly take the busywork
+        off your plate from day one.
+      </p>
+    </div>
+
+    <ol class="setup__steps">
+      {
+        steps.map((s, i) => (
+          <li class="setup__step" data-sr data-sr-delay={i + 1}>
+            {/* Image area — per-step artwork from Assets/Setup */}
+            <div class="setup__media">
+              <img src={s.img} alt={`Step ${s.n}: ${s.title}`} loading="lazy" width="800" height="500" />
+            </div>
+
+            <div class="setup__copy">
+              <div class="setup__heading">
+                <span class="setup__num" aria-hidden="true">{s.n}</span>
+                <h3 class="setup__title">{s.title}</h3>
+              </div>
+              <p class="setup__body">{s.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .setup__lede {
+    margin-inline: auto;
+    margin-top: 1.1rem;
+    max-width: 44ch;
+  }
+
+  .setup__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .setup__step {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  /* Image area — placeholder until artwork is supplied per step.
+     Drop an <img> inside .setup__media (it'll fill the box via object-fit).
+     16:10 matches lindy's wide-but-short artwork tiles. */
+  .setup__media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: var(--paper-raised);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .setup__media :global(img),
+  .setup__media :global(video) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .setup__copy {
+    padding: 1.75rem;
+  }
+
+  .setup__heading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.65rem;
+  }
+
+  /* Mono step number — the meaningful sequence (§5). Gold = the one key
+     number accent (§3). Sits as a small badge beside the step title. */
+  .setup__num {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.85rem;
+    height: 1.85rem;
+    padding: 0 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--gold);
+    background: var(--paper-warm);
+    border-radius: var(--radius-sm);
+  }
+
+  .setup__title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .setup__body {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  @media (max-width: 760px) {
+    .setup__steps {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

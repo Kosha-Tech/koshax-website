@@ -1,0 +1,683 @@
+---
+// Hero — the signature "Settle" moment (§6). Copy verbatim from §8.
+//
+// Mechanic: scattered scraps of life admin (mono chips) settle into one
+// aligned stack inside the phone, while the spam chips fade to opacity:0 —
+// capture + filter made visible in a single orchestrated moment.
+//
+// No-JS / reduced-motion safe: the SETTLED state is the CSS default. JS only
+// adds `.is-animating` (the scattered pre-state) then `.is-loaded` to play the
+// transition — and only when prefers-reduced-motion does NOT match.
+
+// Captured scraps that settle into the aligned stack (kept).
+const kept = [
+  { glyph: '✈', label: 'DEL→BOM', value: 'May 3' },
+  { glyph: '🏦', label: 'HDFC', value: '₹—' },
+  { glyph: '🩺', label: 'Lab report', value: 'Mar 28' },
+];
+// Noise that gets filtered away (spam chips → opacity:0).
+const filtered = [
+  { glyph: '✉', label: '300 unread' },
+  { glyph: '📵', label: 'Spam call' },
+];
+
+// The incoming noise stream — the chaos Kosha absorbs. Rendered as a
+// right-to-left marquee BEHIND the phone (tone = soft pastel tint per pill).
+const stream = [
+  { glyph: '📧', label: '47 unread emails', tone: 'rose' },
+  { glyph: '📅', label: '3 calendar conflicts', tone: 'blue' },
+  { glyph: '🎒', label: 'School circulars', tone: 'amber' },
+  { glyph: '📰', label: 'News alerts', tone: 'stone' },
+  { glyph: '📝', label: 'Scattered to-dos', tone: 'jade' },
+  { glyph: '💊', label: 'Medication reminders', tone: 'rose' },
+  { glyph: '🛒', label: 'Grocery lists', tone: 'jade' },
+  { glyph: '🎂', label: 'Birthday reminders', tone: 'violet' },
+  { glyph: '📋', label: 'Insurance renewal', tone: 'amber' },
+  { glyph: '📞', label: 'Missed calls', tone: 'teal' },
+  { glyph: '💬', label: 'WhatsApp groups (89)', tone: 'jade' },
+  { glyph: '📱', label: 'Social notifications', tone: 'violet' },
+  { glyph: '🏦', label: 'Bank notifications', tone: 'rose' },
+  { glyph: '🚗', label: 'Car service due', tone: 'clay' },
+];
+// Split across three marquee rows for depth behind the phone.
+const rows = [
+  [...stream.slice(0, 5), ...stream.slice(9, 12)],
+  [...stream.slice(5, 9), ...stream.slice(12)],
+  [...stream.slice(2, 7), ...stream.slice(0, 2)],
+];
+---
+
+<section class="hero" data-hero>
+  <div class="container hero__inner">
+    <!-- ============ The pitch — centered (§8 copy verbatim) ============ -->
+    <div class="hero__copy">
+      <h2 class="hero__title reveal" data-reveal="1">Focus on what really matters.</h2>
+
+      <p class="hero__subhead reveal" data-reveal="3">
+        Kosha is the quiet assistant for everything outside work. It finds your important
+        documents, blocks the spam before it reaches you, and remembers the deadlines you
+        shouldn’t have to — so your attention stays where it counts.
+      </p>
+
+      <div class="hero__actions reveal" data-reveal="4">
+        <a
+          class="cta download-trigger"
+          href="https://kosha.app/get?utm_source=hero"
+          data-placement="hero"
+        >
+          <span class="cta__label">
+            <span class="cta__text">Download free</span>
+            <span class="cta__text cta__text--ghost" aria-hidden="true">Download free</span>
+          </span>
+          <span class="cta__arrow" aria-hidden="true">
+            <svg class="cta__chevron" viewBox="0 0 13 10" width="13" height="10" fill="none">
+              <path d="M1 5h10M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <svg class="cta__chevron cta__chevron--ghost" viewBox="0 0 13 10" width="13" height="10" fill="none">
+              <path d="M1 5h10M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
+        <p class="hero__microcopy">Free to start · No credit card · Read-only &amp; private</p>
+      </div>
+    </div>
+
+    <!-- ============ The Settle visual — centered below ============ -->
+    <div class="hero__visual" aria-hidden="true">
+      <!-- Incoming noise: right-to-left marquee rows behind the phone -->
+      <div class="hero__stream">
+        {
+          rows.map((row, r) => (
+            <div class={`marquee marquee--${r}`}>
+              <div class="marquee__track">
+                {[...row, ...row].map((c) => (
+                  <span class={`pill pill--${c.tone}`}>
+                    <span class="pill__glyph">{c.glyph}</span>
+                    {c.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="phone">
+        <div class="phone__screen">
+          <!-- Mobile: static lock-screen artwork fills the phone screen,
+               standing in for the animated Settle content below. -->
+          <img class="screen__photo" src="/hero-mobile.png" alt="" decoding="async" />
+
+          <div class="screen__bar">
+            <img class="screen__brand" src="/kosha-logo-blue.svg" alt="Kosha" width="364" height="60" decoding="async" />
+            <span class="screen__time">9:41</span>
+          </div>
+
+          <p class="screen__label">● Captured</p>
+
+          <div class="stack">
+            {
+              kept.map((c, i) => (
+                <div class={`chip chip--keep chip--k${i}`}>
+                  <span class="chip__glyph">{c.glyph}</span>
+                  <span class="chip__label">{c.label}</span>
+                  <span class="chip__value">{c.value}</span>
+                </div>
+              ))
+            }
+          </div>
+
+          <!-- Filtered note: confirms the filter step after settle -->
+          <p class="screen__filtered reveal-late">✓ 2 distractions filtered</p>
+
+          <!-- Spam scraps: scattered over the phone, fade away on settle -->
+          {
+            filtered.map((c, i) => (
+              <div class={`chip chip--spam chip--s${i}`}>
+                <span class="chip__glyph">{c.glyph}</span>
+                <span class="chip__label">{c.label}</span>
+              </div>
+            ))
+          }
+        </div>
+        <img class="phone__frame" src="/phone-frame.png" alt="" width="1015" height="2048" decoding="async" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    /* Top padding must clear the fixed nav (~90px) on small screens, so the
+       title never slides under the bar. No bottom padding — the phone runs to
+       the hero's edge and the next section overlaps its lower body. */
+    padding-block: clamp(104px, 12vw, 140px) 0;
+    text-align: center;
+  }
+
+  .hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ---------- Copy (centered) ---------- */
+  .hero__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 60rem;
+  }
+
+  .hero__title {
+    font-size: var(--t-h2);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    margin: 0 0 1.25rem;
+    max-width: 18ch;
+  }
+
+  .hero__subhead {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    max-width: 56ch;
+    margin: 0 0 2.5rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .hero__microcopy {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ---------- Hero CTA — gradient pill + arrow badge (Framer-style) ----------
+     A vertical periwinkle gradient with a glowing purple shadow and a circular
+     arrow badge on the right. On hover the label and arrow flip vertically to a
+     fresh copy (perspective rotateX), echoing the Settle motion. */
+  .cta {
+    --cta-pad: 0.42rem;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: var(--cta-pad) var(--cta-pad) var(--cta-pad) 1.6rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--accent);
+    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-bright) 100%);
+    box-shadow: 0 6px 20px 0 rgba(81, 99, 255, 0.55);
+    color: #f0f2f6;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  }
+
+  .cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px 0 rgba(81, 99, 255, 0.6);
+  }
+
+  .cta:active {
+    transform: translateY(0);
+  }
+
+  .cta:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 3px;
+  }
+
+  /* Label — two stacked copies that flip on hover (perspective rotateX). */
+  .cta__label {
+    position: relative;
+    display: inline-grid;
+    overflow: hidden;
+    perspective: 500px;
+  }
+
+  .cta__text {
+    grid-area: 1 / 1;
+    white-space: nowrap;
+    transform-origin: 50% 100%;
+    transition: transform var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+  }
+
+  .cta__text--ghost {
+    transform: translateY(100%) rotateX(-60deg);
+    opacity: 0;
+  }
+
+  .cta:hover .cta__text {
+    transform: translateY(-100%) rotateX(60deg);
+    opacity: 0;
+  }
+
+  .cta:hover .cta__text--ghost {
+    transform: none;
+    opacity: 1;
+  }
+
+  /* Arrow badge — near-white circle holding a periwinkle chevron. */
+  .cta__arrow {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: var(--radius-pill);
+    background: #f0f2f6;
+    color: var(--accent);
+    overflow: hidden;
+  }
+
+  .cta__chevron {
+    grid-area: 1 / 1;
+    transition: transform var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+  }
+
+  .cta__chevron--ghost {
+    transform: translateX(-140%);
+    opacity: 0;
+  }
+
+  .cta:hover .cta__chevron {
+    transform: translateX(140%);
+    opacity: 0;
+  }
+
+  .cta:hover .cta__chevron--ghost {
+    transform: none;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta,
+    .cta__text,
+    .cta__chevron {
+      transition: none;
+    }
+    .cta:hover {
+      transform: none;
+    }
+    .cta:hover .cta__text,
+    .cta:hover .cta__chevron {
+      transform: none;
+      opacity: 1;
+    }
+    .cta__text--ghost,
+    .cta__chevron--ghost {
+      display: none;
+    }
+  }
+
+  /* ---------- Phone + Settle (centered below) ---------- */
+  .hero__visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    /* Full width so the noise stream extends beyond the phone on both sides */
+    width: 100%;
+    align-self: stretch;
+    /* Brought close to the copy — the stream fills the gap visually */
+    margin-top: clamp(0.5rem, 2vw, 1.5rem);
+  }
+
+  .phone {
+    position: relative;
+    z-index: 2; /* sits in front of the noise stream */
+    width: min(380px, 86vw);
+    /* Realistic iPhone frame (1015×2048 PNG) overlaid on the Settle screen.
+       The screen content only fills the top; the phone is left tall and its
+       lower body slides UNDER the next section. We fade the phone's lower body
+       to transparent with a mask so it dissolves cleanly into the page (rails
+       and all) — no hard dark edge for the overlapping band to fight with. */
+    aspect-ratio: 1015 / 2048;
+    -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 66%);
+    mask-image: linear-gradient(to bottom, #000 40%, transparent 66%);
+  }
+
+  .phone__frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3; /* above the screen */
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* ---------- Noise stream (right-to-left marquee, behind phone) ---------- */
+  .hero__stream {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    /* Rows sit across the phone's upper region, flanking it (see ref) */
+    justify-content: flex-start;
+    padding-top: clamp(1.5rem, 5vw, 3.5rem);
+    gap: clamp(0.6rem, 1.6vw, 1.1rem);
+    overflow: hidden;
+    pointer-events: none;
+    /* Fade the rows out at both edges so they dissolve into the page */
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 12%,
+      #000 88%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 12%,
+      #000 88%,
+      transparent 100%
+    );
+  }
+
+  .marquee {
+    overflow: hidden;
+  }
+
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    gap: clamp(0.5rem, 1.2vw, 0.85rem);
+    /* Right-to-left: track slides left by half its length (one copy) */
+    animation: marquee-rtl 38s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee--1 .marquee__track {
+    animation-duration: 30s;
+  }
+  .marquee--2 .marquee__track {
+    animation-duration: 46s;
+  }
+
+  @keyframes marquee-rtl {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex: none;
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    padding: 0.62rem 0.95rem;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .pill__glyph {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  /* Soft pastel tones — pill fill + matching label ink */
+  .pill--rose   { background: #FDECEC; color: #C2453E; }
+  .pill--blue   { background: #E8EEFE; color: #2F54B8; }
+  .pill--amber  { background: #FBF3DC; color: #9A6B16; }
+  .pill--stone  { background: #EFECE6; color: #6B5E4B; }
+  .pill--jade   { background: #E4F5EC; color: #1F8A55; }
+  .pill--violet { background: #F0EBFD; color: #6B45C8; }
+  .pill--teal   { background: #E1F3F1; color: #1E8579; }
+  .pill--clay   { background: #FBEDEB; color: var(--clay); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
+
+  .phone__screen {
+    position: absolute;
+    top: 3%;
+    bottom: 3%;
+    left: 6.2%;
+    right: 5.8%;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: 8% / 4%;
+    /* Top padding is a % of width so it scales with the device and clears the
+       Dynamic Island baked into the frame art. */
+    padding: 16% 18px 18px;
+    overflow: hidden;
+  }
+
+  /* Static lock-screen photo fills the phone screen, replacing the coded
+     Settle content (which is hidden below). */
+  .screen__photo {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 2; /* above the screen content it replaces */
+  }
+
+  /* The coded Settle content is replaced by the static photo. Scoped under
+     .phone__screen so it beats the later same-name display rules. */
+  .phone__screen .screen__bar,
+  .phone__screen .screen__label,
+  .phone__screen .stack,
+  .phone__screen .screen__filtered,
+  .phone__screen .chip--spam {
+    display: none;
+  }
+
+  .screen__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    margin-bottom: 1.25rem;
+  }
+
+  .screen__brand {
+    height: 18px;
+    width: auto;
+    display: block;
+  }
+
+  .screen__label {
+    font-family: var(--font-mono);
+    font-size: var(--t-eyebrow);
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    color: var(--jade);
+    margin: 0 0 .85rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid var(--gold); /* gold as a whisper — one hairline */
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+  }
+
+  /* Chip = a captured scrap, rendered like a calm ledger line (§4 mono). */
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink);
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: .6rem .7rem;
+    box-shadow: 0 1px 2px rgba(27, 30, 48, .05);
+  }
+
+  .chip__glyph {
+    font-size: 0.95rem;
+    line-height: 1;
+  }
+
+  .chip__label {
+    font-weight: 500;
+  }
+
+  .chip__value {
+    margin-left: auto;
+    color: var(--ink-soft);
+  }
+
+  .screen__filtered {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--jade);
+    margin: 1rem 0 0;
+  }
+
+  /* Spam scraps float over the screen (scattered), then vanish. */
+  .chip--spam {
+    position: absolute;
+    color: var(--clay);
+    border-color: color-mix(in srgb, var(--clay) 30%, var(--line));
+  }
+  .chip--s0 {
+    top: 30%;
+    left: 14px;
+  }
+  .chip--s1 {
+    top: 58%;
+    right: 14px;
+  }
+
+  /* ============================================================
+     SETTLED = default state (no-JS / reduced-motion target):
+     kept chips aligned, text in place, spam already gone.
+     ============================================================ */
+  .reveal,
+  .reveal-late,
+  .chip--keep {
+    opacity: 1;
+    transform: none;
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+  .chip--spam {
+    opacity: 0;
+  }
+
+  /* Stagger when settling */
+  .chip--k0 { transition-delay: 120ms; }
+  .chip--k1 { transition-delay: 240ms; }
+  .chip--k2 { transition-delay: 360ms; }
+  .reveal[data-reveal="0"] { transition-delay: 0ms; }
+  .reveal[data-reveal="1"] { transition-delay: 80ms; }
+  .reveal[data-reveal="2"] { transition-delay: 160ms; }
+  .reveal[data-reveal="3"] { transition-delay: 240ms; }
+  .reveal[data-reveal="4"] { transition-delay: 320ms; }
+  .reveal[data-reveal="5"] { transition-delay: 400ms; }
+  .reveal-late { transition-delay: 620ms; }
+
+  /* ============================================================
+     SCATTERED pre-state — applied by JS (.is-animating) only while
+     not yet loaded, and only when motion is allowed. No transition
+     on the jump INTO the scattered state.
+     ============================================================ */
+  .is-animating:not(.is-loaded) .reveal,
+  .is-animating:not(.is-loaded) .reveal-late,
+  .is-animating:not(.is-loaded) .chip--keep {
+    transition: none;
+  }
+
+  .is-animating:not(.is-loaded) .reveal,
+  .is-animating:not(.is-loaded) .reveal-late {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  /* Kept chips scattered: offset + rotate + faded */
+  .is-animating:not(.is-loaded) .chip--k0 {
+    transform: translate(-46px, -22px) rotate(-7deg);
+    opacity: .35;
+  }
+  .is-animating:not(.is-loaded) .chip--k1 {
+    transform: translate(52px, 6px) rotate(6deg);
+    opacity: .35;
+  }
+  .is-animating:not(.is-loaded) .chip--k2 {
+    transform: translate(-30px, 40px) rotate(-4deg);
+    opacity: .35;
+  }
+
+  /* Spam scraps visible + scattered before filtering */
+  .is-animating:not(.is-loaded) .chip--spam {
+    transition: none;
+    opacity: .85;
+  }
+  .is-animating:not(.is-loaded) .chip--s0 {
+    transform: translate(-10px, -6px) rotate(-8deg);
+  }
+  .is-animating:not(.is-loaded) .chip--s1 {
+    transform: translate(8px, 10px) rotate(7deg);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 880px) {
+    .hero__subhead {
+      font-size: 1rem;
+    }
+  }
+
+  /* Belt-and-suspenders: force settled if reduced motion is on,
+     even if a class lingers. */
+  @media (prefers-reduced-motion: reduce) {
+    .is-animating:not(.is-loaded) .reveal,
+    .is-animating:not(.is-loaded) .reveal-late,
+    .is-animating:not(.is-loaded) .chip--keep {
+      opacity: 1;
+      transform: none;
+    }
+    .is-animating:not(.is-loaded) .chip--spam {
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  // Play the Settle moment once, only when motion is allowed (§6/§7).
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (hero && !reduce) {
+    // 1) Snap to scattered pre-state (no transition).
+    hero.classList.add('is-animating');
+    // 2) Next frame, release to the settled state → everything transitions.
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => hero.classList.add('is-loaded'))
+    );
+  }
+</script>

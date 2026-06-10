@@ -1,0 +1,98 @@
+/* ============================================================
+   Kosha — design tokens.
+   Visual language adapted from lovi.care: white paper, deep-indigo
+   display ink, periwinkle accent, warm-graphite body, soft tinted
+   panels, very generous radii + negative space.
+   Derive everything from these. No framework default palettes.
+   ============================================================ */
+:root {
+  /* COLOR ------------------------------------------------------ */
+  --paper: #FFFFFF;          /* page bg + cards — clean white, lovi-style */
+  --paper-raised: #F2F3FD;   /* soft periwinkle panel tint (chips, inner rows) */
+  --paper-warm: #F6F5F4;     /* alternate warm panel tint */
+
+  /* Light tinted section band — Wealthfront-style warm peach fading down into
+     soft lavender. White cards sit on top of this and pop with a gentle glow. */
+  --tint-peach: #FCE7D6;     /* ambient-peach — warm top of the gradient */
+  --tint-lavender: #E7E2F6;  /* lavender — cool bottom of the gradient */
+  --surface-tint: var(--tint-lavender);  /* solid fallback / single-colour uses */
+  --surface-tint-2: var(--tint-peach);
+
+  --ink: #151581;            /* headings + brand — deep indigo (lovi navy) */
+  --ink-body: #292824;       /* body text — warm graphite, never pure #000 */
+  --ink-soft: rgba(41, 40, 36, .56);   /* secondary text */
+  --ink-faint: rgba(41, 40, 36, .40);  /* tertiary / meta */
+  --indigo-soft: rgba(21, 21, 129, .45); /* muted indigo (de-emphasised heads) */
+
+  /* Deep bands (FILTER section + final CTA) — Wealthfront-style deep eggplant
+     that anchors the page and makes the blue/purple circle-glow + white pop. */
+  --band-dark: #0D1738;
+  --eggplant: #2A1645;       /* deep aubergine base for the dark bands */
+  --band-raised: #3A2358;    /* panels/cards inside the dark eggplant bands */
+  --indigo: #151581;
+  --indigo-raised: #232392;
+
+  /* Accent — periwinkle. The signature pop: links, marks, hairlines,
+     active states, focus ring. Used with restraint as a fill on CTAs. */
+  --accent: #5163FF;
+  --accent-bright: #6E7DFF;  /* hover / focus */
+  --accent-deep: #3A48C9;    /* pressed / on-light contrast */
+  --accent-tint: #EEEFFF;    /* very light periwinkle fill (chips, pills) */
+  --accent-wash: rgba(81, 99, 255, .10); /* translucent wash */
+
+  --line: rgba(21, 21, 129, .10);        /* hairlines on light */
+  --line-strong: rgba(21, 21, 129, .16);
+
+  /* SEMANTIC — status hues used inside app-demo cards / badges */
+  --jade: #44B77B;           /* done / safe / streak (lovi green) */
+  --jade-tint: #E7F6EE;
+  --clay: #E0736A;           /* spam / blocked / problem (soft coral) */
+  --clay-tint: #FBEDEB;
+
+  /* TYPE ------------------------------------------------------- */
+  /* Headings: Space Grotesk (geometric grotesk display). Body: Inter (neutral,
+     legible long-form). Data/ledger "mono" role + small labels: Lexend.
+     Ledger rows opt into tabular figures locally so columns still align. */
+  --font-sans: "Lexend Variable", "Lexend",
+    system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Space Grotesk Variable", "Space Grotesk",
+    system-ui, -apple-system, "Segoe UI", sans-serif;   /* headings */
+  --font-body: "Inter Variable", "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-sans);      /* data / ledger / eyebrows */
+
+  /* SCALE — large, confident, tightly tracked headings (lovi-style).
+     Google Sans Flex carries a slightly larger x-height than Inter, so the
+     body holds at the same rem while headings lean on weight for presence. */
+  --t-h2: clamp(2.05rem, 4.4vw, 3.4rem);        /* largest heading — weight 500, tracking -0.025em */
+  --t-h3: 1.35rem;
+  --t-body: 1rem;                               /* body + lede unified at 16px/400 */
+  --t-eyebrow: 0.75rem;                         /* UPPERCASE, letter-spacing .16em */
+
+  /* SPACE / SHAPE / MOTION ------------------------------------- */
+  --maxw: 1180px;
+  --gutter: clamp(20px, 5vw, 64px);
+  --section-y: clamp(80px, 8vw, 120px);  /* consistent vertical rhythm — never below 80px */
+  --radius: 24px;            /* default cards */
+  --radius-lg: 40px;         /* large panels / section cards */
+  --radius-sm: 14px;         /* chips, small rows */
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(21, 21, 129, .05);
+  --shadow: 0 2px 8px rgba(21, 21, 129, .05), 0 20px 50px -20px rgba(21, 21, 129, .14);
+  --shadow-lg: 0 30px 80px -28px rgba(21, 21, 129, .22);
+
+  /* White-card glow: a soft periwinkle bloom so white cards lift off the
+     lilac light sections (lovi's gentle elevation). */
+  --shadow-card: 0 1px 3px rgba(21, 21, 129, .04), 0 16px 36px -18px rgba(81, 99, 255, .26);
+  --shadow-card-hover: 0 2px 8px rgba(21, 21, 129, .05), 0 26px 54px -20px rgba(81, 99, 255, .34);
+
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --dur: 600ms;
+  --dur-fast: 320ms;
+
+  /* Back-compat aliases — components authored against the old palette refer
+     to --gold / --shadow as the single accent + elevation. Remap them onto
+     the new periwinkle system so the whole site recolours consistently. */
+  --gold: var(--accent);
+  --gold-bright: var(--accent-bright);
+}

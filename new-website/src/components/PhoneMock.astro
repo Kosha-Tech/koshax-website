@@ -1,0 +1,804 @@
+---
+// PhoneMock — a small animated phone whose screen is tailored to each feature
+// card (§5 pipeline). One device frame, six screens switched by `kind`.
+// Animations are transform/opacity only; base CSS is the resting *visible*
+// state, so prefers-reduced-motion users still see a fully populated UI.
+interface Props {
+  kind: 'email' | 'retrieval' | 'spam' | 'priority' | 'habit' | 'planner';
+}
+const { kind } = Astro.props;
+---
+
+<div class:list={['phone', `phone--${kind}`]} aria-hidden="true">
+  <div class="phone__screen">
+
+    {kind === 'email' && (
+      <div class="scr scr--email">
+        <p class="scr__title">Inbox · parsing</p>
+        <div class="em-row">
+          <i class="em-ico">📄</i>
+          <div class="em-lines"><b /><i /></div>
+          <span class="em-tag em-tag--pdf">PDF</span>
+        </div>
+        <div class="em-row">
+          <i class="em-ico">📅</i>
+          <div class="em-lines"><b /><i /></div>
+          <span class="em-tag em-tag--due">Due 12d</span>
+        </div>
+        <div class="em-row">
+          <i class="em-ico">🩺</i>
+          <div class="em-lines"><b /><i /></div>
+          <span class="em-tag em-tag--ok">✓ Filed</span>
+        </div>
+        <span class="em-scan"></span>
+      </div>
+    )}
+
+    {kind === 'retrieval' && (
+      <div class="scr scr--retrieval">
+        <div class="rt-search">
+          <span class="rt-search__ico">🔍</span>
+          <span class="rt-search__text">utility bill</span>
+          <span class="rt-caret"></span>
+        </div>
+        <div class="rt-result">
+          <div class="rt-result__head">
+            <span>📄 HDFC · electricity</span>
+            <span class="rt-result__ok">✓</span>
+          </div>
+          <div class="rt-result__meta"><span>April</span><span>₹1,840</span></div>
+        </div>
+        <p class="rt-time">found in 0.3s</p>
+      </div>
+    )}
+
+    {kind === 'spam' && (
+      <div class="scr scr--spam">
+        <div class="sp-call">
+          <span class="sp-call__avatar">?</span>
+          <p class="sp-call__name">Unknown caller</p>
+          <p class="sp-call__num">+91 80xx · loan offer</p>
+          <span class="sp-stamp">Blocked</span>
+        </div>
+        <div class="sp-count">
+          <span>Blocked this week</span><b>7</b>
+        </div>
+      </div>
+    )}
+
+    {kind === 'priority' && (
+      <div class="scr scr--priority">
+        <div class="pr-row pr-row--mute"><i></i><b /></div>
+        <div class="pr-row pr-row--mute"><i></i><b /></div>
+        <div class="pr-row pr-row--gold">
+          <span class="pr-row__up">↑</span>
+          <span class="pr-row__lbl">Insurance renewal</span>
+          <span class="pr-row__flag">Urgent</span>
+        </div>
+      </div>
+    )}
+
+    {kind === 'habit' && (
+      <div class="scr scr--habit">
+        <div class="hb-ring">
+          <svg viewBox="0 0 60 60">
+            <circle class="hb-ring__bg" cx="30" cy="30" r="25" />
+            <circle class="hb-ring__fg" cx="30" cy="30" r="25" />
+          </svg>
+          <span class="hb-ring__num">🔥<b>12</b></span>
+        </div>
+        <div class="hb-list">
+          <div class="hb-item"><span>Morning walk</span><i class="hb-check">✓</i></div>
+          <div class="hb-item"><span>Vitamins</span><i class="hb-check">✓</i></div>
+          <div class="hb-item"><span>Read 20 min</span><i class="hb-check">✓</i></div>
+        </div>
+      </div>
+    )}
+
+    {kind === 'planner' && (
+      <div class="scr scr--planner">
+        <p class="scr__title">This week</p>
+        <div class="pl-week">
+          {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+            <div class="pl-day">
+              <span class="pl-bar" style={`--h:${[55, 80, 40, 95, 65, 30, 50][i]}%`}></span>
+              <span class="pl-lbl">{d}</span>
+            </div>
+          ))}
+          <span class="pl-cursor"></span>
+        </div>
+        <div class="pl-task"><i class="pl-dot"></i>Meals · Meds · Grocery</div>
+        <div class="pl-task pl-task--soft"><i class="pl-dot pl-dot--alt"></i>Refill prescription</div>
+      </div>
+    )}
+  </div>
+  <img class="phone__frame" src="/phone-frame.png" alt="" width="1015" height="2048" loading="lazy" decoding="async" />
+</div>
+
+<style>
+  /* ===== Device frame =====
+     Realistic iPhone PNG (1015×2048) overlaid on top of the live screen.
+     The screen sits in the frame's transparent window, measured from the
+     source art: left 6.9% · right 6.5% · top 3.4% · bottom 3.4%.
+     Screen is nudged a hair outside the window so the bezel masks its edges. */
+  .phone {
+    position: relative;
+    width: clamp(150px, 54%, 188px);
+    aspect-ratio: 1015 / 2048;
+    filter: drop-shadow(0 30px 60px rgba(13, 23, 56, 0.45));
+  }
+
+  :global(.section--dark) .phone {
+    filter: drop-shadow(0 34px 64px rgba(0, 0, 0, 0.6));
+  }
+
+  .phone__frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .phone__screen {
+    position: absolute;
+    top: 3%;
+    bottom: 3%;
+    left: 6.2%;
+    right: 5.8%;
+    z-index: 1;
+    border-radius: 8% / 4%;
+    background: var(--paper);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* Top padding is a % of width so it scales with the device and always
+       clears the Dynamic Island baked into the frame art. */
+    padding: 17% 11px 12px;
+    gap: 8px;
+  }
+
+  .scr__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .scr__brand {
+    height: 14px;
+    width: auto;
+    display: block;
+  }
+
+  .scr__pill {
+    font-size: 0.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border-radius: 99px;
+    padding: 0.25em 0.6em;
+  }
+
+  .scr__title {
+    font-size: 0.55rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+
+  .scr {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 0;
+  }
+
+  /* ===== EMAIL — inbox parsing, scan beam + tag pop ===== */
+  .em-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 7px;
+    border-radius: 9px;
+    background: var(--paper-raised);
+  }
+  .em-ico {
+    font-size: 0.7rem;
+    line-height: 1;
+    font-style: normal;
+  }
+  .em-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .em-lines b {
+    height: 4px;
+    width: 80%;
+    border-radius: 99px;
+    background: rgba(21, 21, 129, 0.22);
+  }
+  .em-lines i {
+    height: 3px;
+    width: 55%;
+    border-radius: 99px;
+    background: rgba(21, 21, 129, 0.12);
+  }
+  .em-tag {
+    font-size: 0.46rem;
+    font-weight: 700;
+    padding: 0.25em 0.5em;
+    border-radius: 99px;
+    white-space: nowrap;
+    transform-origin: center;
+    animation: emPop 4s var(--ease) infinite;
+  }
+  .em-tag--pdf {
+    color: var(--accent);
+    background: var(--accent-tint);
+    animation-delay: 0.2s;
+  }
+  .em-tag--due {
+    color: #b07d12;
+    background: #fbf2db;
+    animation-delay: 0.6s;
+  }
+  .em-tag--ok {
+    color: var(--jade);
+    background: var(--jade-tint);
+    animation-delay: 1s;
+  }
+  .em-scan {
+    position: absolute;
+    inset: 0 -7px auto -7px;
+    height: 40%;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgba(81, 99, 255, 0.16) 60%,
+      rgba(81, 99, 255, 0.28)
+    );
+    border-bottom: 1.5px solid var(--accent);
+    border-radius: 12px;
+    animation: emScan 4s var(--ease) infinite;
+  }
+  @keyframes emPop {
+    0%,
+    8% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    16% {
+      transform: scale(1.18);
+      opacity: 1;
+    }
+    24%,
+    88% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    96%,
+    100% {
+      transform: scale(0);
+      opacity: 0;
+    }
+  }
+  @keyframes emScan {
+    0% {
+      transform: translateY(-110%);
+      opacity: 0;
+    }
+    8% {
+      opacity: 1;
+    }
+    40% {
+      transform: translateY(150%);
+      opacity: 1;
+    }
+    44%,
+    100% {
+      transform: translateY(150%);
+      opacity: 0;
+    }
+  }
+
+  /* ===== RETRIEVAL — type query, result surfaces ===== */
+  .rt-search {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 8px;
+    border-radius: 99px;
+    background: var(--paper-raised);
+    font-size: 0.55rem;
+    color: var(--ink);
+  }
+  .rt-search__ico {
+    font-size: 0.6rem;
+  }
+  .rt-search__text {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: rtType 4s steps(12) infinite;
+  }
+  .rt-caret {
+    width: 1px;
+    height: 0.6rem;
+    background: var(--accent);
+    animation: rtBlink 0.8s steps(1) infinite;
+  }
+  .rt-result {
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    padding: 7px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: var(--paper);
+    box-shadow: var(--shadow-sm);
+    animation: rtRise 4s var(--ease) infinite;
+  }
+  .rt-result__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.52rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .rt-result__ok {
+    color: var(--jade);
+    font-weight: 700;
+  }
+  .rt-result__meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.5rem;
+    color: var(--ink-soft);
+  }
+  .rt-time {
+    margin: 0;
+    font-size: 0.46rem;
+    color: var(--ink-faint);
+    text-align: center;
+  }
+  @keyframes rtType {
+    0% {
+      width: 0;
+    }
+    35%,
+    90% {
+      width: 4.4rem;
+    }
+    100% {
+      width: 0;
+    }
+  }
+  @keyframes rtBlink {
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes rtRise {
+    0%,
+    38% {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    52%,
+    90% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+  }
+
+  /* ===== SPAM — incoming call blocked ===== */
+  .scr--spam {
+    justify-content: space-between;
+  }
+  .sp-call {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    text-align: center;
+    border-radius: 12px;
+    background: var(--paper-raised);
+    padding: 10px;
+    animation: spShake 4s var(--ease) infinite;
+  }
+  .sp-call__avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 99px;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    color: var(--clay);
+    background: var(--clay-tint);
+  }
+  .sp-call__name {
+    margin: 2px 0 0;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .sp-call__num {
+    margin: 0;
+    font-size: 0.5rem;
+    color: var(--ink-soft);
+  }
+  .sp-stamp {
+    position: absolute;
+    top: 38%;
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--clay);
+    border: 2px solid var(--clay);
+    border-radius: 6px;
+    padding: 0.15em 0.5em;
+    transform: rotate(-11deg);
+    animation: spStamp 4s var(--ease) infinite;
+  }
+  .sp-count {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.52rem;
+    color: var(--ink-soft);
+    padding: 5px 8px;
+    border-radius: 8px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+  }
+  .sp-count b {
+    color: var(--clay);
+    font-size: 0.7rem;
+  }
+  @keyframes spShake {
+    0%,
+    44% {
+      transform: translateX(0);
+    }
+    48% {
+      transform: translateX(-3px);
+    }
+    52% {
+      transform: translateX(3px);
+    }
+    56% {
+      transform: translateX(-2px);
+    }
+    60% {
+      transform: translateX(0);
+    }
+    78% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    90%,
+    100% {
+      transform: translateY(-6px);
+      opacity: 0.55;
+    }
+  }
+  @keyframes spStamp {
+    0%,
+    46% {
+      opacity: 0;
+      transform: rotate(-11deg) scale(1.7);
+    }
+    56% {
+      opacity: 1;
+      transform: rotate(-11deg) scale(1);
+    }
+    86% {
+      opacity: 1;
+    }
+    94%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* ===== PRIORITY — urgent item promoted to top ===== */
+  .scr--priority {
+    position: relative;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+  .pr-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 9px;
+    min-height: 14px;
+  }
+  .pr-row--mute {
+    background: var(--paper-raised);
+  }
+  .pr-row--mute i {
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: rgba(21, 21, 129, 0.18);
+  }
+  .pr-row--mute b {
+    flex: 1;
+    height: 4px;
+    border-radius: 99px;
+    background: rgba(21, 21, 129, 0.16);
+  }
+  .pr-row--gold {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: #fff;
+    border: 1.5px solid var(--accent);
+    box-shadow: 0 10px 22px -10px rgba(81, 99, 255, 0.5);
+    animation: prPromote 4s var(--ease) infinite;
+  }
+  .pr-row__up {
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 0.7rem;
+  }
+  .pr-row__lbl {
+    flex: 1;
+    font-size: 0.52rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .pr-row__flag {
+    font-size: 0.44rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border-radius: 99px;
+    padding: 0.2em 0.5em;
+  }
+  @keyframes prPromote {
+    0%,
+    10% {
+      transform: translateY(76px);
+      opacity: 0;
+    }
+    22% {
+      opacity: 1;
+    }
+    46%,
+    86% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    96%,
+    100% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+  }
+
+  /* ===== HABIT — streak ring fills, items tick ===== */
+  .scr--habit {
+    align-items: center;
+    gap: 8px;
+  }
+  .hb-ring {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-items: center;
+  }
+  .hb-ring svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  .hb-ring__bg {
+    fill: none;
+    stroke: var(--paper-raised);
+    stroke-width: 6;
+  }
+  .hb-ring__fg {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 157;
+    stroke-dashoffset: 47;
+    animation: hbFill 4s var(--ease) infinite;
+  }
+  .hb-ring__num {
+    position: absolute;
+    font-size: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+    color: var(--ink-soft);
+  }
+  .hb-ring__num b {
+    font-size: 0.8rem;
+    color: var(--ink);
+  }
+  .hb-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .hb-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.52rem;
+    color: var(--ink);
+    padding: 5px 8px;
+    border-radius: 8px;
+    background: var(--paper-raised);
+  }
+  .hb-check {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--jade);
+    transform-origin: center;
+    animation: emPop 4s var(--ease) infinite;
+  }
+  .hb-item:nth-child(1) .hb-check {
+    animation-delay: 0.3s;
+  }
+  .hb-item:nth-child(2) .hb-check {
+    animation-delay: 0.6s;
+  }
+  .hb-item:nth-child(3) .hb-check {
+    animation-delay: 0.9s;
+  }
+  @keyframes hbFill {
+    0% {
+      stroke-dashoffset: 157;
+    }
+    30%,
+    85% {
+      stroke-dashoffset: 39;
+    }
+    100% {
+      stroke-dashoffset: 157;
+    }
+  }
+
+  /* ===== PLANNER — week bars grow, cursor sweeps ===== */
+  .pl-week {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 3px;
+    height: 56px;
+    padding: 4px 2px 0;
+  }
+  .pl-day {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+  .pl-bar {
+    width: 70%;
+    height: var(--h);
+    border-radius: 99px;
+    background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+    transform-origin: bottom;
+    animation: plGrow 3.6s var(--ease) infinite;
+  }
+  .pl-day:nth-child(1) .pl-bar {
+    animation-delay: 0s;
+  }
+  .pl-day:nth-child(2) .pl-bar {
+    animation-delay: 0.12s;
+  }
+  .pl-day:nth-child(3) .pl-bar {
+    animation-delay: 0.24s;
+  }
+  .pl-day:nth-child(4) .pl-bar {
+    animation-delay: 0.36s;
+  }
+  .pl-day:nth-child(5) .pl-bar {
+    animation-delay: 0.48s;
+  }
+  .pl-day:nth-child(6) .pl-bar {
+    animation-delay: 0.6s;
+  }
+  .pl-day:nth-child(7) .pl-bar {
+    animation-delay: 0.72s;
+  }
+  .pl-lbl {
+    font-size: 0.46rem;
+    color: var(--ink-faint);
+  }
+  .pl-task {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.52rem;
+    color: var(--ink);
+    padding: 5px 7px;
+    border-radius: 8px;
+    background: var(--paper-raised);
+  }
+  .pl-task--soft {
+    color: var(--ink-soft);
+  }
+  .pl-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 99px;
+    background: var(--jade);
+  }
+  .pl-dot--alt {
+    background: var(--accent);
+  }
+  @keyframes plGrow {
+    0% {
+      transform: scaleY(0.12);
+      opacity: 0.4;
+    }
+    40%,
+    100% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+
+  /* ===== Respect reduced motion — base CSS is already the resting state ===== */
+  @media (prefers-reduced-motion: reduce) {
+    .em-tag,
+    .em-scan,
+    .rt-search__text,
+    .rt-caret,
+    .rt-result,
+    .sp-call,
+    .sp-stamp,
+    .pr-row--gold,
+    .hb-ring__fg,
+    .hb-check,
+    .pl-bar {
+      animation: none !important;
+    }
+    .em-scan,
+    .sp-stamp {
+      opacity: 0;
+    }
+    .pr-row--gold {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .rt-search__text {
+      width: auto;
+    }
+  }
+</style>
