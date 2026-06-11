@@ -22,22 +22,39 @@ const filtered = [
 ];
 
 // The incoming noise stream — the chaos Kosha absorbs. Rendered as a
-// right-to-left marquee BEHIND the phone (tone = soft pastel tint per pill).
+// right-to-left marquee BEHIND the phone: white pills, periwinkle line
+// icons, dark ink labels (lucide-style 24×24 stroke paths).
+const icons: Record<string, string> = {
+  mail: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+  calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+  book: '<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>',
+  news: '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8V6Z"/>',
+  list: '<path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8M13 12h8M13 18h8"/>',
+  pill: '<path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/>',
+  cart: '<circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>',
+  gift: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/>',
+  shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+  phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+  chat: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  bell: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+  bank: '<path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 2l8 5H4Z"/>',
+  car: '<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>',
+};
 const stream = [
-  { glyph: '📧', label: '47 unread emails', tone: 'rose' },
-  { glyph: '📅', label: '3 calendar conflicts', tone: 'blue' },
-  { glyph: '🎒', label: 'School circulars', tone: 'amber' },
-  { glyph: '📰', label: 'News alerts', tone: 'stone' },
-  { glyph: '📝', label: 'Scattered to-dos', tone: 'jade' },
-  { glyph: '💊', label: 'Medication reminders', tone: 'rose' },
-  { glyph: '🛒', label: 'Grocery lists', tone: 'jade' },
-  { glyph: '🎂', label: 'Birthday reminders', tone: 'violet' },
-  { glyph: '📋', label: 'Insurance renewal', tone: 'amber' },
-  { glyph: '📞', label: 'Missed calls', tone: 'teal' },
-  { glyph: '💬', label: 'WhatsApp groups (89)', tone: 'jade' },
-  { glyph: '📱', label: 'Social notifications', tone: 'violet' },
-  { glyph: '🏦', label: 'Bank notifications', tone: 'rose' },
-  { glyph: '🚗', label: 'Car service due', tone: 'clay' },
+  { icon: 'mail', label: '47 unread emails' },
+  { icon: 'calendar', label: '3 calendar conflicts' },
+  { icon: 'book', label: 'School circulars' },
+  { icon: 'news', label: 'News alerts' },
+  { icon: 'list', label: 'Scattered to-dos' },
+  { icon: 'pill', label: 'Medication reminders' },
+  { icon: 'cart', label: 'Grocery lists' },
+  { icon: 'gift', label: 'Birthday reminders' },
+  { icon: 'shield', label: 'Insurance renewal' },
+  { icon: 'phone', label: 'Missed calls' },
+  { icon: 'chat', label: 'WhatsApp groups (89)' },
+  { icon: 'bell', label: 'Social notifications' },
+  { icon: 'bank', label: 'Bank notifications' },
+  { icon: 'car', label: 'Car service due' },
 ];
 // Split across three marquee rows for depth behind the phone.
 const rows = [
@@ -51,23 +68,30 @@ const rows = [
   <div class="container hero__inner">
     <!-- ============ The pitch — centered (§8 copy verbatim) ============ -->
     <div class="hero__copy">
-      <h2 class="hero__title reveal" data-reveal="1">Focus on what really matters.</h2>
+      <h2 class="hero__title reveal" data-reveal="1">
+        Focus on your<br />
+        <span class="hero__title-highlight">
+          Next Best Action
+          <svg class="hero__title-underline" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M 8 36 C 90 28 200 14 268 9 C 285 7.8 296 10 290 14 C 285 17.5 263 20 238 22" fill="none" stroke="#444CE7" stroke-width="4.5" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+          </svg>
+        </span>
+      </h2>
 
       <p class="hero__subhead reveal" data-reveal="3">
-        Kosha is the quiet assistant for everything outside work. It finds your important
-        documents, blocks the spam before it reaches you, and remembers the deadlines you
-        shouldn’t have to — so your attention stays where it counts.
+        KoshaX is an AI-powered Life OS that augments your mind, and helps you focus on
+        stuff that matters
       </p>
 
       <div class="hero__actions reveal" data-reveal="4">
         <a
           class="cta download-trigger"
-          href="https://kosha.app/get?utm_source=hero"
+          href="/download?utm_source=hero"
           data-placement="hero"
         >
           <span class="cta__label">
-            <span class="cta__text">Download free</span>
-            <span class="cta__text cta__text--ghost" aria-hidden="true">Download free</span>
+            <span class="cta__text">Download KoshaX</span>
+            <span class="cta__text cta__text--ghost" aria-hidden="true">Download KoshaX</span>
           </span>
           <span class="cta__arrow" aria-hidden="true">
             <svg class="cta__chevron" viewBox="0 0 13 10" width="13" height="10" fill="none">
@@ -78,7 +102,7 @@ const rows = [
             </svg>
           </span>
         </a>
-        <p class="hero__microcopy">Free to start · No credit card · Read-only &amp; private</p>
+        <p class="hero__microcopy">Free to start · Encrypted &amp; Private</p>
       </div>
     </div>
 
@@ -91,8 +115,17 @@ const rows = [
             <div class={`marquee marquee--${r}`}>
               <div class="marquee__track">
                 {[...row, ...row].map((c) => (
-                  <span class={`pill pill--${c.tone}`}>
-                    <span class="pill__glyph">{c.glyph}</span>
+                  <span class="pill">
+                    <svg
+                      class="pill__icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      set:html={icons[c.icon]}
+                    />
                     {c.label}
                   </span>
                 ))}
@@ -106,7 +139,7 @@ const rows = [
         <div class="phone__screen">
           <!-- Mobile: static lock-screen artwork fills the phone screen,
                standing in for the animated Settle content below. -->
-          <img class="screen__photo" src="/hero-mobile.png" alt="" decoding="async" />
+          <img class="screen__photo" src="/hero-app-screen.png" alt="" decoding="async" />
 
           <div class="screen__bar">
             <img class="screen__brand" src="/kosha-logo-blue.svg" alt="Kosha" width="364" height="60" decoding="async" />
@@ -175,14 +208,29 @@ const rows = [
     line-height: 1.04;
     letter-spacing: -0.025em;
     margin: 0 0 1.25rem;
-    max-width: 18ch;
+  }
+
+  .hero__title-highlight {
+    position: relative;
+    display: inline-block;
+    margin-top: 0.15em;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+  }
+
+  .hero__title-underline {
+    position: absolute;
+    left: 0;
+    bottom: -0.3em;
+    width: 100%;
+    height: 0.38em;
+    overflow: visible;
   }
 
   .hero__subhead {
     color: var(--ink-soft);
     font-size: 1rem;
     max-width: 56ch;
-    margin: 0 0 2.5rem;
+    margin: 1.5rem 0 2.5rem;
   }
 
   .hero__actions {
@@ -204,6 +252,7 @@ const rows = [
      arrow badge on the right. On hover the label and arrow flip vertically to a
      fresh copy (perspective rotateX), echoing the Settle motion. */
   .cta {
+    --cta-color: #444CE7;
     --cta-pad: 0.42rem;
     position: relative;
     display: inline-flex;
@@ -211,9 +260,9 @@ const rows = [
     gap: 0.85rem;
     padding: var(--cta-pad) var(--cta-pad) var(--cta-pad) 1.6rem;
     border-radius: var(--radius-pill);
-    border: 1px solid var(--accent);
-    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-bright) 100%);
-    box-shadow: 0 6px 20px 0 rgba(81, 99, 255, 0.55);
+    border: 1px solid var(--cta-color);
+    background: linear-gradient(180deg, var(--cta-color) 0%, color-mix(in srgb, var(--cta-color) 82%, white) 100%);
+    box-shadow: 0 6px 20px 0 rgba(68, 76, 231, 0.55);
     color: #f0f2f6;
     font-family: var(--font-body);
     font-weight: 600;
@@ -226,7 +275,7 @@ const rows = [
 
   .cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 30px 0 rgba(81, 99, 255, 0.6);
+    box-shadow: 0 12px 30px 0 rgba(68, 76, 231, 0.6);
   }
 
   .cta:active {
@@ -278,7 +327,7 @@ const rows = [
     height: 2.35rem;
     border-radius: var(--radius-pill);
     background: #f0f2f6;
-    color: var(--accent);
+    color: var(--cta-color);
     overflow: hidden;
   }
 
@@ -344,8 +393,8 @@ const rows = [
        to transparent with a mask so it dissolves cleanly into the page (rails
        and all) — no hard dark edge for the overlapping band to fight with. */
     aspect-ratio: 1015 / 2048;
-    -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 66%);
-    mask-image: linear-gradient(to bottom, #000 40%, transparent 66%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 52%, transparent 80%);
+    mask-image: linear-gradient(to bottom, #000 52%, transparent 80%);
   }
 
   .phone__frame {
@@ -368,7 +417,7 @@ const rows = [
     flex-direction: column;
     /* Rows sit across the phone's upper region, flanking it (see ref) */
     justify-content: flex-start;
-    padding-top: clamp(1.5rem, 5vw, 3.5rem);
+    padding-top: clamp(5.5rem, 13vw, 10.5rem);
     gap: clamp(0.6rem, 1.6vw, 1.1rem);
     overflow: hidden;
     pointer-events: none;
@@ -421,32 +470,28 @@ const rows = [
   .pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.5rem;
     flex: none;
     font-family: var(--font-sans);
     font-size: 0.92rem;
     font-weight: 500;
     line-height: 1;
     white-space: nowrap;
-    padding: 0.62rem 0.95rem;
+    padding: 0.68rem 1.05rem;
     border-radius: var(--radius-pill);
-    box-shadow: var(--shadow-sm);
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid #444CE7;
+    box-shadow: 0 2px 10px rgba(27, 30, 48, 0.07);
   }
 
-  .pill__glyph {
-    font-size: 1rem;
-    line-height: 1;
+  /* Periwinkle line icon — lighter tint of the CTA indigo */
+  .pill__icon {
+    width: 1.1em;
+    height: 1.1em;
+    flex: none;
+    color: #7B80F2;
   }
-
-  /* Soft pastel tones — pill fill + matching label ink */
-  .pill--rose   { background: #FDECEC; color: #C2453E; }
-  .pill--blue   { background: #E8EEFE; color: #2F54B8; }
-  .pill--amber  { background: #FBF3DC; color: #9A6B16; }
-  .pill--stone  { background: #EFECE6; color: #6B5E4B; }
-  .pill--jade   { background: #E4F5EC; color: #1F8A55; }
-  .pill--violet { background: #F0EBFD; color: #6B45C8; }
-  .pill--teal   { background: #E1F3F1; color: #1E8579; }
-  .pill--clay   { background: #FBEDEB; color: var(--clay); }
 
   @media (prefers-reduced-motion: reduce) {
     .marquee__track {
@@ -477,7 +522,10 @@ const rows = [
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* Fit by width so the screenshot's edges (status bar, logo, avatar) are
+       never cropped; the bottom gap hides under the phone's fade mask. */
+    object-fit: contain;
+    object-position: top center;
     z-index: 2; /* above the screen content it replaces */
   }
 

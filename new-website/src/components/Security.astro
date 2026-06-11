@@ -1,28 +1,23 @@
 ---
 // Built right (security) · eyebrow "Built right" (§8).
-// §12 honesty: ISO 27001 / SOC 2 carry a `*` until actually certified —
-// the asterisk maps to a footnote. Don't present uncertified as held.
+// Icons are lucide-style 24×24 stroke paths in tinted chips — same visual
+// language as the Problem cards, each with its own mood colour (--c).
 const features = [
   {
-    glyph: '🔒',
+    color: '#1D9E75',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>`,
     name: 'Privacy by design',
     desc: 'Email access is strictly read-only. Nothing you share with Kosha is sold, stored on third-party servers, or used to train models. Your personal life is yours — Kosha just helps you navigate it.',
   },
   {
-    glyph: '🌐',
+    color: '#378ADD',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
     name: 'Works where life happens',
     desc: 'On the go or winding down at home, Kosha is there — iOS, Android, and wherever your day takes you. One experience across every device and channel.',
   },
 ];
 
-const certs = [
-  { label: 'Google API verified', pending: false },
-  { label: 'DPDP Act 2023', pending: false },
-  { label: 'GDPR', pending: false },
-  { label: 'ISO 27001', pending: true },
-  { label: 'SOC 2 Type II', pending: true },
-];
-const hasPending = certs.some((c) => c.pending);
+const certs = ['CASA Certified', 'ISO 27001', 'SOC 2 Type II'];
 ---
 
 <section class="section security" id="security">
@@ -36,8 +31,8 @@ const hasPending = certs.some((c) => c.pending);
       <ul class="security__features" data-sr data-sr-delay="1">
         {
           features.map((f) => (
-            <li class="security__feature">
-              <span class="security__glyph" aria-hidden="true">{f.glyph}</span>
+            <li class="security__feature" style={`--c:${f.color}`}>
+              <span class="security__icon" set:html={f.icon} />
               <div>
                 <h3 class="security__name">{f.name}</h3>
                 <p class="security__desc">{f.desc}</p>
@@ -54,18 +49,11 @@ const hasPending = certs.some((c) => c.pending);
           certs.map((c) => (
             <li class="security__cert">
               <span class="security__cert-mark" aria-hidden="true">✓</span>
-              {c.label}{c.pending && <sup class="security__pending">*</sup>}
+              {c}
             </li>
           ))
         }
       </ul>
-      {
-        hasPending && (
-          <p class="security__footnote">
-            <span aria-hidden="true">*</span> Certification in progress — not yet held. Listed for transparency, never as a claim.
-          </p>
-        )
-      }
     </div>
   </div>
 </section>
@@ -93,10 +81,21 @@ const hasPending = certs.some((c) => c.pending);
     gap: 0.9rem;
   }
 
-  .security__glyph {
+  .security__icon {
     flex: none;
-    font-size: 1.2rem;
-    line-height: 1.3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 18%, transparent);
+  }
+  .security__icon :global(svg) {
+    width: 21px;
+    height: 21px;
+    display: block;
   }
 
   .security__name {
@@ -136,18 +135,6 @@ const hasPending = certs.some((c) => c.pending);
 
   .security__cert-mark {
     color: var(--gold); /* gold whisper — the verification marks */
-  }
-
-  .security__pending {
-    color: var(--clay);
-    font-size: 0.7em;
-  }
-
-  .security__footnote {
-    margin: 1.25rem 0 0;
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    max-width: 60ch;
   }
 
   @media (max-width: 760px) {

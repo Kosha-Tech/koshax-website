@@ -2,31 +2,36 @@
 // Setup (#how-it-works) · eyebrow "Getting started" (§8).
 // §5: setup steps ARE a real sequence → numbering 1 · 2 · 3 is meaningful here
 // (unlike problems/solutions). Copy verbatim from §8.
+//
+// Redesigned as a connected stepper: three numbered nodes sit on a dashed
+// path (the "two minutes" journey), each with a lucide-style stroke icon in
+// a tinted chip — the same icon language as the Problem and Security
+// sections. No artwork tiles. Mobile collapses to a vertical timeline.
 const steps = [
   {
     n: '1',
     title: 'Download Kosha',
     body: 'Free on iOS and Android. No account required to explore. No credit card ever.',
-    img: '/setup-step-1.png',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="3" y2="15"/></svg>`,
   },
   {
     n: '2',
     title: 'Connect your email',
     body:
       'One tap. Read-only access means Kosha can find your documents — but never write, send, or share anything on your behalf.',
-    img: '/setup-step-2.png',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/><path d="m16 19 2 2 4-4"/></svg>`,
   },
   {
     n: '3',
     title: 'Let Kosha take it from here',
     body:
       'Quiet reminders. Zero overwhelm. From day one, your personal life starts running itself.',
-    img: '/setup-step-3.png',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg>`,
   },
 ];
 ---
 
-<section class="section setup" id="how-it-works">
+<section class="section section--dark setup" id="how-it-works">
   <div class="container">
     <div class="section__head section__head--center" data-sr>
       <p class="eyebrow">Getting started</p>
@@ -41,18 +46,10 @@ const steps = [
       {
         steps.map((s, i) => (
           <li class="setup__step" data-sr data-sr-delay={i + 1}>
-            {/* Image area — per-step artwork from Assets/Setup */}
-            <div class="setup__media">
-              <img src={s.img} alt={`Step ${s.n}: ${s.title}`} loading="lazy" width="800" height="500" />
-            </div>
-
-            <div class="setup__copy">
-              <div class="setup__heading">
-                <span class="setup__num" aria-hidden="true">{s.n}</span>
-                <h3 class="setup__title">{s.title}</h3>
-              </div>
-              <p class="setup__body">{s.body}</p>
-            </div>
+            <span class="setup__num" aria-hidden="true">{s.n}</span>
+            <span class="setup__icon" set:html={s.icon} />
+            <h3 class="setup__title">{s.title}</h3>
+            <p class="setup__body">{s.body}</p>
           </li>
         ))
       }
@@ -67,88 +64,148 @@ const steps = [
     max-width: 44ch;
   }
 
+  /* ---- The path: three columns joined by a dashed line that runs through
+     the numbered nodes (the journey from download to done). ---- */
   .setup__steps {
     list-style: none;
     margin: 0;
     padding: 0;
+    position: relative;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .setup__steps::before {
+    content: '';
+    position: absolute;
+    top: 1.25rem; /* centre of the number nodes */
+    left: 16.66%;
+    right: 16.66%;
+    border-top: 2px dashed color-mix(in srgb, var(--accent-bright) 55%, transparent);
   }
 
   .setup__step {
+    position: relative;
     display: flex;
     flex-direction: column;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  /* Image area — placeholder until artwork is supplied per step.
-     Drop an <img> inside .setup__media (it'll fill the box via object-fit).
-     16:10 matches lindy's wide-but-short artwork tiles. */
-  .setup__media {
-    position: relative;
-    aspect-ratio: 16 / 10;
-    background: var(--paper-raised);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .setup__media :global(img),
-  .setup__media :global(video) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .setup__copy {
-    padding: 1.75rem;
-  }
-
-  .setup__heading {
-    display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.65rem;
+    text-align: center;
   }
 
-  /* Mono step number — the meaningful sequence (§5). Gold = the one key
-     number accent (§3). Sits as a small badge beside the step title. */
+  /* Numbered node — sits ON the dashed path; solid accent fill masks the
+     line behind it. Mono digits = the meaningful sequence (§5). */
   .setup__num {
     flex: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 1.85rem;
-    height: 1.85rem;
-    padding: 0 0.45rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
     font-family: var(--font-mono);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 500;
-    color: var(--gold);
-    background: var(--paper-warm);
-    border-radius: var(--radius-sm);
+    color: #fff;
+    background: var(--accent);
+    box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--accent) 60%, transparent);
+  }
+
+  /* Icon chip — same lucide-in-a-squircle language as Problem / Security.
+     On the dark band a raised-eggplant chip goes muddy, so instead it's a
+     translucent periwinkle wash with a light-periwinkle icon — clearly lit
+     against the eggplant without competing with the white number nodes. */
+  .setup__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    margin-top: 1.6rem;
+    border-radius: 18px;
+    color: color-mix(in srgb, #fff 70%, var(--accent-bright));
+    background: color-mix(in srgb, var(--accent-bright) 22%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent-bright) 38%, transparent);
+  }
+  .setup__icon :global(svg) {
+    width: 28px;
+    height: 28px;
+    display: block;
   }
 
   .setup__title {
     font-family: var(--font-display);
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     font-weight: 500;
-    margin: 0;
+    line-height: 1.2;
+    margin: 1.1rem 0 0.6rem;
+    max-width: 16ch;
   }
 
   .setup__body {
-    color: var(--ink-soft);
+    color: color-mix(in srgb, #fff 72%, transparent);
+    font-size: 0.95rem;
     margin: 0;
+    max-width: 30ch;
   }
 
+  /* ---- Mobile: vertical timeline — nodes down the left, the dashed path
+     drops between them, content sits to the right. ---- */
   @media (max-width: 760px) {
     .setup__steps {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 0;
+      max-width: 30rem;
+      margin-inline: auto;
+    }
+    .setup__steps::before {
+      display: none;
+    }
+
+    .setup__step {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      column-gap: 1.1rem;
+      align-items: start;
+      text-align: left;
+      padding-bottom: 2.5rem;
+    }
+    .setup__step:last-child {
+      padding-bottom: 0;
+    }
+    /* the dropped path segment between this node and the next */
+    .setup__step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: calc(1.25rem - 1px);
+      top: 3rem;
+      bottom: 0.5rem;
+      border-left: 2px dashed color-mix(in srgb, var(--accent-bright) 55%, transparent);
+    }
+
+    .setup__num {
+      grid-column: 1;
+      grid-row: 1 / span 3;
+    }
+    .setup__icon {
+      grid-column: 2;
+      margin-top: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+    }
+    .setup__icon :global(svg) {
+      width: 24px;
+      height: 24px;
+    }
+    .setup__title {
+      grid-column: 2;
+      margin-top: 0.9rem;
+      max-width: none;
+    }
+    .setup__body {
+      grid-column: 2;
+      max-width: 46ch;
     }
   }
 </style>

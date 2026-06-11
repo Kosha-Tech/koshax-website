@@ -5,32 +5,45 @@
 // fanned into an overlapping stack (hand-of-cards), tilted and vertically
 // staggered. They fade + rise in together on scroll.
 //
-// Each card carries a tilt (--rot) and a vertical offset (--dy) for the arc.
-// Icons live inline so the accent colour is themeable via currentColor.
+// Each card carries a tilt (--rot), a vertical offset (--dy) for the arc, and
+// a mood colour (--c) that tints its background, border, pin, tag and icon.
+// Icons are lucide-style 24×24 stroke paths, themeable via currentColor.
 const cards = [
   {
-    text: 'WhatsApp groups you can’t mute',
-    rot: -8,
-    dy: 30,
-    icon: `<svg viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M36.3863 36.8792L30.7607 32.5719C30.3447 32.9252 29.9035 33.2455 29.4372 33.5327C28.971 33.8199 28.4848 34.0839 27.9788 34.3248L27.7485 32.59C28.0548 32.4317 28.3482 32.2689 28.6286 32.1016C28.9092 31.9355 29.1714 31.7488 29.4151 31.5416L22.2212 26.0335L22.9819 31.7649L16.2877 26.6394L10.6323 27.39L9.7552 20.7813L14.5333 20.1472L5.40622 13.1589L6.42072 11.8339L37.401 35.5559L36.3863 36.8792ZM34.0037 28.7705L32.6937 27.7675C33.2499 26.7387 33.6394 25.6412 33.8624 24.4751C34.0853 23.309 34.1162 22.114 33.9549 20.8901C33.6338 18.4713 32.6443 16.3778 30.9861 14.6094C29.3279 12.8411 27.3024 11.7088 24.9097 11.2127L24.6795 9.47788C27.554 9.98969 29.999 11.268 32.0144 13.3129C34.0299 15.3577 35.2274 17.8104 35.607 20.6708C35.798 22.1093 35.7495 23.5179 35.4618 24.8967C35.174 26.2754 34.688 27.5667 34.0037 28.7705ZM28.814 24.7954L26.4747 23.0043L25.5976 16.3956C26.612 16.8774 27.4283 17.5811 28.0466 18.5067C28.6636 19.4313 29.046 20.4504 29.1938 21.564C29.2684 22.1258 29.2745 22.6786 29.2122 23.2227C29.1499 23.7667 29.0177 24.2909 28.8156 24.7952M21.2926 19.0366L18.0772 16.548L20.5361 13.3365L21.2926 19.0366Z" fill="currentColor"/></svg>`,
+    tag: 'On you',
+    title: 'Family health monitoring',
+    sub: 'Becoming a daily chore.',
+    color: '#1D9E75',
+    rot: -5,
+    dy: 14,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>`,
   },
   {
-    text: 'Bill due dates missed by one day',
-    rot: -6,
-    dy: 18,
-    icon: `<svg viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g clip-path="url(#clip_cal)"><path d="M10.3352 36.2303C9.5936 36.0316 9.0413 35.6179 8.67832 34.9892C8.31534 34.3605 8.23267 33.6752 8.43031 32.9333L13.9388 12.3752C14.1373 11.6346 14.5514 11.083 15.1812 10.7203C15.8109 10.3576 16.4962 10.275 17.2371 10.4723L20.0849 11.2354L20.8148 8.5115C20.8818 8.26143 21.0194 8.07629 21.2276 7.95609C21.4358 7.83588 21.6644 7.80913 21.9134 7.87585C22.1624 7.94257 22.3476 8.08017 22.4688 8.28867C22.5901 8.49716 22.6167 8.7263 22.5486 8.97608L21.8188 11.7L33.3358 14.786L34.0821 12.0009C34.1436 11.7712 34.2718 11.5997 34.4667 11.4862C34.6616 11.3728 34.8737 11.3474 35.1031 11.41C35.3325 11.4726 35.503 11.6006 35.6146 11.7938C35.7261 11.987 35.7521 12.1993 35.6924 12.4306L34.9457 15.2173L37.7936 15.9804C38.5341 16.1789 39.0863 16.5931 39.45 17.2232C39.8138 17.8532 39.8959 18.5384 39.6964 19.2786L34.1883 39.8351C33.9899 40.5757 33.5762 41.128 32.9472 41.492C32.3182 41.8561 31.6325 41.9381 30.8901 41.738L10.3352 36.2303ZM10.7666 34.6205L31.3231 40.1286C31.5699 40.1947 31.8245 40.1525 32.0869 40.0019C32.3492 39.8514 32.5132 39.6515 32.5789 39.4022L36.3611 25.2868L13.8228 19.2477L10.0402 33.3647C9.97405 33.6115 10.0163 33.8661 10.1668 34.1285C10.3174 34.3908 10.5168 34.5547 10.765 34.62M23.5658 27.963C23.2331 27.8738 22.9764 27.6727 22.7957 27.3598C22.615 27.0468 22.5692 26.7239 22.6583 26.3912C22.7475 26.0585 22.9484 25.8023 23.2611 25.6227C23.5738 25.4431 23.8967 25.3973 24.2297 25.4854C24.5627 25.5734 24.8194 25.7745 24.9998 26.0886C25.1802 26.4026 25.226 26.7255 25.1371 27.0571C25.0483 27.3888 24.8473 27.6449 24.5343 27.8256C24.2214 28.0063 23.8985 28.0521 23.5658 27.963ZM16.3562 25.6343C16.1755 25.3213 16.1297 24.9985 16.2188 24.6657C16.3077 24.3341 16.5086 24.0779 16.8216 23.8972C17.1346 23.7165 17.4575 23.6708 17.7902 23.7599C18.1229 23.8491 18.3796 24.0501 18.5603 24.3631C18.741 24.6761 18.7868 24.999 18.6976 25.3317C18.6085 25.6644 18.4075 25.9205 18.0948 26.1002C17.7821 26.2798 17.4593 26.3256 17.1263 26.2375C16.7933 26.1494 16.5366 25.9484 16.3562 25.6343ZM30.0053 29.6884C29.6726 29.5993 29.4159 29.3982 29.2352 29.0852C29.0545 28.7722 29.0087 28.4494 29.0978 28.1167C29.187 27.784 29.3879 27.5278 29.7006 27.3482C30.0133 27.1685 30.3362 27.1227 30.6692 27.2108C31.0022 27.2989 31.2589 27.5 31.4393 27.814C31.6197 28.1281 31.6655 28.4509 31.5766 28.7826C31.4878 29.1142 31.2868 29.3704 30.9738 29.5511C30.6609 29.7318 30.338 29.7776 30.0053 29.6884ZM21.9068 34.1545C21.5741 34.0654 21.3173 33.8643 21.1366 33.5513C20.9559 33.2384 20.9102 32.9155 20.9993 32.5828C21.0885 32.2501 21.2894 31.9939 21.6021 31.8143C21.9148 31.6347 22.2376 31.5889 22.5706 31.677C22.9036 31.765 23.1603 31.9661 23.3408 32.2802C23.5212 32.5942 23.5669 32.9171 23.4781 33.2487C23.3892 33.5803 23.1882 33.837 22.8749 34.0188C22.5616 34.2006 22.2389 34.2458 21.9068 34.1545ZM14.6971 31.8259C14.5164 31.5129 14.4707 31.19 14.5598 30.8573C14.6487 30.5257 14.8496 30.2695 15.1626 30.0888C15.4756 29.9081 15.7984 29.8623 16.1311 29.9515C16.4638 30.0406 16.7205 30.2417 16.9012 30.5547C17.082 30.8677 17.1277 31.1905 17.0386 31.5232C16.9494 31.856 16.7484 32.1127 16.4354 32.2934C16.1227 32.473 15.8 32.5182 15.4673 32.4291C15.1346 32.3399 14.8778 32.1389 14.6971 31.8259ZM28.3463 35.88C28.0136 35.7909 27.7569 35.5898 27.5761 35.2768C27.3954 34.9638 27.3497 34.641 27.4388 34.3083C27.528 33.9755 27.7289 33.7194 28.0416 33.5397C28.3543 33.3601 28.6771 33.3143 29.0101 33.4024C29.3431 33.4905 29.5998 33.6916 29.7803 34.0056C29.9607 34.3197 30.0065 34.6425 29.9176 34.9742C29.8287 35.3058 29.6277 35.5625 29.3144 35.7443C29.0011 35.9261 28.6784 35.9713 28.3463 35.88Z" fill="currentColor"/></g><defs><clipPath id="clip_cal"><rect width="40" height="40" fill="white" transform="translate(10.3528) rotate(15)"/></clipPath></defs></svg>`,
+    tag: 'Late',
+    title: 'Missed timeline for payments',
+    sub: '₹500 fee. You were so close.',
+    color: '#E24B4A',
+    rot: 2,
+    dy: 2,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m14 14-4 4m0-4 4 4"/></svg>`,
   },
   {
-    text: '15 mins to find a boarding pass',
+    tag: 'Panic',
+    title: 'Burned 15 minutes at the gate',
+    sub: 'Hunting for a boarding pass.',
+    color: '#BA7517',
+    rot: -2,
+    dy: 16,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22h20"/><path d="M6.36 17.4 4 17l-2-4 1.1-.55a2 2 0 0 1 1.8 0l.17.1a2 2 0 0 0 1.8 0L8 12 5 6l.9-.45a2 2 0 0 1 2.09.2l4.02 3a2 2 0 0 0 2.1.2l4.19-2.06a2.41 2.41 0 0 1 1.73-.17L21 7a1.4 1.4 0 0 1 .87 1.99l-.38.76c-.23.46-.6.84-1.07 1.08L7.58 17.2a2 2 0 0 1-1.22.18Z"/></svg>`,
+  },
+  {
+    tag: 'Lost',
+    title: 'Important information',
+    sub: 'Buried in emails by Monday.',
+    color: '#378ADD',
     rot: 5,
-    dy: 0,
-    icon: `<svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21.12 36.3358L16.7566 30.307L9.72204 27.743L11.2601 25.7146L17.0936 25.8839L21.4212 20.1435L8.29756 16.5961L10.2688 13.997L25.6921 14.4666L30.1146 8.5631C30.5117 8.03501 31.0459 7.72387 31.7171 7.62969C32.3883 7.5355 32.9875 7.68761 33.5146 8.086C34.044 8.48408 34.3555 9.01707 34.4492 9.68497C34.543 10.3529 34.3907 10.9509 33.9925 11.4792L29.5254 17.3654L34.2223 32.0552L32.2444 34.6789L25.2435 23.0354L20.9158 28.7758L22.6553 34.2994L21.12 36.3358Z" fill="currentColor"/></svg>`,
-  },
-  {
-    text: '300+ unread emails by Monday',
-    rot: 8,
-    dy: 26,
-    icon: `<svg viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g clip-path="url(#clip_mail)"><path d="M9.58806 32.5791C8.84645 32.3804 8.29415 31.9667 7.93117 31.338C7.56818 30.7093 7.48566 30.0234 7.68359 29.2805L12.3285 11.9453C12.5272 11.2037 12.9415 10.6515 13.5713 10.2888C14.201 9.92615 14.8858 9.84334 15.6256 10.0404L39.4034 16.4117C40.144 16.6101 40.6956 17.0242 41.0583 17.654C41.421 18.2837 41.5037 18.9691 41.3063 19.7099L36.6609 37.0466C36.4625 37.7872 36.0483 38.3393 35.4182 38.7031C34.7881 39.0669 34.1035 39.1491 33.3643 38.9499L9.58806 32.5791ZM24.4449 24.6819L39.5804 19.7116L39.4663 18.154L24.9263 22.8853L14.7 11.5179L13.8224 12.8097L24.4449 24.6819Z" fill="currentColor"/></g><defs><clipPath id="clip_mail"><rect width="40" height="40" fill="white" transform="translate(10.3528) rotate(15)"/></clipPath></defs></svg>`,
+    dy: 6,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z"/><path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/></svg>`,
   },
 ];
 ---
@@ -39,7 +52,7 @@ const cards = [
   <div class="container">
     <div class="problem__head" data-sr>
       <p class="eyebrow">Why it’s hard</p>
-      <h2 class="section__title">You’re not disorganised. Your tools are.</h2>
+      <h2 class="section__title">You’re not disorganised.<br />Your tools are.</h2>
     </div>
 
     <div class="problem__cards">
@@ -47,10 +60,15 @@ const cards = [
         cards.map((c, i) => (
           <article
             class="pcard"
-            style={`--rot:${c.rot}deg;--dy:${c.dy}px;--i:${i};--gx:${((1.5 - i) * 11.8).toFixed(2)}rem`}
+            style={`--c:${c.color};--rot:${c.rot}deg;--dy:${c.dy}px;--i:${i};--gx:${((1.5 - i) * 9).toFixed(2)}rem`}
           >
-            <span class="pcard__icon" set:html={c.icon} />
-            <p class="pcard__text">{c.text}</p>
+            <span class="pcard__pin" aria-hidden="true"></span>
+            <div>
+              <span class="pcard__tag">{c.tag}</span>
+              <span class="pcard__icon" set:html={c.icon} />
+              <h3 class="pcard__title">{c.title}</h3>
+            </div>
+            <p class="pcard__sub">{c.sub}</p>
           </article>
         ))
       }
@@ -79,7 +97,8 @@ const cards = [
         to bottom,
         transparent 0,
         color-mix(in srgb, var(--tint-peach) 80%, transparent) 160px,
-        color-mix(in srgb, var(--tint-lavender) 80%, transparent)
+        color-mix(in srgb, var(--tint-lavender) 80%, transparent) calc(100% - 140px),
+        transparent 100%
       ),
       var(--paper);
   }
@@ -94,64 +113,107 @@ const cards = [
     text-align: center;
   }
 
-  /* ---- The fanned stack of symptom cards ---- */
+  /* ---- The fanned deck of symptom cards ---- */
   .problem__cards {
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    gap: 0.5rem;
     margin-top: clamp(2.5rem, 5vw, 4.5rem);
     padding-bottom: clamp(1.5rem, 4vw, 3rem); /* room for the tilt + shadow */
   }
 
-  /* ---- A single symptom card: icon top-left, line of text below ---- */
+  /* ---- A single symptom card: tag + icon + title up top, subline below.
+     Each carries a mood colour (--c) that tints bg, border, pin, tag, icon. */
   .pcard {
+    position: relative;
     flex: 0 0 auto;
-    width: clamp(13rem, 17vw, 16.5rem);
-    min-height: clamp(17rem, 21vw, 20.5rem);
-    padding: clamp(1.4rem, 2vw, 2rem);
+    width: clamp(10.5rem, 13vw, 13rem);
+    min-height: clamp(12.5rem, 14.5vw, 14rem);
+    padding: 1.15rem 1rem 1.3rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    justify-content: space-between;
+    gap: 1rem;
 
     background: var(--paper);
     border-top: 2px solid var(--accent); /* the blue thread along the top */
     border-radius: var(--radius);
-    box-shadow: 0 32px 64px -12px rgba(16, 24, 40, 0.16);
+    box-shadow: 0 10px 24px -10px rgba(16, 24, 40, 0.12);
 
-    /* Overlap the previous card, then tilt + lift into the arc. Rotate about
-       the centre so the lower (text) ends fan apart rather than stacking. */
     transform: translateY(var(--dy)) rotate(var(--rot));
     transform-origin: center center;
   }
-  .pcard:not(:first-child) {
-    margin-left: clamp(-1.5rem, -1vw, -0.6rem);
+
+  /* Hover: straighten, lift and pop above the neighbours (reference deck). */
+  .pcard:hover,
+  .problem.is-armed.is-shown .pcard:hover {
+    transform: translateY(calc(var(--dy) - 10px)) rotate(0deg) scale(1.04);
+    box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.28);
+    z-index: 5;
+    transition:
+      transform 350ms cubic-bezier(0.2, 0.8, 0.3, 1.2),
+      box-shadow 350ms var(--ease);
+    transition-delay: 0ms;
   }
-  /* Stack left → right so each card overlaps the one before it. */
-  .pcard:nth-child(1) { z-index: 1; }
-  .pcard:nth-child(2) { z-index: 2; }
-  .pcard:nth-child(3) { z-index: 3; }
-  .pcard:nth-child(4) { z-index: 4; }
+
+  .pcard__pin {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--c);
+  }
+
+  .pcard__tag {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 16%, transparent);
+    padding: 2px 7px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 9px;
+  }
 
   .pcard__icon {
-    color: var(--accent);
-    width: clamp(2.4rem, 3vw, 3rem);
-    height: clamp(2.4rem, 3vw, 3rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 18%, transparent);
+    margin-bottom: 22px;
   }
   .pcard__icon :global(svg) {
-    width: 100%;
-    height: 100%;
+    width: 21px;
+    height: 21px;
     display: block;
   }
 
-  .pcard__text {
+  .pcard__title {
     margin: 0;
-    margin-top: auto; /* push the line to the lower portion of the card */
     font-family: var(--font-body);
-    font-size: clamp(1.05rem, 1.35vw, 1.32rem);
-    font-weight: 600;
-    line-height: 1.25;
-    letter-spacing: -0.015em;
-    color: var(--ink-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .pcard__sub {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.76rem;
+    line-height: 1.4;
+    color: var(--ink-soft);
   }
 
   /* ---- Scroll reveal: the cards start gathered into a flat, centred stack
@@ -183,14 +245,7 @@ const cards = [
     .pcard {
       width: calc(50% - 0.5rem);
       min-height: 0;
-      gap: 1rem;
       transform: none;
-    }
-    .pcard:not(:first-child) {
-      margin-left: 0;
-    }
-    .pcard__text {
-      font-size: 1.02rem;
     }
     /* never tilt / offset on the stacked mobile layout */
     .problem.is-armed .pcard,

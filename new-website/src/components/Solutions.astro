@@ -1,14 +1,14 @@
 ---
-// Solutions — the pipeline (§5): capture → filter → anticipate. Each step is
-// its own section: a centered intro (title pill → heading → crisp subheading)
-// over a two-card bento grid. Each card carries an animated phone mock whose
-// screen matches the feature. FILTER stays one of the two dark bands (§3).
+// Solutions — the pipeline (§5): capture → filter → anticipate, combined into
+// ONE section. Headline-as-tabs switcher (Samachar/Vichaar/Vyapaar ref) sits
+// top-left; the active view's text fills the left column and its animated
+// phone mocks the right. Auto-rotates every few seconds; clicking a verb
+// locks it. No-JS fallback: the three panels simply stack.
 import PhoneMock from './PhoneMock.astro';
 
 const solutions = [
   {
     verb: 'Capture',
-    dark: false,
     title: 'Nothing important slips through.',
     body: 'Kosha quietly captures what matters across your inbox and channels.',
     cards: [
@@ -25,8 +25,25 @@ const solutions = [
     ],
   },
   {
-    verb: 'Filter',
-    dark: true,
+    // TODO: placeholder copy — replace with final Calibrate content.
+    verb: 'Calibrate',
+    title: 'Tuned to what matters to you.',
+    body: 'Kosha calibrates to your priorities — what to surface, what to hold, and when.',
+    cards: [
+      {
+        kind: 'priority',
+        name: 'Priority ranking',
+        desc: 'The right thing surfaces at the right moment — not all at once.',
+      },
+      {
+        kind: 'habit',
+        name: 'Habit engine',
+        desc: 'Streaks that survive real life — recover your routine after a miss.',
+      },
+    ],
+  },
+  {
+    verb: 'Think',
     title: 'Only what matters reaches you.',
     body: 'Kosha learns your signal from your noise, so attention goes where it’s needed.',
     cards: [
@@ -44,7 +61,6 @@ const solutions = [
   },
   {
     verb: 'Anticipate',
-    dark: false,
     title: 'Kosha thinks ahead for you.',
     body: 'It tracks your habits and plans, then nudges you gently at the right moment.',
     cards: [
@@ -60,142 +76,353 @@ const solutions = [
       },
     ],
   },
+  {
+    // TODO: placeholder copy — replace with final Coordinate content.
+    verb: 'Coordinate',
+    title: 'Loop in the people who matter.',
+    body: 'Reminders and tasks aren’t just for you — Kosha nudges family or colleagues on your behalf.',
+    cards: [
+      {
+        kind: 'planner',
+        name: 'Shared planning',
+        desc: 'Hand a task to a co-founder or family member without leaving the flow.',
+      },
+      {
+        kind: 'retrieval',
+        name: 'Shared retrieval',
+        desc: 'The document they need, surfaced for them — without you digging it up.',
+      },
+    ],
+  },
 ];
 ---
 
-{
-  solutions.map((s) => (
-    <section id={s.verb.toLowerCase()} class:list={['section', 'solution', { 'section--dark': s.dark }]}>
-      <div class="container">
-        {/* ---- Centered intro: title pill → heading → subheading ---- */}
-        <div class="solution__head section__head" data-sr>
-          <p class="solution__pill">{s.verb}</p>
-          <h2 class="solution__title section__title">{s.title}</h2>
-          <p class="solution__body lede">{s.body}</p>
-        </div>
+<section id="capture" class="section solution" data-solutions>
+  {/* Invisible anchors so the other verbs' deep links still land here
+      (the hashchange handler below also selects the matching tab). */}
+  <span id="calibrate" class="solution__anchor" aria-hidden="true"></span>
+  <span id="think" class="solution__anchor" aria-hidden="true"></span>
+  <span id="anticipate" class="solution__anchor" aria-hidden="true"></span>
+  <span id="coordinate" class="solution__anchor" aria-hidden="true"></span>
 
-        {/* ---- Two-card bento grid (image space + label) ---- */}
-        <div class="solution__grid">
-          {s.cards.map((c, ci) => (
-            <article class="solution__card" data-sr data-sr-delay={ci + 1}>
-              <div class="solution__card-body">
-                <h3 class="solution__card-name">{c.name}</h3>
-                <p class="solution__card-desc">{c.desc}</p>
-              </div>
-              <div class="solution__media">
+  <div class="container">
+    <div class="solution__head section__head" data-sr>
+      <p class="eyebrow">But life never stops</p>
+      <h2 class="section__title">KoshaX ensures you always stay on top</h2>
+    </div>
+
+    <div class="solution__tabs" role="tablist" aria-label="What Kosha does">
+      {
+        solutions.map((s, i) => (
+          <button
+            type="button"
+            class:list={['solution__tab', { 'is-active': i === 0 }]}
+            id={`tab-${s.verb.toLowerCase()}`}
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-controls={`panel-${s.verb.toLowerCase()}`}
+          >
+            {s.verb}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="solution__panels">
+      {
+        solutions.map((s, i) => (
+          <div
+            class:list={['solution__panel', { 'is-active': i === 0 }]}
+            id={`panel-${s.verb.toLowerCase()}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${s.verb.toLowerCase()}`}
+          >
+            {/* ---- Text column (left) ---- */}
+            <div class="solution__text">
+              <h3 class="solution__title">{s.title}</h3>
+              <p class="solution__body lede">{s.body}</p>
+              <ul class="solution__features">
+                {s.cards.map((c) => (
+                  <li class="solution__feature">
+                    <h4 class="solution__feature-name">{c.name}</h4>
+                    <p class="solution__feature-desc">{c.desc}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* ---- Graphic column (right): the view's animated phones ---- */}
+            <div class="solution__visual">
+              {s.cards.map((c) => (
                 <PhoneMock kind={c.kind} />
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  ))
-}
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
 
 <style>
-  /* ---- Centered intro (width/centering inherited from .section__head) ---- */
+  .solution {
+    position: relative;
+  }
+
+  .solution__anchor {
+    position: absolute;
+    top: 0;
+  }
+
   .solution__head {
-    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
   }
 
-  /* Title pill — the verb, in a soft rounded chip (reference "Features" pill) */
-  .solution__pill {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: var(--t-eyebrow);
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--accent);
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-pill);
-    box-shadow: var(--shadow-sm);
-    padding: 0.5rem 1.1rem;
-    margin: 0;
+  /* ---- The verb switcher — headline-as-tabs (Samachar/Vichaar/Vyapaar ref):
+     the three verbs sit side by side at display size; the active one is full
+     ink with an accent underline, the others recede to a soft grey. ---- */
+  .solution__tabs {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
   }
 
-  .section--dark .solution__pill {
-    color: var(--accent-bright);
-    background: var(--band-raised);
-    border-color: rgba(255, 255, 255, 0.12);
+  .solution__tab {
+    position: relative;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: color-mix(in srgb, var(--ink) 28%, transparent);
+    background: none;
+    border: none;
+    padding: 0.1rem 0 0.35rem;
+    transition: color 300ms var(--ease);
+  }
+
+  /* Accent underline draws in beneath the selected verb. */
+  .solution__tab::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 300ms var(--ease);
+  }
+
+  .solution__tab.is-active::after {
+    transform: scaleX(1);
+  }
+
+  .solution__tab:hover {
+    color: color-mix(in srgb, var(--ink) 55%, transparent);
+  }
+
+  .solution__tab.is-active {
+    color: var(--ink);
+  }
+
+  .solution__tab:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  /* ---- Panels ----
+     Default (no JS): the three views simply stack, all visible.
+     Enhanced (JS adds .is-enhanced): panels share one grid cell and
+     crossfade as the switcher rotates. */
+  .solution__panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .solution__panel + .solution__panel {
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .is-enhanced .solution__panels {
+    display: grid;
+  }
+
+  .is-enhanced .solution__panel {
+    grid-area: 1 / 1;
+    margin-top: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition:
+      opacity 450ms var(--ease),
+      transform 450ms var(--ease),
+      visibility 0s linear 450ms;
+  }
+
+  .is-enhanced .solution__panel.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  /* ---- Text column ---- */
+  .solution__text {
+    max-width: 34rem;
   }
 
   .solution__title {
-    margin: 1.1rem 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 0;
   }
 
   .solution__body {
-    margin: 1rem auto 0;
-    max-width: 46ch;
+    margin: 1rem 0 2rem;
   }
 
-  /* ---- Bento grid ---- */
-  .solution__grid {
+  .solution__features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    gap: 1.4rem;
+  }
+
+  .solution__feature-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0 0 0.35rem;
+  }
+
+  .solution__feature-desc {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin: 0;
+    max-width: 44ch;
+  }
+
+  /* ---- Graphic column: the two animated phones, side by side, the second
+     dropped slightly for depth. Clipped at the section's flow height. ---- */
+  .solution__visual {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     gap: clamp(1rem, 2.5vw, 1.75rem);
   }
 
-  /* Borderless panel — text on top, phone bleeds in from the bottom (cropped) */
-  .solution__card {
-    display: flex;
-    flex-direction: column;
-    background: #f6f6fa;
-    border: none;
-    box-shadow: none;
-    border-radius: var(--radius);
-    padding: clamp(0.5rem, 1.5vw, 1.25rem);
-    padding-bottom: 0;
-    overflow: hidden;
+  .solution__visual :global(.phone) {
+    width: clamp(150px, 42%, 210px);
+    flex: none;
   }
 
-  .section--dark .solution__card {
-    background: rgba(255, 255, 255, 0.08);
+  .solution__visual :global(.phone:nth-child(2)) {
+    margin-top: clamp(1.5rem, 3vw, 2.75rem);
   }
 
-  /* Stage for the animated phone — zoomed in and clipped at the card's bottom */
-  .solution__media {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: clamp(1rem, 3vw, 2rem) 0 0;
-  }
-
-  /* Larger device (zoom) whose lower portion is cropped by the card.
-     Height = width * 18.6/9, so cropping 40% of the height (showing ~60%)
-     means pulling up 0.83 * width — exact at every viewport size. */
-  .solution__media :global(.phone) {
-    width: clamp(202px, 74%, 254px);
-    margin-bottom: calc(clamp(202px, 74%, 254px) * -0.83);
-  }
-
-  .solution__card-body {
-    padding: clamp(1rem, 2vw, 1.5rem) 0.4rem clamp(0.5rem, 1.5vw, 1rem);
-    text-align: center;
-  }
-
-  .solution__card-name {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    font-weight: 500;
-    margin: 0 0 0.4rem;
-  }
-
-  .solution__card-desc {
-    color: var(--ink-soft);
-    font-size: 0.95rem;
-    margin: 0 auto;
-    max-width: 34ch;
-  }
-
-  .section--dark .solution__card-desc {
-    color: color-mix(in srgb, var(--paper-raised) 72%, transparent);
-  }
-
+  /* ---- Mobile: single column, graphic below the text ---- */
   @media (max-width: 880px) {
-    .solution__grid {
+    .solution__panel {
       grid-template-columns: 1fr;
+    }
+    .solution__text {
+      max-width: none;
+    }
+    .solution__visual :global(.phone) {
+      width: clamp(140px, 40%, 190px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .solution__tab,
+    .solution__tab::after {
+      transition: none;
+    }
+    .is-enhanced .solution__panel {
+      transition: none;
+      transform: none;
     }
   }
 </style>
+
+<script>
+  // Verb switcher: auto-rotates Capture → Calibrate → Think → Anticipate →
+  // Coordinate while the
+  // section is on screen. A click (or a #filter/#anticipate deep link) selects
+  // that view and stops the rotation — the user has taken the wheel.
+  const root = document.querySelector<HTMLElement>('[data-solutions]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (root) {
+    root.classList.add('is-enhanced');
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('.solution__tab')];
+    const panels = [...root.querySelectorAll<HTMLElement>('.solution__panel')];
+
+    let idx = 0;
+    let timer: ReturnType<typeof setInterval> | null = null;
+    let locked = false; // user clicked — stop auto-rotating
+
+    const select = (i: number) => {
+      idx = i;
+      tabs.forEach((t, ti) => {
+        t.classList.toggle('is-active', ti === i);
+        t.setAttribute('aria-selected', String(ti === i));
+      });
+      panels.forEach((p, pi) => p.classList.toggle('is-active', pi === i));
+    };
+
+    const stop = () => {
+      if (timer) clearInterval(timer);
+      timer = null;
+    };
+    const start = () => {
+      if (!reduce && !locked && !timer)
+        timer = setInterval(() => select((idx + 1) % tabs.length), 5000);
+    };
+
+    tabs.forEach((t, i) =>
+      t.addEventListener('click', () => {
+        locked = true;
+        stop();
+        select(i);
+      })
+    );
+
+    // Deep links (#capture … #coordinate) select the matching view.
+    const byHash = () => {
+      const i = tabs.findIndex((t) => `#${t.id.slice(4)}` === location.hash);
+      if (i >= 0) {
+        locked = true;
+        stop();
+        select(i);
+      }
+    };
+    window.addEventListener('hashchange', byHash);
+    byHash();
+
+    // Rotate only while the section is actually in view.
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => (e.isIntersecting ? start() : stop())),
+        { threshold: 0.25 }
+      ).observe(root);
+    } else {
+      start();
+    }
+  }
+</script>

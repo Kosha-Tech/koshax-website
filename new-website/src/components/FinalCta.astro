@@ -15,12 +15,12 @@
         <div class="final-cta__actions">
           <a
             class="btn btn--primary download-trigger"
-            href="https://kosha.app/get?utm_source=cta"
+            href="/download?utm_source=cta"
             data-placement="cta"
           >
-            Download free
+            Download KoshaX
           </a>
-          <p class="final-cta__micro">Free to start · No credit card · Read-only &amp; private</p>
+          <p class="final-cta__micro">Free to start · Encrypted &amp; Private</p>
         </div>
       </div>
     </div>
@@ -28,6 +28,12 @@
 </section>
 
 <style>
+  /* Let the closing banner stretch wider than the standard column so it
+     reads as a big full-stop to the page. */
+  .final-cta .container {
+    max-width: 1440px;
+  }
+
   /* Contained banner — dark indigo card with padding, not a full-width band */
   .final-cta__banner {
     border-radius: var(--radius-lg);
@@ -54,7 +60,7 @@
     color: color-mix(in srgb, var(--paper-raised) 78%, transparent);
     font-size: 1.15rem;
     margin: 0 0 2rem;
-    max-width: 42ch;
+    text-wrap: balance;
   }
 
   .final-cta__actions {

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="A packed calendar above a calm, ordered stream of life admin running underneath">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E6E9FF"/>
+      <stop offset="0.55" stop-color="#EDEAFB"/>
+      <stop offset="1" stop-color="#F6EEEA"/>
+    </linearGradient>
+    <linearGradient id="streak" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5163FF" stop-opacity="0"/>
+      <stop offset="0.45" stop-color="#5163FF" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#F4A26B" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8B8FF5" stop-opacity="0.15"/>
+      <stop offset="0.5" stop-color="#444CE7" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#8B8FF5" stop-opacity="0.15"/>
+    </linearGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+    <filter id="cardShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#1B1E30" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="600" fill="url(#bg)"/>
+
+  <!-- glow blobs -->
+  <circle cx="660" cy="140" r="150" fill="#C9CEFF" opacity="0.55" filter="url(#soft)"/>
+  <circle cx="130" cy="150" r="130" fill="#ADB4FF" opacity="0.35" filter="url(#soft)"/>
+  <circle cx="400" cy="500" r="170" fill="#F6D8C4" opacity="0.45" filter="url(#soft)"/>
+
+  <!-- the packed day: back-to-back calendar card -->
+  <g filter="url(#cardShadow)">
+    <rect x="170" y="80" width="460" height="220" rx="22" fill="#fff"/>
+  </g>
+  <!-- calendar header -->
+  <rect x="200" y="106" width="110" height="10" rx="5" fill="#3A3F63"/>
+  <circle cx="586" cy="111" r="6" fill="#E24B4A"/>
+  <circle cx="566" cy="111" r="6" fill="#F2B33D"/>
+  <!-- hour gridlines -->
+  <g stroke="#EDEDF6" stroke-width="2">
+    <line x1="200" y1="138" x2="600" y2="138"/>
+    <line x1="200" y1="178" x2="600" y2="178"/>
+    <line x1="200" y1="218" x2="600" y2="218"/>
+    <line x1="200" y1="258" x2="600" y2="258"/>
+  </g>
+  <!-- back-to-back blocks -->
+  <rect x="214" y="144" width="150" height="28" rx="8" fill="#EEEFFF"/>
+  <rect x="372" y="144" width="106" height="28" rx="8" fill="#E8EEFE"/>
+  <rect x="486" y="144" width="100" height="28" rx="8" fill="#EEEFFF"/>
+  <rect x="214" y="184" width="92" height="28" rx="8" fill="#E8EEFE"/>
+  <rect x="314" y="184" width="164" height="28" rx="8" fill="#EEEFFF"/>
+  <rect x="486" y="184" width="100" height="28" rx="8" fill="#FBF3DC"/>
+  <rect x="214" y="224" width="128" height="28" rx="8" fill="#EEEFFF"/>
+  <rect x="350" y="224" width="120" height="28" rx="8" fill="#E8EEFE"/>
+  <rect x="478" y="224" width="108" height="28" rx="8" fill="#EEEFFF"/>
+  <!-- block label lines -->
+  <g fill="#8B8FF5">
+    <rect x="224" y="154" width="80" height="7" rx="3.5"/>
+    <rect x="382" y="154" width="56" height="7" rx="3.5"/>
+    <rect x="496" y="154" width="52" height="7" rx="3.5"/>
+    <rect x="224" y="194" width="48" height="7" rx="3.5"/>
+    <rect x="324" y="194" width="92" height="7" rx="3.5"/>
+    <rect x="496" y="194" width="52" height="7" rx="3.5"/>
+    <rect x="224" y="234" width="68" height="7" rx="3.5"/>
+    <rect x="360" y="234" width="64" height="7" rx="3.5"/>
+    <rect x="488" y="234" width="58" height="7" rx="3.5"/>
+  </g>
+
+  <!-- the quiet layer underneath: a calm flow carrying life admin, handled -->
+  <path d="M-40 430 C 160 380 300 430 400 430 S 640 380 840 420" stroke="url(#flow)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M-40 470 C 180 430 320 470 440 466 S 700 430 840 460" stroke="url(#streak)" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- handled items riding the flow -->
+  <g filter="url(#cardShadow)">
+    <rect x="186" y="392" width="150" height="44" rx="22" fill="#fff"/>
+    <rect x="392" y="404" width="150" height="44" rx="22" fill="#fff"/>
+    <rect x="586" y="380" width="120" height="44" rx="22" fill="#fff"/>
+  </g>
+  <circle cx="214" cy="414" r="11" fill="#EEEFFF"/>
+  <path d="M209 414 l4 4 7 -8" stroke="#444CE7" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="234" y="409" width="84" height="9" rx="4.5" fill="#3A3F63"/>
+
+  <circle cx="420" cy="426" r="11" fill="#EEEFFF"/>
+  <path d="M415 426 l4 4 7 -8" stroke="#444CE7" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="440" y="421" width="84" height="9" rx="4.5" fill="#3A3F63"/>
+
+  <circle cx="614" cy="402" r="11" fill="#EEEFFF"/>
+  <path d="M609 402 l4 4 7 -8" stroke="#444CE7" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="634" y="397" width="54" height="9" rx="4.5" fill="#3A3F63"/>
+
+  <!-- connector: the calendar rests on the quiet layer -->
+  <g fill="none" stroke="#8B8FF5" stroke-width="2" opacity="0.55" stroke-dasharray="1 7" stroke-linecap="round">
+    <path d="M400 300 C 400 330 400 360 400 396"/>
+  </g>
+
+  <!-- sparkle accent -->
+  <path d="M120 330 l6 16 16 6 -16 6 -6 16 -6 -16 -16 -6 16 -6 z" fill="#fff" opacity="0.95"/>
+  <path d="M160 372 l3.5 9 9 3.5 -9 3.5 -3.5 9 -3.5 -9 -9 -3.5 9 -3.5 z" fill="#fff" opacity="0.8"/>
+</svg>

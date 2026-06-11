@@ -5,43 +5,93 @@
 // Accessible tablist: roles, aria-selected, arrow-key navigation.
 const personas = [
   {
-    id: 'leaders',
-    tab: 'Leaders',
-    title: 'You run the meeting. Kosha runs the rest.',
+    id: 'founders',
+    tab: 'Founders',
+    title: 'You run the company. KoshaX runs everything else.',
     body:
-      'Back-to-back calls leave no room for life admin. Kosha keeps your personal life as sharp as your professional one — quietly, in the background.',
-    pills: ['Instant doc retrieval', 'Spam call shield', 'Weekly life planner', 'Habit tracking'],
-    // Drop a real image at this path in /public and it appears automatically.
+      'When all of you goes into the company, the rest of life still needs a system. KoshaX is that system — the operating layer for everything outside the building.',
+    pills: [
+      'Your whole life, one view',
+      'Renewals & deadlines, never missed',
+      'Every document, one search away',
+      'Loop in a co-founder or family',
+    ],
     img: '/persona-leaders.jpg',
     tint: 'linear-gradient(150deg, var(--accent-tint), var(--tint-lavender))',
   },
   {
-    id: 'developers',
-    tab: 'Developers',
-    title: 'Ship code. Let Kosha ship the rest.',
+    id: 'investors',
+    tab: 'Investors',
+    title: 'Hundreds of threads. One system that holds them.',
     body:
-      'Deep work needs a quiet mind. Kosha keeps the life-admin tabs closed so you can stay in flow.',
-    pills: ['Zero-noise inbox', 'Deadline tracking', 'Doc retrieval', 'Focus-hour shield'],
-    img: '/persona-developers.jpg',
+      'Your life is people, commitments, and follow-ups across everything. KoshaX is the system that keeps every thread in place while you keep moving.',
+    pills: [
+      'Nudge someone for you',
+      'Never miss a follow-up',
+      'Travel docs, ready at the gate',
+      'One morning brief from KoshaX',
+    ],
+    img: '/persona-investors.svg',
     tint: 'linear-gradient(150deg, var(--tint-lavender), var(--accent-tint))',
+  },
+  {
+    id: 'operators',
+    tab: 'Operators',
+    title: 'You run everything. KoshaX runs you.',
+    body:
+      'You’re the system everyone else depends on. KoshaX is the system you run on — so the person holding it all together isn’t the one left exposed.',
+    pills: [
+      'Your whole life, one view',
+      'Deadlines flagged early',
+      'Every document, one search away',
+      'Remind your family, not just your team',
+    ],
+    img: '/persona-operators.svg',
+    tint: 'linear-gradient(150deg, var(--tint-peach), var(--accent-tint))',
   },
   {
     id: 'creators',
     tab: 'Creators',
-    title: 'Make things. Skip the admin.',
+    title: 'You make the work. KoshaX runs the rest.',
     body:
-      'Invoices, renewals, receipts — the unglamorous part of independence. Kosha handles it so you can keep creating.',
-    pills: ['Receipt capture', 'Renewal reminders', 'Spam shield', 'Weekly planner'],
+      'Everything outside the work pulls at your attention. KoshaX is the system running quietly underneath it — so the only thread you’re holding is the one you want to.',
+    pills: [
+      'Renewals & deadlines, never missed',
+      'Every document, one search away',
+      'Your whole life, one view',
+      'One morning brief from KoshaX',
+    ],
     img: '/persona-creators.jpg',
-    tint: 'linear-gradient(150deg, var(--tint-peach), var(--accent-tint))',
+    tint: 'linear-gradient(150deg, var(--accent-tint), var(--tint-peach))',
   },
   {
-    id: 'parents',
-    tab: 'Busy parents',
-    title: 'One less thing to hold in your head.',
+    id: 'professionals',
+    tab: 'Professionals',
+    title: 'Back-to-back all day. KoshaX runs life underneath it.',
     body:
-      'Vaccination dates, school forms, bill due dates. Kosha remembers the family logistics so you don’t carry them alone.',
-    pills: ['Document vault', 'Appointment nudges', 'Habit & meds', 'Family planner'],
+      'Between everything you owe everyone, your own life still needs to run. KoshaX is the operating layer that keeps it in order without you thinking about it.',
+    pills: [
+      'Your whole life, one view',
+      'Deadlines flagged early',
+      'Every document, one search away',
+      'Loop in a family member',
+    ],
+    img: '/persona-professionals.svg',
+    tint: 'linear-gradient(150deg, var(--tint-lavender), var(--tint-peach))',
+  },
+  {
+    id: 'homemaker',
+    tab: 'Homemaker',
+    title: 'You run the household. KoshaX runs it with you.',
+    body:
+      'You’re already the system the whole family depends on — every appointment, bill, renewal, and reminder runs through you. KoshaX is the operating layer underneath it, so none of it has to live in your head anymore.',
+    pills: [
+      'The whole family, one view',
+      'Renewals & appointments, never missed',
+      'Every document, one search away',
+      'Remind anyone in the family',
+    ],
+    // Drop a real image at this path in /public and it appears automatically.
     img: '/persona-parents.jpg',
     tint: 'linear-gradient(150deg, var(--accent-tint), var(--tint-peach))',
   },
@@ -51,10 +101,11 @@ const personas = [
 <section class="section section--tint persona" id="persona">
   <div class="container">
     <div class="section__head" data-sr>
-      <p class="eyebrow">Who it’s built for</p>
-      <h2 class="section__title">Kosha works the way you work.</h2>
+      <p class="eyebrow">Who it’s for</p>
+      <h2 class="section__title">One life. One system to run it.</h2>
       <p class="lede" style="margin-top:1rem">
-        Personal life admin looks different depending on your role. See how Kosha fits yours.
+        However you spend your days, KoshaX is the layer your personal life runs on. See where it
+        fits yours.
       </p>
     </div>
 
