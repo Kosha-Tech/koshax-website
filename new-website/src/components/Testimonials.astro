@@ -4,17 +4,45 @@
 // Presented as a lovi-style single-row marquee: cards drift continuously,
 // pause on hover, and fade out softly at both edges.
 //
-// Card design: each review reads like a real store review — tinted initials
-// avatar, 5-star row, headline, quote, and a store + date footer. Cards cycle
-// through the site's mood colours (--c tints the avatar, wash and quote mark).
+// Card design: tinted initials avatar, name (+ role where given), headline,
+// and quote. Cards cycle through the site's mood colours (--c tints the
+// avatar, wash and quote mark). One shared 5★ row sits under the heading.
 const lead = 'From clutter to clarity, chaos to calm;';
 const leadTail = 'KoshaX quietly saves the day.';
 const quotes = [
+  {
+    title: 'It catches what slips',
+    text: 'Dad’s medicines, my kid’s checkup, midnight deploys — KoshaX holds what used to live in my head, and the reminder calls catch what slips.',
+    name: 'Tushar Gupta',
+    role: 'CTO, Startup',
+    img: '/testimonial-tushar.jpg',
+  },
   {
     title: 'Found it in 10 seconds',
     text: 'Found my health insurance renewal doc in 10 seconds. I used to spend 20 minutes hunting through Gmail.',
     name: 'Riya K.',
     meta: 'Apr 12th, 2025 / App Store',
+  },
+  {
+    title: 'I switch off at night',
+    text: 'My work runs on tiny details — site visits, samples, vendors, deadlines. Now I tell Kai once and finally switch off at night.',
+    name: 'Paridhi Sahni',
+    role: 'Interior Designer',
+    img: '/testimonial-paridhi.jpg',
+  },
+  {
+    title: 'Saved me a fine',
+    text: 'It quietly reminded me my car insurance lapsed in two days. That one nudge saved me a fine and a very bad morning.',
+    name: 'Anshul Garg',
+    role: 'Business Operations',
+    img: '/testimonial-anshul.jpg',
+  },
+  {
+    title: 'Finally present at dinner',
+    text: 'Kai cuts through investor calls, client follow-ups, and family chaos to tell me what needs attention next. I’m finally present at dinner.',
+    name: 'Chirag Jain',
+    role: 'Founder, Westend Prime Wealth',
+    img: '/testimonial-chirag.jpg',
   },
   {
     title: 'Nudges that feel human',
@@ -23,28 +51,11 @@ const quotes = [
     meta: 'Mar 3rd, 2025 / Play Store',
   },
   {
-    title: 'The noise just stopped',
-    text: 'The spam filter alone is worth it. I had no idea how many times a day I was being interrupted until it just… stopped.',
-    name: 'Sneha N.',
-    meta: 'Feb 21st, 2025 / App Store',
-  },
-  {
     title: 'Everything, one search away',
     text: 'My passport, my PAN, my rent agreement — all one search away. I deleted three other apps the week I started.',
-    name: 'Vikram S.',
-    meta: 'Jan 30th, 2025 / Play Store',
-  },
-  {
-    title: 'Saved me a fine',
-    text: 'It quietly reminded me my car insurance lapsed in two days. That one nudge saved me a fine and a very bad morning.',
-    name: 'Ananya R.',
-    meta: 'Jan 8th, 2025 / App Store',
-  },
-  {
-    title: 'I just have it now',
-    text: 'I’m the person everyone in my family asks “where’s that document?” Now I just have it. Every single time.',
-    name: 'Karthik V.',
-    meta: 'Dec 14th, 2024 / App Store',
+    name: 'Rhythm Gupta',
+    role: 'Product Head',
+    img: '/testimonial-rhythm.jpg',
   },
 ];
 
@@ -52,11 +63,8 @@ const quotes = [
 const palette = ['#5163FF', '#1D9E75', '#E24B4A', '#BA7517', '#378ADD', '#8B5CF6'];
 
 const cards = quotes.map((q, i) => {
-  const [date, store] = q.meta.split(' / ');
   return {
     ...q,
-    date,
-    store,
     color: palette[i % palette.length],
     initials: q.name
       .split(' ')
@@ -72,6 +80,7 @@ const cards = quotes.map((q, i) => {
     <div class="section__head testimonials__head" data-sr>
       <p class="eyebrow">Real people, real results</p>
       <p class="testimonials__lead">“{lead}<br />{leadTail}”</p>
+      <p class="testimonials__stars" role="img" aria-label="Rated 5 out of 5 stars">★★★★★</p>
     </div>
   </div>
 
@@ -88,28 +97,18 @@ const cards = quotes.map((q, i) => {
             >
               <span class="testimonials__mark" aria-hidden="true">“</span>
               <header class="testimonials__top">
-                <span class="testimonials__avatar" aria-hidden="true">{q.initials}</span>
+                {'img' in q && q.img ? (
+                  <img class="testimonials__avatar testimonials__avatar--photo" src={q.img} alt="" loading="lazy" width="40" height="40" />
+                ) : (
+                  <span class="testimonials__avatar" aria-hidden="true">{q.initials}</span>
+                )}
                 <span class="testimonials__who">
                   <span class="testimonials__name">{q.name}</span>
-                  <span class="testimonials__stars" role="img" aria-label="Rated 5 out of 5 stars">
-                    ★★★★★
-                  </span>
+                  {'role' in q && q.role && <span class="testimonials__role">{q.role}</span>}
                 </span>
               </header>
               <h3 class="testimonials__title">{q.title}</h3>
               <blockquote class="testimonials__quote">{q.text}</blockquote>
-              <footer class="testimonials__foot">
-                {q.store === 'App Store' ? (
-                  <svg class="testimonials__store" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true">
-                    <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
-                  </svg>
-                ) : (
-                  <svg class="testimonials__store" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M4 2.5v19a.5.5 0 0 0 .76.43L20.5 12.5a.58.58 0 0 0 0-1L4.76 2.07A.5.5 0 0 0 4 2.5Z" />
-                  </svg>
-                )}
-                {q.store} · {q.date}
-              </footer>
             </li>
           ))
         )
@@ -173,7 +172,7 @@ const cards = quotes.map((q, i) => {
     width: max-content;
     gap: clamp(0.6rem, 1.2vw, 0.9rem); /* tight spacing between cards */
     will-change: transform;
-    animation: marquee-scroll 36s linear infinite; /* 6s per card — same drift speed as the old 10-card/60s loop */
+    animation: marquee-scroll 42s linear infinite; /* ~6s per card keeps the drift speed steady as cards are added */
   }
 
   /* Pause the marquee when the visitor hovers anywhere over it. */
@@ -243,6 +242,11 @@ const cards = quotes.map((q, i) => {
     border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
   }
 
+  /* Photo avatar — same circle, real face instead of initials. */
+  .testimonials__avatar--photo {
+    object-fit: cover;
+  }
+
   .testimonials__who {
     display: flex;
     flex-direction: column;
@@ -254,11 +258,20 @@ const cards = quotes.map((q, i) => {
     color: var(--ink);
   }
 
-  /* Amber rating row — these are 5★ store reviews, say so loudly. */
+  /* Amber rating row — one loud 5★ under the section heading. */
   .testimonials__stars {
-    font-size: 0.8rem;
-    letter-spacing: 0.18em;
+    font-size: 1.9rem;
+    letter-spacing: 0.32em;
+    line-height: 1;
     color: #f2a93b;
+    margin: 1.25rem 0 0;
+  }
+
+  /* Reviewer's role, tucked under the name (non-store testimonials). */
+  .testimonials__role {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--ink-soft);
   }
 
   .testimonials__title {
@@ -275,25 +288,6 @@ const cards = quotes.map((q, i) => {
     font-size: 0.95rem;
     line-height: 1.5;
     color: var(--ink-soft);
-  }
-
-  /* Store + date footer pinned to the bottom edge of the card. */
-  .testimonials__foot {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    margin-top: auto;
-    padding-top: 1rem;
-    font-family: var(--font-mono);
-    font-size: 0.74rem;
-    color: var(--ink-soft);
-  }
-
-  .testimonials__store {
-    width: 13px;
-    height: 13px;
-    flex: none;
-    opacity: 0.75;
   }
 
   /* Respect reduced-motion: freeze the marquee, let it scroll manually. */

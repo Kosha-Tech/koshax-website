@@ -1,97 +1,68 @@
 ---
-// Solutions — the pipeline (§5): capture → filter → anticipate, combined into
-// ONE section. Headline-as-tabs switcher (Samachar/Vichaar/Vyapaar ref) sits
-// top-left; the active view's text fills the left column and its animated
-// phone mocks the right. Auto-rotates every few seconds; clicking a verb
-// locks it. No-JS fallback: the three panels simply stack.
-import PhoneMock from './PhoneMock.astro';
-
+// Solutions — the pipeline (§5): Capture → Calibrate → Think → Anticipate →
+// Coordinate, combined into ONE section. Headline-as-tabs switcher sits
+// top-left; each view shows its stage badge (Learn / Understand / Act),
+// tagline, body, a "How it works" explainer box, and an "In action" panel of
+// example cards. Auto-rotates every few seconds; clicking a verb locks it.
+// No-JS fallback: the five panels simply stack.
 const solutions = [
   {
     verb: 'Capture',
-    title: 'Nothing important slips through.',
-    body: 'Kosha quietly captures what matters across your inbox and channels.',
-    cards: [
-      {
-        kind: 'email',
-        name: 'Email intelligence',
-        desc: 'Read-only parsing finds documents and deadlines. Credentials never stored.',
-      },
-      {
-        kind: 'retrieval',
-        name: 'Instant retrieval',
-        desc: 'Ask for any bill or report — it surfaces in seconds, not searches.',
-      },
+    stage: 'Learn',
+    title: 'Nothing slips through.',
+    body: 'KoshaX quietly pulls in context from everywhere you already are, and when something lives only in your head, just tell Kai. You live your life; KoshaX takes notes.',
+    how: 'Connectors ingest from email, calendar, WhatsApp, voice notes, meetings and reminders, then normalize everything into a single timeline of events.',
+    actions: [
+      { label: 'From email', text: '“Mom’s flight lands Sat 6pm — DEL T3”' },
+      { label: 'Voice note', text: '“Remind me to renew the car insurance”' },
+      { label: 'WhatsApp', text: '“Dinner with the Sharmas next Friday?”' },
     ],
   },
   {
-    // TODO: placeholder copy — replace with final Calibrate content.
     verb: 'Calibrate',
-    title: 'Tuned to what matters to you.',
-    body: 'Kosha calibrates to your priorities — what to surface, what to hold, and when.',
-    cards: [
-      {
-        kind: 'priority',
-        name: 'Priority ranking',
-        desc: 'The right thing surfaces at the right moment — not all at once.',
-      },
-      {
-        kind: 'habit',
-        name: 'Habit engine',
-        desc: 'Streaks that survive real life — recover your routine after a miss.',
-      },
+    stage: 'Learn',
+    title: 'It learns what matters to you.',
+    body: 'Every input is organized into a living knowledge graph of your patterns, priorities, relationships and routines. Over time KoshaX learns your signal from your noise.',
+    how: 'Entities (people, places, recurring tasks) are linked and weighted, so KoshaX knows who matters, what’s urgent, and what can wait.',
+    actions: [
+      { label: 'Knowledge graph', text: 'Mom → family · high priority · visiting' },
+      { label: 'Pattern learned', text: 'Insurance renewals → yearly · reminder 7d before' },
+      { label: 'Routine', text: 'Friday evenings → usually social' },
     ],
   },
   {
     verb: 'Think',
-    title: 'Only what matters reaches you.',
-    body: 'Kosha learns your signal from your noise, so attention goes where it’s needed.',
-    cards: [
-      {
-        kind: 'spam',
-        name: 'Spam call shield',
-        desc: 'Loan offers and telemarketing are blocked before your phone rings.',
-      },
-      {
-        kind: 'priority',
-        name: 'Priority ranking',
-        desc: 'The right thing surfaces at the right moment — not all at once.',
-      },
+    stage: 'Understand',
+    title: 'It connects the dots.',
+    body: 'This is where raw context becomes understanding. KoshaX reasons across everything it knows, weighing what actually matters to you right now.',
+    how: 'Reasoning ranks competing demands against your goals and current moment — not just what’s loudest or most recent.',
+    actions: [
+      { label: 'Reasoning', text: 'Mom lands Sat 6pm → leave by 4:30pm for DEL traffic' },
+      { label: 'Trade-off', text: 'Dinner clashes with airport run → suggest reschedule' },
     ],
   },
   {
     verb: 'Anticipate',
-    title: 'Kosha thinks ahead for you.',
-    body: 'It tracks your habits and plans, then nudges you gently at the right moment.',
-    cards: [
-      {
-        kind: 'habit',
-        name: 'Habit engine',
-        desc: 'Streaks that survive real life — recover your routine after a miss.',
-      },
-      {
-        kind: 'planner',
-        name: 'Life planner',
-        desc: 'Meals, medicines, groceries — your week planned in minutes.',
-      },
+    stage: 'Act',
+    title: 'It thinks ahead for you.',
+    body: 'KoshaX tracks your habits and plans, then nudges you gently at the right moment — the right thing surfacing exactly when you need it, before you even ask.',
+    how: 'A habit engine and life planner schedule nudges by timing and context, with streaks that recover after a missed day.',
+    actions: [
+      { label: 'Nudge · today 4:00pm', text: 'Leave soon to pick up Mom from DEL T3' },
+      { label: 'Nudge · in 5 days', text: 'Renew car insurance before it lapses' },
+      { label: 'This week planned', text: 'Meals · meds · groceries ✓' },
     ],
   },
   {
-    // TODO: placeholder copy — replace with final Coordinate content.
     verb: 'Coordinate',
-    title: 'Loop in the people who matter.',
-    body: 'Reminders and tasks aren’t just for you — Kosha nudges family or colleagues on your behalf.',
-    cards: [
-      {
-        kind: 'planner',
-        name: 'Shared planning',
-        desc: 'Hand a task to a co-founder or family member without leaving the flow.',
-      },
-      {
-        kind: 'retrieval',
-        name: 'Shared retrieval',
-        desc: 'The document they need, surfaced for them — without you digging it up.',
-      },
+    stage: 'Act',
+    title: 'It extends beyond you.',
+    body: 'Life isn’t solo. KoshaX shares context and handles logistics across your family and network, so plans stay in sync without the endless back-and-forth.',
+    how: 'Shared context lets KoshaX propose, assign and confirm logistics across people — with each person seeing only what’s relevant to them.',
+    actions: [
+      { label: 'Shared with family', text: 'Sat: Dad drops, you pick up Mom' },
+      { label: 'Auto-sent', text: '“Shifting Sharma dinner to Sunday — ok?”' },
+      { label: 'Grocery run', text: 'Assigned to whoever’s closest' },
     ],
   },
 ];
@@ -109,9 +80,13 @@ const solutions = [
     <div class="solution__head section__head" data-sr>
       <p class="eyebrow">But life never stops</p>
       <h2 class="section__title">KoshaX ensures you always stay on top</h2>
+      <p class="lede" style="margin-top:1rem">
+        KoshaX turns the chaos of daily life into the right action, at the right time — for you and
+        everyone you coordinate with.
+      </p>
     </div>
 
-    <div class="solution__tabs" role="tablist" aria-label="What Kosha does">
+    <div class="solution__tabs" role="tablist" aria-label="What KoshaX does">
       {
         solutions.map((s, i) => (
           <button
@@ -139,24 +114,29 @@ const solutions = [
           >
             {/* ---- Text column (left) ---- */}
             <div class="solution__text">
-              <h3 class="solution__title">{s.title}</h3>
+              <div class="solution__heading">
+                <h3 class="solution__title">{s.title}</h3>
+                <span class="solution__stage">{s.stage}</span>
+              </div>
               <p class="solution__body lede">{s.body}</p>
-              <ul class="solution__features">
-                {s.cards.map((c) => (
-                  <li class="solution__feature">
-                    <h4 class="solution__feature-name">{c.name}</h4>
-                    <p class="solution__feature-desc">{c.desc}</p>
+              <div class="solution__how">
+                <p class="solution__label">How it works</p>
+                <p class="solution__how-text">{s.how}</p>
+              </div>
+            </div>
+
+            {/* ---- "In action" panel (right): example cards ---- */}
+            <aside class="solution__action">
+              <p class="solution__label">In action</p>
+              <ul class="solution__chips">
+                {s.actions.map((a) => (
+                  <li class="solution__chip">
+                    <span class="solution__chip-label">{a.label}</span>
+                    <p class="solution__chip-text">{a.text}</p>
                   </li>
                 ))}
               </ul>
-            </div>
-
-            {/* ---- Graphic column (right): the view's animated phones ---- */}
-            <div class="solution__visual">
-              {s.cards.map((c) => (
-                <PhoneMock kind={c.kind} />
-              ))}
-            </div>
+            </aside>
           </div>
         ))
       }
@@ -179,7 +159,7 @@ const solutions = [
   }
 
   /* ---- The verb switcher — headline-as-tabs (Samachar/Vichaar/Vyapaar ref):
-     the three verbs sit side by side at display size; the active one is full
+     the verbs sit side by side at display size; the active one is full
      ink with an accent underline, the others recede to a soft grey. ---- */
   .solution__tabs {
     display: flex;
@@ -239,13 +219,13 @@ const solutions = [
   }
 
   /* ---- Panels ----
-     Default (no JS): the three views simply stack, all visible.
+     Default (no JS): the five views simply stack, all visible.
      Enhanced (JS adds .is-enhanced): panels share one grid cell and
      crossfade as the switcher rotates. */
   .solution__panel {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: start;
     gap: clamp(2rem, 5vw, 4rem);
   }
 
@@ -281,6 +261,13 @@ const solutions = [
     max-width: 34rem;
   }
 
+  .solution__heading {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
   .solution__title {
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 2.6vw, 2rem);
@@ -290,60 +277,89 @@ const solutions = [
     margin: 0;
   }
 
-  .solution__body {
-    margin: 1rem 0 2rem;
+  /* Stage badge — Learn / Understand / Act */
+  .solution__stage {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--accent-deep);
+    background: var(--accent-tint);
+    border-radius: var(--radius-pill);
+    padding: 0.3rem 0.75rem;
   }
 
-  .solution__features {
+  .solution__body {
+    margin: 1rem 0 1.75rem;
+  }
+
+  /* Shared small-caps label for the explainer + action panels */
+  .solution__label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.7rem;
+  }
+
+  /* "How it works" explainer box */
+  .solution__how {
+    background: var(--paper-warm);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 1.4rem;
+  }
+
+  .solution__how-text {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--ink-body);
+  }
+
+  /* ---- "In action" panel: tinted shell, white example cards ---- */
+  .solution__action {
+    background: var(--paper-warm);
+    border-radius: var(--radius);
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+
+  .solution__chips {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 1.4rem;
+    gap: 0.85rem;
   }
 
-  .solution__feature-name {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin: 0 0 0.35rem;
+  .solution__chip {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1.1rem;
   }
 
-  .solution__feature-desc {
+  .solution__chip-label {
+    display: block;
+    font-size: 0.85rem;
     color: var(--ink-soft);
-    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .solution__chip-text {
     margin: 0;
-    max-width: 44ch;
+    font-size: 0.98rem;
+    line-height: 1.45;
+    color: var(--ink-body);
   }
 
-  /* ---- Graphic column: the two animated phones, side by side, the second
-     dropped slightly for depth. Clipped at the section's flow height. ---- */
-  .solution__visual {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: clamp(1rem, 2.5vw, 1.75rem);
-  }
-
-  .solution__visual :global(.phone) {
-    width: clamp(150px, 42%, 210px);
-    flex: none;
-  }
-
-  .solution__visual :global(.phone:nth-child(2)) {
-    margin-top: clamp(1.5rem, 3vw, 2.75rem);
-  }
-
-  /* ---- Mobile: single column, graphic below the text ---- */
+  /* ---- Mobile: single column, action panel below the text ---- */
   @media (max-width: 880px) {
     .solution__panel {
       grid-template-columns: 1fr;
     }
     .solution__text {
       max-width: none;
-    }
-    .solution__visual :global(.phone) {
-      width: clamp(140px, 40%, 190px);
     }
   }
 
