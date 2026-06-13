@@ -1,0 +1,58 @@
+---
+// 404 — GitHub Pages serves dist/404.html for any unknown path.
+// (Replaces the old site's 404.html SPA-routing hack, which a static
+// site doesn't need.)
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Page not found — KoshaX"
+  description="That page doesn’t exist. Head back to KoshaX — the AI-powered Life OS."
+>
+  <Nav />
+  <main class="nf">
+    <div class="container nf__inner">
+      <p class="eyebrow">404</p>
+      <h1 class="nf__title">This page slipped through.</h1>
+      <p class="nf__sub lede">
+        Ironic, we know. The page you’re looking for doesn’t exist — but everything else is right
+        where it should be.
+      </p>
+      <a class="btn btn--primary" href="/">Back to home</a>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .nf {
+    min-height: 70vh;
+    display: grid;
+    place-items: center;
+    padding-block: clamp(140px, 16vw, 200px) var(--section-y);
+  }
+
+  .nf__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .nf__title {
+    font-family: var(--font-display);
+    font-size: var(--t-h2);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.06;
+    color: var(--ink);
+    margin: 0.85rem 0 1rem;
+  }
+
+  .nf__sub {
+    margin: 0 0 2rem;
+    max-width: 44ch;
+  }
+</style>
