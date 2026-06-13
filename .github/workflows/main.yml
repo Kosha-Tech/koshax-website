@@ -26,6 +26,11 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    # The live site is the Astro project in new-website/. Install/build run
+    # there; action `with:` paths below stay repo-root-relative.
+    defaults:
+      run:
+        working-directory: new-website
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,6 +40,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
+          cache-dependency-path: new-website/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -44,8 +50,8 @@ jobs:
 
       - name: Copy custom domain
         run: |
-          if [ -f CNAME ]; then
-            cp CNAME dist/CNAME
+          if [ -f ../CNAME ]; then
+            cp ../CNAME dist/CNAME
           fi
 
       - name: Setup Pages
@@ -54,7 +60,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: new-website/dist
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

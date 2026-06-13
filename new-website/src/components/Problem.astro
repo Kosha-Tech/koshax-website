@@ -1,0 +1,293 @@
+---
+// Problem (#use-cases) · eyebrow "Why it's hard" (§8).
+// Per the Figma redesign (node 4157-28712): the calm statement sits at the top,
+// and below it sit FOUR lived-symptom cards — each an icon + line of text —
+// fanned into an overlapping stack (hand-of-cards), tilted and vertically
+// staggered. They fade + rise in together on scroll.
+//
+// Each card carries a tilt (--rot), a vertical offset (--dy) for the arc, and
+// a mood colour (--c) that tints its background, border, pin, tag and icon.
+// Icons are lucide-style 24×24 stroke paths, themeable via currentColor.
+const cards = [
+  {
+    tag: 'On you',
+    title: 'Family health monitoring',
+    sub: 'Becoming a daily chore.',
+    color: '#1D9E75',
+    rot: -5,
+    dy: 14,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>`,
+  },
+  {
+    tag: 'Late',
+    title: 'Missed timeline for payments',
+    sub: '₹500 fee. You were so close.',
+    color: '#E24B4A',
+    rot: 2,
+    dy: 2,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m14 14-4 4m0-4 4 4"/></svg>`,
+  },
+  {
+    tag: 'Panic',
+    title: 'Burned 15 minutes at the gate',
+    sub: 'Hunting for a boarding pass.',
+    color: '#BA7517',
+    rot: -2,
+    dy: 16,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22h20"/><path d="M6.36 17.4 4 17l-2-4 1.1-.55a2 2 0 0 1 1.8 0l.17.1a2 2 0 0 0 1.8 0L8 12 5 6l.9-.45a2 2 0 0 1 2.09.2l4.02 3a2 2 0 0 0 2.1.2l4.19-2.06a2.41 2.41 0 0 1 1.73-.17L21 7a1.4 1.4 0 0 1 .87 1.99l-.38.76c-.23.46-.6.84-1.07 1.08L7.58 17.2a2 2 0 0 1-1.22.18Z"/></svg>`,
+  },
+  {
+    tag: 'Lost',
+    title: 'Important information',
+    sub: 'Buried in emails by Monday.',
+    color: '#378ADD',
+    rot: 5,
+    dy: 6,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z"/><path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/></svg>`,
+  },
+];
+---
+
+<section class="section section--tint problem" id="use-cases">
+  <div class="container">
+    <div class="problem__head" data-sr>
+      <p class="eyebrow">Everyday life feels hard</p>
+      <h2 class="section__title">It’s not you who is disorganised.<br />Your tools are.</h2>
+    </div>
+
+    <div class="problem__cards">
+      {
+        cards.map((c, i) => (
+          <article
+            class="pcard"
+            style={`--c:${c.color};--rot:${c.rot}deg;--dy:${c.dy}px;--i:${i};--gx:${((1.5 - i) * 9).toFixed(2)}rem`}
+          >
+            <span class="pcard__pin" aria-hidden="true"></span>
+            <div>
+              <span class="pcard__tag">{c.tag}</span>
+              <span class="pcard__icon" set:html={c.icon} />
+              <h3 class="pcard__title">{c.title}</h3>
+            </div>
+            <p class="pcard__sub">{c.sub}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Tuck the hero phone UNDER this section: pull the band up over the phone's
+     lower body, paint above it (z-index), and let the top edge fade in from
+     transparent so the phone shows through and dissolves into the tint. The
+     heading sits below that overlap (padding-top), so it clears the phone. */
+  .problem {
+    position: relative;
+    z-index: 3; /* above the hero phone (z-index 2) */
+    margin-top: clamp(-130px, -10vw, -100px);
+    padding-top: clamp(150px, 13vw, 200px);
+    padding-bottom: var(--section-y);
+    /* Fully OPAQUE band: an 80% peach→lavender tint over a solid white base.
+       The white base is full-height, so the hero phone is hidden cleanly behind
+       the band (no ghosting / smearing). The tint fades in from transparent at
+       the very top, so the band's top edge is plain white — seamless with the
+       hero's white above it (no visible seam). */
+    background:
+      linear-gradient(
+        to bottom,
+        transparent 0,
+        color-mix(in srgb, var(--tint-peach) 80%, transparent) 160px,
+        color-mix(in srgb, var(--tint-lavender) 80%, transparent) calc(100% - 140px),
+        transparent 100%
+      ),
+      var(--paper);
+  }
+
+  /* The hero phone now fades out on its own (masked in Hero.astro), so the band
+     needs no overlap trickery — it simply starts as a clean opaque gradient. */
+
+  /* ---- Heading: pinned at the top, centered (Figma) ---- */
+  .problem__head {
+    /* wide enough for "It's not you who is disorganised." on one line */
+    max-width: 62rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  /* ---- The fanned deck of symptom cards ---- */
+  .problem__cards {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: clamp(2.5rem, 5vw, 4.5rem);
+    padding-bottom: clamp(1.5rem, 4vw, 3rem); /* room for the tilt + shadow */
+  }
+
+  /* ---- A single symptom card: tag + icon + title up top, subline below.
+     Each carries a mood colour (--c) that tints bg, border, pin, tag, icon. */
+  .pcard {
+    position: relative;
+    flex: 0 0 auto;
+    width: clamp(10.5rem, 13vw, 13rem);
+    min-height: clamp(12.5rem, 14.5vw, 14rem);
+    padding: 1.15rem 1rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+
+    background: var(--paper);
+    border-top: 2px solid var(--accent); /* the blue thread along the top */
+    border-radius: var(--radius);
+    box-shadow: 0 10px 24px -10px rgba(16, 24, 40, 0.12);
+
+    transform: translateY(var(--dy)) rotate(var(--rot));
+    transform-origin: center center;
+  }
+
+  /* Hover: straighten, lift and pop above the neighbours (reference deck). */
+  .pcard:hover,
+  .problem.is-armed.is-shown .pcard:hover {
+    transform: translateY(calc(var(--dy) - 10px)) rotate(0deg) scale(1.04);
+    box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.28);
+    z-index: 5;
+    transition:
+      transform 350ms cubic-bezier(0.2, 0.8, 0.3, 1.2),
+      box-shadow 350ms var(--ease);
+    transition-delay: 0ms;
+  }
+
+  .pcard__pin {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--c);
+  }
+
+  .pcard__tag {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 16%, transparent);
+    padding: 2px 7px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 9px;
+  }
+
+  .pcard__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 18%, transparent);
+    margin-bottom: 22px;
+  }
+  .pcard__icon :global(svg) {
+    width: 21px;
+    height: 21px;
+    display: block;
+  }
+
+  .pcard__title {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .pcard__sub {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.76rem;
+    line-height: 1.4;
+    color: var(--ink-soft);
+  }
+
+  /* ---- Scroll reveal: the cards start gathered into a flat, centred stack
+     (--gx pulls each toward the middle, no tilt) and FAN OUT to their resting
+     fanned positions when the section scrolls in — spreading apart, tilting,
+     and lifting into the arc, one after another. ---- */
+  .problem.is-armed .pcard {
+    opacity: 0;
+    transform: translateX(var(--gx)) translateY(calc(var(--dy) + 10px))
+      rotate(0deg) scale(0.96);
+  }
+  .problem.is-armed.is-shown .pcard {
+    opacity: 1;
+    transform: translateY(var(--dy)) rotate(var(--rot)) scale(1);
+    transition:
+      opacity 420ms var(--ease),
+      transform 820ms var(--ease);
+    transition-delay: calc(var(--i) * 110ms);
+  }
+
+  /* ---- Mobile: drop the fan, stack the cards upright in a calm grid ---- */
+  @media (max-width: 760px) {
+    .problem__cards {
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      max-width: 30rem;
+      margin-inline: auto;
+    }
+    .pcard {
+      width: calc(50% - 0.5rem);
+      min-height: 0;
+      transform: none;
+    }
+    /* never tilt / offset on the stacked mobile layout */
+    .problem.is-armed .pcard,
+    .problem.is-armed.is-shown .pcard {
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .problem.is-armed .pcard,
+    .problem.is-armed.is-shown .pcard {
+      opacity: 1;
+      transition: none;
+      transform: translateY(var(--dy)) rotate(var(--rot));
+    }
+    @media (max-width: 760px) {
+      .problem .pcard { transform: none; }
+    }
+  }
+</style>
+
+<script>
+  // Fan the cards out from a gathered stack when the section scrolls into
+  // view. Plays once. Reduced motion / no-JS keep the resting fanned state.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('.problem');
+  const cards = section?.querySelector<HTMLElement>('.problem__cards');
+
+  if (section && cards && !reduce && 'IntersectionObserver' in window) {
+    section.classList.add('is-armed');
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            section.classList.add('is-shown');
+            io.disconnect();
+          }
+        }
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(cards);
+  }
+</script>

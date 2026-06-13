@@ -1,0 +1,349 @@
+---
+// Nav — lovi.care-style fixed, transparent bar with a progressive-blur backdrop.
+// Logo left · jump-links centre · download CTA right.
+// Logo: the blue Kosha mark from /Assets, served from /public.
+
+// Root-relative (/#…) so they work from /download too, not just the homepage.
+const links = [
+  { href: '/#capture', label: 'How it works' }, // Solutions — "KoshaX ensures you always stay on top"
+  { href: '/#persona', label: 'Usecases' }, // Persona — "One life. One system to run it."
+];
+---
+
+<header class="nav" data-reveal="nav">
+  <!-- Progressive blur — stacked layers of increasing blur, masked so the frost
+       is strongest at the top edge and fades to clear at the bottom. No tint. -->
+  <div class="nav__blur" aria-hidden="true">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <div class="nav__inner">
+    <a class="nav__brand" href="/" aria-label="Kosha — home">
+      <!-- Blue logo on light sections, white logo on dark sections. The nav
+           toggles `.nav--on-dark` as it scrolls over a dark band. -->
+      <img
+        class="nav__logo nav__logo--blue"
+        src="/kosha-logo-blue.svg"
+        alt="Kosha"
+        width="364"
+        height="60"
+        decoding="async"
+      />
+      <img
+        class="nav__logo nav__logo--white"
+        src="/kosha-logo-white.svg"
+        alt=""
+        aria-hidden="true"
+        width="364"
+        height="60"
+        decoding="async"
+      />
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      {
+        links.map((l) => (
+          <a class="nav__link" href={l.href}>
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="nav__right">
+      <a
+        class="nav__cta download-trigger"
+        href="/download?utm_source=nav"
+        data-placement="nav"
+      >
+        Download KoshaX
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Offset anchor jumps so targets aren't hidden under the fixed bar. */
+  :global(html) {
+    scroll-padding-top: 90px;
+  }
+
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+  }
+
+  /* Progressive blur backdrop — heaviest blur at the top, fading to clear. */
+  .nav__blur {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 110px;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .nav__blur > div {
+    position: absolute;
+    inset: 0;
+  }
+
+  .nav__blur > div:nth-child(1) {
+    backdrop-filter: blur(0.5px);
+    -webkit-backdrop-filter: blur(0.5px);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, #000 16%, transparent 33%);
+    mask-image: linear-gradient(to top, #000 0%, #000 16%, transparent 33%);
+  }
+  .nav__blur > div:nth-child(2) {
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    -webkit-mask-image: linear-gradient(to top, transparent 8%, #000 25%, #000 41%, transparent 58%);
+    mask-image: linear-gradient(to top, transparent 8%, #000 25%, #000 41%, transparent 58%);
+  }
+  .nav__blur > div:nth-child(3) {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    -webkit-mask-image: linear-gradient(to top, transparent 16%, #000 33%, #000 50%, transparent 66%);
+    mask-image: linear-gradient(to top, transparent 16%, #000 33%, #000 50%, transparent 66%);
+  }
+  .nav__blur > div:nth-child(4) {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    -webkit-mask-image: linear-gradient(to top, transparent 33%, #000 50%, #000 66%, transparent 83%);
+    mask-image: linear-gradient(to top, transparent 33%, #000 50%, #000 66%, transparent 83%);
+  }
+  .nav__blur > div:nth-child(5) {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    -webkit-mask-image: linear-gradient(to top, transparent 50%, #000 66%, #000 83%, transparent 100%);
+    mask-image: linear-gradient(to top, transparent 50%, #000 66%, #000 83%, transparent 100%);
+  }
+  .nav__blur > div:nth-child(6) {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    -webkit-mask-image: linear-gradient(to top, transparent 66%, #000 83%, #000 100%);
+    mask-image: linear-gradient(to top, transparent 66%, #000 83%, #000 100%);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 26px clamp(20px, 4vw, 48px) 12px;
+  }
+
+  /* Brand mark — the blue Kosha logo, sized by height. */
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+    flex: none;
+  }
+
+  .nav__logo {
+    height: 26px;
+    width: auto;
+    display: block;
+  }
+
+  /* Logo swap by theme — blue by default, white when over a dark section. */
+  .nav__logo--white {
+    display: none;
+  }
+  .nav--on-dark .nav__logo--blue {
+    display: none;
+  }
+  .nav--on-dark .nav__logo--white {
+    display: block;
+  }
+
+  /* ---------- Jump links (centre) ---------- */
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.6vw, 2.2rem);
+  }
+
+  .nav__link {
+    position: relative;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 0.35rem 0;
+    white-space: nowrap;
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .nav__link:hover {
+    color: var(--ink);
+  }
+
+  /* Underline draws in (periwinkle accent) on hover/focus. */
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-fast) var(--ease);
+  }
+
+  .nav__link:hover::after,
+  .nav__link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .nav--on-dark .nav__link {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .nav--on-dark .nav__link:hover {
+    color: #fff;
+  }
+  .nav--on-dark .nav__link::after {
+    background: #fff;
+  }
+
+  /* ---------- Right cluster: CTA ---------- */
+  .nav__right {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex: none;
+  }
+
+  .nav__cta {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    padding: 0.65rem 1.2rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    background: var(--ink);
+    color: #fff;
+    text-decoration: none;
+    box-shadow:
+      0 0.6px 0.6px -1px rgba(0, 0, 0, 0.16),
+      0 2.3px 2.3px -2.2px rgba(0, 0, 0, 0.15),
+      0 10px 10px -3.25px rgba(0, 0, 0, 0.09);
+    transition:
+      transform var(--dur-fast) var(--ease),
+      box-shadow var(--dur-fast) var(--ease),
+      background var(--dur-fast) var(--ease);
+  }
+
+  .nav__cta:hover {
+    transform: translateY(-1px);
+    background: var(--ink-body);
+    box-shadow:
+      0 1px 1px -1px rgba(0, 0, 0, 0.18),
+      0 4px 4px -2px rgba(0, 0, 0, 0.16),
+      0 16px 16px -3px rgba(0, 0, 0, 0.12);
+  }
+
+  .nav__cta:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* ============================================================
+     Light theme — applied (.nav--on-dark) while the bar floats over a
+     dark section: white logo (above), white links + inverted CTA.
+     Toggled by the scroll observer in the script below.
+     ============================================================ */
+  /* Invert the CTA so the navy button stays legible on a navy band. */
+  .nav--on-dark .nav__cta {
+    background: #fff;
+    color: var(--ink);
+  }
+  .nav--on-dark .nav__cta:hover {
+    background: rgba(255, 255, 255, 0.88);
+  }
+
+  /* Smooth the theme flip rather than hard-cutting colours. */
+  .nav__cta {
+    transition:
+      color var(--dur-fast) var(--ease),
+      background var(--dur-fast) var(--ease),
+      border-color var(--dur-fast) var(--ease),
+      transform var(--dur-fast) var(--ease),
+      box-shadow var(--dur-fast) var(--ease);
+  }
+
+  @media (max-width: 480px) {
+    .nav__logo {
+      height: 22px;
+    }
+    .nav__link {
+      font-size: 0.85rem;
+    }
+    .nav__cta {
+      padding: 0.5rem 0.9rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav__cta,
+    .nav__link,
+    .nav__link::after {
+      transition: none;
+    }
+    .nav__cta:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.nav');
+
+  // ----- Adaptive theme: go light while the bar floats over a dark section -----
+  const darkSections = Array.from(
+    document.querySelectorAll<HTMLElement>('.section--dark')
+  );
+
+  if (header && darkSections.length) {
+    // Probe a point inside the bar; if a dark section spans it, the bar is
+    // over dark and switches to the light theme.
+    const probeY = () => header.getBoundingClientRect().height * 0.5 || 32;
+
+    const isOverDark = () => {
+      const y = probeY();
+      return darkSections.some((s) => {
+        const r = s.getBoundingClientRect();
+        return r.top <= y && r.bottom >= y;
+      });
+    };
+
+    let ticking = false;
+    const sync = () => {
+      ticking = false;
+      header.classList.toggle('nav--on-dark', isOverDark());
+    };
+    const schedule = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(sync);
+    };
+
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    sync(); // set initial state on load
+  }
+</script>

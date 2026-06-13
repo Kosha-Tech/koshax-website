@@ -1,0 +1,203 @@
+---
+// Footer (§8). Link map per §9.
+// Dark closing band (ref: KOSHA:: dark footer): white wordmark up top, then a
+// big two-line display statement, with the Explore/Legal columns alongside.
+// Social row intentionally OMITTED: §8/§9 say link only profiles that are live
+// and prune any that 404. None exist yet — add Instagram/X/LinkedIn here once
+// the real profiles are up.
+const explore = [
+  { label: 'Use cases', href: '/#use-cases' },
+  { label: 'How it works', href: '/#how-it-works' },
+  { label: 'FAQ', href: '/#faq' },
+  { label: 'Care', href: '/care' },
+];
+const legal = [
+  { label: 'Privacy policy', href: '/privacy' },
+  { label: 'Terms & Conditions', href: '/terms' },
+];
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a class="footer__mark" href="/" aria-label="Kosha — home">
+        <img
+          class="footer__logo"
+          src="/kosha-logo-white.svg"
+          alt="Kosha"
+          width="364"
+          height="60"
+          decoding="async"
+        />
+      </a>
+      <p class="footer__statement">
+        Quietly handling the everyday,<br />so you can live fully.
+      </p>
+    </div>
+
+    <nav class="footer__col" aria-label="Explore">
+      <h2 class="footer__heading">Explore</h2>
+      <ul>
+        {explore.map((l) => <li><a class="footer__link" href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav class="footer__col" aria-label="Legal">
+      <h2 class="footer__heading">Legal</h2>
+      <ul>
+        {legal.map((l) => <li><a class="footer__link" href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>© 2026 KoshaX Technologies Private Limited. All rights reserved.</p>
+    <div class="footer__socials">
+      <a href="https://www.linkedin.com/company/koshax" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="footer__social">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/koshax_in/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="footer__social">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://www.x.com/koshax_in/" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" class="footer__social">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Dark closing band — near-black navy, white type (KOSHA:: ref). */
+  .footer {
+    background: var(--band-dark);
+    color: #fff;
+    padding-top: clamp(3.5rem, 7vw, 6rem);
+    padding-bottom: 2.5rem;
+  }
+
+  /* Statement takes the wide left column; Explore + Legal sit compactly to
+     its right (tight gap between the two so the first line stays whole). */
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    column-gap: clamp(2rem, 4vw, 4rem);
+    row-gap: 2rem;
+    margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  @media (max-width: 760px) {
+    .footer__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .footer__mark {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+    margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+  }
+  .footer__logo {
+    height: 24px;
+    width: auto;
+    display: block;
+  }
+
+  /* The big two-line statement — the footer's hero. */
+  .footer__statement {
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 3.6vw, 2.7rem);
+    font-weight: 600;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0;
+  }
+
+  .footer__heading {
+    font-family: var(--font-mono);
+    font-size: var(--t-eyebrow);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+    margin: 0 0 1rem;
+  }
+
+  .footer__col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .footer__link {
+    position: relative;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+  }
+  .footer__link:hover {
+    color: #fff;
+  }
+  .footer__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: var(--accent-bright);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur) var(--ease);
+  }
+  .footer__link:hover::after,
+  .footer__link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: rgba(255, 255, 255, 0.55);
+  }
+  .footer__bottom p {
+    margin: 0;
+  }
+
+  /* Social row — bottom right (same links as the live site). */
+  .footer__socials {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+  }
+
+  .footer__social {
+    display: inline-flex;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .footer__social:hover,
+  .footer__social:focus-visible {
+    color: #fff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer__link::after {
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,303 @@
+---
+// Testimonials · eyebrow "Real people, real results" (§8).
+// Copy verbatim. §12: use REAL testimonials — these are from the copy deck.
+// Presented as a lovi-style single-row marquee: cards drift continuously,
+// pause on hover, and fade out softly at both edges.
+//
+// Card design: tinted initials avatar, name (+ role where given), headline,
+// and quote. Cards cycle through the site's mood colours (--c tints the
+// avatar, wash and quote mark). One shared 5★ row sits under the heading.
+const lead = 'From clutter to clarity, chaos to calm;';
+const leadTail = 'KoshaX quietly saves the day.';
+const quotes = [
+  {
+    title: 'It catches what slips',
+    text: 'Dad’s medicines, my kid’s checkup, midnight deploys — KoshaX holds what used to live in my head, and the reminder calls catch what slips.',
+    name: 'Tushar Gupta',
+    role: 'CTO, Startup',
+    img: '/testimonial-tushar.jpg',
+  },
+  {
+    title: 'Found it in 10 seconds',
+    text: 'Found my health insurance renewal doc in 10 seconds. I used to spend 20 minutes hunting through Gmail.',
+    name: 'Riya K.',
+    meta: 'Apr 12th, 2025 / App Store',
+  },
+  {
+    title: 'I switch off at night',
+    text: 'My work runs on tiny details — site visits, samples, vendors, deadlines. Now I tell Kai once and finally switch off at night.',
+    name: 'Paridhi Sahni',
+    role: 'Interior Designer',
+    img: '/testimonial-paridhi.jpg',
+  },
+  {
+    title: 'Saved me a fine',
+    text: 'It quietly reminded me my car insurance lapsed in two days. That one nudge saved me a fine and a very bad morning.',
+    name: 'Anshul Garg',
+    role: 'Business Operations',
+    img: '/testimonial-anshul.jpg',
+  },
+  {
+    title: 'Finally present at dinner',
+    text: 'Kai cuts through investor calls, client follow-ups, and family chaos to tell me what needs attention next. I’m finally present at dinner.',
+    name: 'Chirag Jain',
+    role: 'Founder, Westend Prime Wealth',
+    img: '/testimonial-chirag.jpg',
+  },
+  {
+    title: 'Nudges that feel human',
+    text: 'I’ve tried every habit app. Kosha is the first that didn’t make me feel like a failure when I missed a day.',
+    name: 'Arjun M.',
+    meta: 'Mar 3rd, 2025 / Play Store',
+  },
+  {
+    title: 'Everything, one search away',
+    text: 'My passport, my PAN, my rent agreement — all one search away. I deleted three other apps the week I started.',
+    name: 'Rhythm Gupta',
+    role: 'Product Head',
+    img: '/testimonial-rhythm.jpg',
+  },
+];
+
+// Mood colours shared with the Problem cards — one per review, cycling.
+const palette = ['#5163FF', '#1D9E75', '#E24B4A', '#BA7517', '#378ADD', '#8B5CF6'];
+
+const cards = quotes.map((q, i) => {
+  return {
+    ...q,
+    color: palette[i % palette.length],
+    initials: q.name
+      .split(' ')
+      .map((w) => w[0])
+      .join('')
+      .toUpperCase(),
+  };
+});
+---
+
+<section class="section section--tint testimonials" id="testimonials">
+  <div class="container">
+    <div class="section__head testimonials__head" data-sr>
+      <p class="eyebrow">Real people, real results</p>
+      <p class="testimonials__lead">“{lead}<br />{leadTail}”</p>
+      <p class="testimonials__stars" role="img" aria-label="Rated 5 out of 5 stars">★★★★★</p>
+    </div>
+  </div>
+
+  <div class="testimonials__marquee" data-sr>
+    {/* Duplicated set so the loop is seamless; the clone is aria-hidden. */}
+    <ul class="marquee__track">
+      {
+        [false, true].map((clone) =>
+          cards.map((q) => (
+            <li
+              class="testimonials__card card"
+              style={`--c:${q.color}`}
+              aria-hidden={clone ? 'true' : undefined}
+            >
+              <span class="testimonials__mark" aria-hidden="true">“</span>
+              <header class="testimonials__top">
+                {'img' in q && q.img ? (
+                  <img class="testimonials__avatar testimonials__avatar--photo" src={q.img} alt="" loading="lazy" width="40" height="40" />
+                ) : (
+                  <span class="testimonials__avatar" aria-hidden="true">{q.initials}</span>
+                )}
+                <span class="testimonials__who">
+                  <span class="testimonials__name">{q.name}</span>
+                  {'role' in q && q.role && <span class="testimonials__role">{q.role}</span>}
+                </span>
+              </header>
+              <h3 class="testimonials__title">{q.title}</h3>
+              <blockquote class="testimonials__quote">{q.text}</blockquote>
+            </li>
+          ))
+        )
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* The marquee track adds 2.5rem of internal bottom padding (shadow room);
+     trim it off the section so the gap to the FAQ matches the site rhythm. */
+  .testimonials {
+    padding-bottom: calc(var(--section-y) - 2.5rem);
+  }
+
+  /* The two-line tagline needs more width than the shared 46rem head column,
+     and a notch less size than --t-h2, so each half holds to a single line. */
+  .testimonials__head {
+    max-width: 62rem;
+  }
+
+  .testimonials__lead {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.4vw, 2.75rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0.85rem 0 0;
+  }
+
+  /* Marquee shell — full-bleed, with soft fade masks on both edges (lovi). */
+  .testimonials__marquee {
+    position: relative;
+    margin-top: clamp(2rem, 4vw, 3rem);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    );
+  }
+
+  .marquee__track {
+    list-style: none;
+    margin: 0;
+    /* Room for the cards' soft drop shadow + hover lift — the marquee shell
+       is overflow:hidden, so without this the shadow clips in a hard line. */
+    padding: 0.75rem 0 2.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    gap: clamp(0.6rem, 1.2vw, 0.9rem); /* tight spacing between cards */
+    will-change: transform;
+    animation: marquee-scroll 42s linear infinite; /* ~6s per card keeps the drift speed steady as cards are added */
+  }
+
+  /* Pause the marquee when the visitor hovers anywhere over it. */
+  .testimonials__marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      /* Half the track = exactly one full (un-cloned) set. */
+      transform: translateX(-50%);
+    }
+  }
+
+  /* ---- A single review card — tinted by its mood colour (--c): a soft
+     wash at the top, the avatar, and the oversized quote mark. ---- */
+  .testimonials__card {
+    position: relative;
+    flex: 0 0 auto;
+    width: clamp(18rem, 27vw, 21rem);
+    padding: clamp(1.1rem, 1.8vw, 1.5rem) clamp(1.4rem, 2.2vw, 1.85rem);
+    display: flex;
+    flex-direction: column;
+    background:
+      linear-gradient(170deg, color-mix(in srgb, var(--c) 8%, transparent), transparent 42%),
+      var(--paper);
+    overflow: hidden;
+  }
+
+  /* Oversized display quote mark floating in the top-right corner. */
+  .testimonials__mark {
+    position: absolute;
+    top: -0.4rem;
+    right: 1.1rem;
+    font-family: var(--font-display);
+    font-size: 6rem;
+    line-height: 1.3;
+    color: color-mix(in srgb, var(--c) 16%, transparent);
+    pointer-events: none;
+  }
+
+  .testimonials__top {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 0.85rem;
+  }
+
+  /* Initials avatar — tinted circle in the card's mood colour. */
+  .testimonials__avatar {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 16%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
+  }
+
+  /* Photo avatar — same circle, real face instead of initials. */
+  .testimonials__avatar--photo {
+    object-fit: cover;
+  }
+
+  .testimonials__who {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .testimonials__name {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Amber rating row — one loud 5★ under the section heading. */
+  .testimonials__stars {
+    font-size: 1.9rem;
+    letter-spacing: 0.32em;
+    line-height: 1;
+    color: #f2a93b;
+    margin: 1.25rem 0 0;
+  }
+
+  /* Reviewer's role, tucked under the name (non-store testimonials). */
+  .testimonials__role {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--ink-soft);
+  }
+
+  .testimonials__title {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+
+  .testimonials__quote {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  /* Respect reduced-motion: freeze the marquee, let it scroll manually. */
+  @media (prefers-reduced-motion: reduce) {
+    .testimonials__marquee {
+      overflow-x: auto;
+    }
+
+    .marquee__track {
+      animation: none;
+    }
+  }
+</style>

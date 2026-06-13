@@ -1,0 +1,175 @@
+---
+// Shared frame for legal pages (/privacy, /terms): nav + footer, a narrow
+// reading column, and the content styles the ported legal copy relies on
+// (.legal-card sections, .legal-toc pills, .legal-muted asides).
+import Layout from './Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  lastUpdated?: string;
+  eyebrow?: string;
+  description?: string;
+}
+
+const { title, lastUpdated, eyebrow = 'Legal', description } = Astro.props;
+---
+
+<Layout title={`${title} — KoshaX`} description={description}>
+  <Nav />
+  <main class="legal">
+    <div class="container legal__container">
+      <header class="legal__head">
+        <p class="eyebrow">{eyebrow}</p>
+        <h1 class="legal__title">{title}</h1>
+        {lastUpdated && <p class="legal__meta">Last updated: {lastUpdated}</p>}
+      </header>
+      <slot />
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style is:global>
+  .legal {
+    /* clear the fixed nav */
+    padding-top: clamp(120px, 14vw, 160px);
+    padding-bottom: var(--section-y);
+  }
+
+  .legal__container {
+    max-width: 56rem;
+  }
+
+  .legal__head {
+    margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .legal__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0.85rem 0 0.6rem;
+  }
+
+  .legal__meta {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin: 0 0 1.25rem;
+  }
+
+  /* Intro paragraphs before the first card */
+  .legal__intro {
+    color: var(--ink-soft);
+    margin: 0 0 0.85rem;
+    line-height: 1.6;
+  }
+
+  /* Jump pills */
+  .legal-toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .legal-toc a {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent-deep);
+    background: var(--accent-tint);
+    border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+    border-radius: var(--radius-pill);
+    padding: 0.35rem 0.8rem;
+    text-decoration: none;
+    transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  }
+
+  .legal-toc a:hover {
+    background: color-mix(in srgb, var(--accent) 14%, #fff);
+    border-color: color-mix(in srgb, var(--accent) 32%, transparent);
+  }
+
+  /* One numbered section of the document */
+  .legal-card {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    margin: 1.1rem 0;
+  }
+
+  .legal-card h2 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0 0 0.75rem;
+  }
+
+  .legal-card h3 {
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--ink-body);
+    margin: 1.1rem 0 0.5rem;
+  }
+
+  .legal-card p {
+    color: var(--ink-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0.6rem 0;
+  }
+
+  .legal-card ul,
+  .legal-card ol {
+    margin: 0.6rem 0;
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .legal-card li {
+    color: var(--ink-body);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .legal-card a {
+    color: var(--accent-deep);
+    text-decoration: none;
+  }
+
+  .legal-card a:hover {
+    text-decoration: underline;
+  }
+
+  .legal-muted {
+    color: var(--ink-soft) !important;
+  }
+
+  .legal-uppercase {
+    text-transform: uppercase;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.01em;
+  }
+
+  .legal-pill {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--jade);
+    background: var(--jade-tint);
+    border: 1px solid color-mix(in srgb, var(--jade) 28%, transparent);
+    border-radius: var(--radius-pill);
+    padding: 0.35rem 0.8rem;
+  }
+</style>

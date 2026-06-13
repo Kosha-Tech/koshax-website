@@ -1,0 +1,144 @@
+---
+// Base layout — self-hosts fonts via Fontsource (§3/§11: no third-party
+// font request = on-brand for privacy + faster). <html lang="en-IN"> per §10.
+
+// Headings: Space Grotesk (variable, 300–700) — a geometric grotesk with
+// distinctive character for display type.
+import '@fontsource-variable/space-grotesk';
+// Data/ledger "mono" role + small labels: Lexend (variable, 100–900).
+import '@fontsource-variable/lexend';
+// Body copy: Inter (variable) — a neutral, highly legible UI sans tuned for
+// long-form reading at small sizes.
+import '@fontsource-variable/inter';
+
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Kosha — Focus on what really matters',
+  description = 'Kosha is the quiet assistant for everything outside work. It finds your important documents, blocks spam before it reaches you, and remembers the deadlines you shouldn’t have to.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Analytics — same tags as the live site (index.html at repo root).
+         The download CTA handler below reports into fbq/gtag, so these must
+         load before launch for ClickDownloadCTA / click_download_cta events. -->
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-3WDKJGDDK3"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3WDKJGDDK3');
+    </script>
+    <!-- Facebook Pixel Code -->
+    <script is:inline>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window,document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1474144767724727');
+      fbq('track', 'PageView');
+    </script>
+    <noscript>
+      <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=1474144767724727&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+    <!-- Microsoft Clarity -->
+    <script is:inline>
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "wu4s52pv0b");
+    </script>
+    <!-- End Microsoft Clarity -->
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // Download CTAs (.download-trigger) — same behaviour as the current
+      // site's handleDownloadClick (src/utils/downloadRedirect.js): detect
+      // the platform, fire the Meta Pixel + GA events, then send iOS to the
+      // App Store, Android to the Play Store, and everyone else to /download
+      // (also the no-JS fallback via the links' href).
+      const APP_STORE_URL = 'https://apps.apple.com/in/app/koshax/id6761248820';
+      const PLAY_STORE_URL =
+        'https://play.google.com/store/apps/details?id=com.koshax.ai&hl=en_IN';
+
+      const detectPlatform = () => {
+        const ua = navigator.userAgent || '';
+        // iPadOS 13+ reports as Mac with touch — treat as iOS.
+        const isIpadOS = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
+        if (/iPhone|iPad|iPod/.test(ua) || isIpadOS) return 'ios';
+        if (/Android/i.test(ua)) return 'android';
+        return 'other';
+      };
+
+      document.querySelectorAll<HTMLAnchorElement>('.download-trigger').forEach((a) => {
+        a.addEventListener('click', (e) => {
+          const platform = detectPlatform();
+          const meta = { placement: a.dataset.placement || 'unknown', platform };
+          const w = window as any;
+          w.fbq?.('trackCustom', 'ClickDownloadCTA', meta);
+          w.gtag?.('event', 'click_download_cta', meta);
+          if (platform === 'ios') {
+            e.preventDefault();
+            window.location.href = APP_STORE_URL;
+          } else if (platform === 'android') {
+            e.preventDefault();
+            window.location.href = PLAY_STORE_URL;
+          }
+          // 'other' falls through to the link's own /download href.
+        });
+      });
+    </script>
+
+    <script>
+      // Scroll reveal (§7) — only when motion is allowed. With no JS or
+      // reduced motion, content stays visible (no `.sr-ready` on <html>).
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = document.querySelectorAll<HTMLElement>('[data-sr]');
+
+      if (!reduce && targets.length && 'IntersectionObserver' in window) {
+        document.documentElement.classList.add('sr-ready');
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
+        );
+        targets.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

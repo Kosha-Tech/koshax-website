@@ -1,0 +1,344 @@
+---
+// Persona · eyebrow "Who it's built for" (§8). Badges (was a left tablist) sit
+// centered on top; the active panel below is a 50-50 split — image left,
+// content right (stacks to content-over-image on mobile). Consumer personas.
+// Accessible tablist: roles, aria-selected, arrow-key navigation.
+const personas = [
+  {
+    id: 'founders',
+    tab: 'Founders',
+    title: 'You run the company. KoshaX runs everything else.',
+    body:
+      'When all of you goes into the company, the rest of life still needs a system. KoshaX is that system — the operating layer for everything outside the building.',
+    pills: [
+      'Your whole life, one view',
+      'Renewals & deadlines, never missed',
+      'Every document, one search away',
+      'Loop in a co-founder or family',
+    ],
+    img: '/persona-leaders.jpg',
+    tint: 'linear-gradient(150deg, var(--accent-tint), var(--tint-lavender))',
+  },
+  {
+    id: 'investors',
+    tab: 'Investors',
+    title: 'Hundreds of threads. One system that holds them.',
+    body:
+      'Your life is people, commitments, and follow-ups across everything. KoshaX is the system that keeps every thread in place while you keep moving.',
+    pills: [
+      'Nudge someone for you',
+      'Never miss a follow-up',
+      'Travel docs, ready at the gate',
+      'One morning brief from KoshaX',
+    ],
+    img: '/persona-investors.jpg',
+    tint: 'linear-gradient(150deg, var(--tint-lavender), var(--accent-tint))',
+  },
+  {
+    id: 'operators',
+    tab: 'Operators',
+    title: 'You run everything. KoshaX runs you.',
+    body:
+      'You’re the system everyone else depends on. KoshaX is the system you run on — so the person holding it all together isn’t the one left exposed.',
+    pills: [
+      'Your whole life, one view',
+      'Deadlines flagged early',
+      'Every document, one search away',
+      'Remind your family, not just your team',
+    ],
+    img: '/persona-operators.jpg',
+    tint: 'linear-gradient(150deg, var(--tint-peach), var(--accent-tint))',
+  },
+  {
+    id: 'creators',
+    tab: 'Creators',
+    title: 'You make the work. KoshaX runs the rest.',
+    body:
+      'Everything outside the work pulls at your attention. KoshaX is the system running quietly underneath it — so the only thread you’re holding is the one you want to.',
+    pills: [
+      'Renewals & deadlines, never missed',
+      'Every document, one search away',
+      'Your whole life, one view',
+      'One morning brief from KoshaX',
+    ],
+    img: '/persona-creators.jpg',
+    tint: 'linear-gradient(150deg, var(--accent-tint), var(--tint-peach))',
+  },
+  {
+    id: 'professionals',
+    tab: 'Professionals',
+    title: 'Back-to-back all day. KoshaX runs life underneath it.',
+    body:
+      'Between everything you owe everyone, your own life still needs to run. KoshaX is the operating layer that keeps it in order without you thinking about it.',
+    pills: [
+      'Your whole life, one view',
+      'Deadlines flagged early',
+      'Every document, one search away',
+      'Loop in a family member',
+    ],
+    img: '/persona-professionals.jpg',
+    tint: 'linear-gradient(150deg, var(--tint-lavender), var(--tint-peach))',
+  },
+  {
+    id: 'homemaker',
+    tab: 'Homemaker',
+    title: 'You run the household. KoshaX runs it with you.',
+    body:
+      'You’re already the system the whole family depends on — every appointment, bill, renewal, and reminder runs through you. KoshaX is the operating layer underneath it, so none of it has to live in your head anymore.',
+    pills: [
+      'The whole family, one view',
+      'Renewals & appointments, never missed',
+      'Every document, one search away',
+      'Remind anyone in the family',
+    ],
+    // Drop a real image at this path in /public and it appears automatically.
+    img: '/persona-parents.jpg',
+    tint: 'linear-gradient(150deg, var(--accent-tint), var(--tint-peach))',
+  },
+];
+---
+
+<section class="section section--tint persona" id="persona">
+  <div class="container">
+    <div class="section__head" data-sr>
+      <p class="eyebrow">Who it’s for</p>
+      <h2 class="section__title">One life. One system to run it.</h2>
+      <p class="lede" style="margin-top:1rem">
+        However you spend your days, KoshaX is the layer your personal life runs on. See where it
+        fits yours.
+      </p>
+    </div>
+
+    <div class="persona__layout" data-sr data-sr-delay="1">
+      <div class="persona__badges" role="tablist" aria-label="Personas">
+        {
+          personas.map((p, i) => (
+            <button
+              class="persona__badge"
+              role="tab"
+              id={`tab-${p.id}`}
+              aria-controls={`panel-${p.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? '0' : '-1'}
+            >
+              {p.tab}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="persona__panels">
+        {
+          personas.map((p, i) => (
+            <div
+              class="persona__panel card"
+              role="tabpanel"
+              id={`panel-${p.id}`}
+              aria-labelledby={`tab-${p.id}`}
+              hidden={i !== 0}
+            >
+              <div class="persona__media" style={`background:${p.tint}`}>
+                <span class="persona__media-motif" aria-hidden="true"></span>
+                <img
+                  class="persona__img"
+                  src={p.img}
+                  alt=""
+                  loading="lazy"
+                  onerror="this.style.display='none'"
+                />
+              </div>
+              <div class="persona__content">
+                <h3 class="persona__title">{p.title}</h3>
+                <p class="persona__body">{p.body}</p>
+                <ul class="persona__pills">
+                  {p.pills.map((pill) => (
+                    <li class="persona__pill">{pill}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .persona__layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.75rem, 4vw, 2.75rem);
+  }
+
+  /* Badges — centered pill row that swaps the panel below. */
+  .persona__badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .persona__badge {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    padding: 0.5rem 1.1rem;
+    cursor: pointer;
+    transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  }
+
+  .persona__badge:hover {
+    color: var(--ink);
+    border-color: var(--line-strong);
+  }
+
+  .persona__badge[aria-selected='true'] {
+    color: var(--ink);
+    border-color: var(--gold); /* gold whisper marks the active facet */
+    background: var(--paper);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .persona__panels {
+    width: 100%;
+  }
+
+  /* 50-50 split: image left, content right. Flush edges inside the card.
+     Fixed min-height keeps every persona panel the same size so switching
+     tabs doesn't jump the layout. */
+  .persona__panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    min-height: clamp(360px, 32vw, 440px);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .persona__panel[hidden] {
+    display: none;
+  }
+
+  .persona__media {
+    position: relative;
+    min-height: 100%;
+    overflow: hidden;
+  }
+
+  /* Soft brand motif shown while the placeholder has no real image yet;
+     the <img> sits on top (object-fit:cover) and hides it once dropped in. */
+  .persona__media-motif {
+    position: absolute;
+    inset: 0;
+    background: url('/gradient-circles.svg') center / 62% no-repeat;
+    opacity: 0.5;
+  }
+
+  .persona__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .persona__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(1.75rem, 3.5vw, 3rem);
+  }
+
+  .persona__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 500;
+    line-height: 1.15;
+    margin: 0 0 1rem;
+    max-width: 22ch;
+  }
+
+  .persona__body {
+    color: var(--ink-soft);
+    max-width: 56ch;
+    margin: 0 0 1.75rem;
+  }
+
+  .persona__pills {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .persona__pill {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.4rem 0.85rem;
+  }
+
+  /* Mobile — stack content over image. Content sizes to its text; the media
+     fills the remaining height so all four panels stay the same overall size. */
+  @media (max-width: 760px) {
+    .persona__panel {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      min-height: 580px;
+    }
+    .persona__content {
+      order: 1;
+    }
+    .persona__media {
+      order: 2;
+      min-height: 0;
+      aspect-ratio: auto;
+    }
+  }
+</style>
+
+<script>
+  // Accessible tabs: click + arrow-key roving tabindex (§10 a11y).
+  document.querySelectorAll<HTMLElement>('.persona__badges').forEach((tablist) => {
+    const tabs = Array.from(tablist.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+
+    const select = (tab: HTMLButtonElement, focus = true) => {
+      for (const t of tabs) {
+        const selected = t === tab;
+        t.setAttribute('aria-selected', String(selected));
+        t.setAttribute('tabindex', selected ? '0' : '-1');
+        const panel = document.getElementById(t.getAttribute('aria-controls')!);
+        if (panel) panel.hidden = !selected;
+      }
+      if (focus) tab.focus();
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (e) => {
+        let next = -1;
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+        else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = tabs.length - 1;
+        if (next >= 0) {
+          e.preventDefault();
+          select(tabs[next]);
+        }
+      });
+    });
+  });
+</script>

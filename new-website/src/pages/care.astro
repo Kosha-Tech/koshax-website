@@ -1,0 +1,64 @@
+---
+// KoshaX Care — support + account deletion. Content ported verbatim from the
+// live site's public/care.html (linked from app store listings for the
+// account-deletion requirement, hence the stable #delete-account anchor).
+import LegalLayout from '../layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="KoshaX Care"
+  eyebrow="Support"
+  description="KoshaX Care – Get help with issues or account deletion requests"
+>
+  <p class="legal__intro">
+    We're here to help. If you're facing any issues or need assistance with your account, please
+    reach out to us.
+  </p>
+
+  <section class="legal-card">
+    <h2>Report an Issue</h2>
+    <p>
+      If you are experiencing any problems with KoshaX — whether it's a bug, a feature not working
+      as expected, or anything else — please contact us at
+      <a href="mailto:care@koshax.com">care@koshax.com</a>. We'll get back to you as soon as
+      possible.
+    </p>
+  </section>
+
+  <section class="legal-card" id="delete-account">
+    <h2>Delete Your KoshaX Account</h2>
+    <p>
+      You can request permanent deletion of your KoshaX account and associated data at any time by
+      following the steps below.
+    </p>
+
+    <h3>How to Request Account Deletion</h3>
+    <ol>
+      <li>Send an email to <a href="mailto:care@koshax.com">care@koshax.com</a> from the email address linked to your KoshaX account.</li>
+      <li>Use the subject line: <strong>Account Deletion Request</strong>.</li>
+      <li>Include your registered phone number in the body of the email so we can locate your account.</li>
+      <li>Our team will verify your identity and process the request within <strong>30 days</strong>.</li>
+      <li>You will receive a confirmation email once your account and data have been permanently deleted.</li>
+    </ol>
+
+    <h3>Data That Will Be Deleted</h3>
+    <p>Upon account deletion, the following data will be <strong>permanently removed</strong>:</p>
+    <ul>
+      <li>Your profile information and account credentials</li>
+      <li>All user-generated content (messages, notes, uploads, and files)</li>
+      <li>Connected integrations (contacts, calendar, email) and app preferences</li>
+    </ul>
+
+    <h3>Data That May Be Retained</h3>
+    <p>Certain data may be retained for a limited period after deletion, as required by law or for legitimate business purposes:</p>
+    <ul>
+      <li><strong>Transaction and billing records</strong> — retained for up to <strong>7 years</strong> to comply with tax and financial regulations.</li>
+      <li><strong>Fraud prevention and security logs</strong> — retained for up to <strong>90 days</strong> to protect against abuse and ensure platform integrity.</li>
+      <li><strong>Legal compliance records</strong> — retained as required by applicable laws, including the Information Technology Act (India) and other regulatory obligations.</li>
+    </ul>
+    <p class="legal-muted">
+      Retained data is stored securely and is not used for any purpose other than the specific
+      legal or regulatory requirement.
+    </p>
+  </section>
+</LegalLayout>
