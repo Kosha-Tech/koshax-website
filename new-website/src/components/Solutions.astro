@@ -363,6 +363,27 @@ const solutions = [
     }
   }
 
+  /* ---- Phones: keep all five verbs on ONE line. Stop wrapping, shrink the
+     verbs with the viewport and spread them edge-to-edge. Falls back to a
+     quiet horizontal scroll on ultra-narrow screens rather than wrapping. ---- */
+  @media (max-width: 480px) {
+    .solution__tabs {
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: clamp(0.2rem, 1vw, 0.6rem);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .solution__tabs::-webkit-scrollbar {
+      display: none;
+    }
+    .solution__tab {
+      font-size: clamp(0.8rem, 3.7vw, 1.4rem);
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .solution__tab,
     .solution__tab::after {

@@ -700,6 +700,14 @@ const rows = [
     }
   }
 
+  /* On phones the 86vw phone dominates the screen — pull it in so the noise
+     stream breathes around it and the mock reads as part of the page. */
+  @media (max-width: 480px) {
+    .phone {
+      width: min(300px, 68vw);
+    }
+  }
+
   /* Belt-and-suspenders: force settled if reduced motion is on,
      even if a class lingers. */
   @media (prefers-reduced-motion: reduce) {
