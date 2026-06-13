@@ -45,7 +45,7 @@ const links = [
       />
     </a>
 
-    <nav class="nav__links" aria-label="Primary">
+    <nav class="nav__links" id="nav-menu" aria-label="Primary">
       {
         links.map((l) => (
           <a class="nav__link" href={l.href}>
@@ -63,6 +63,18 @@ const links = [
       >
         Download KoshaX
       </a>
+
+      <!-- Mobile-only (≤768px): opens the jump-links as a dropdown. Sits to
+           the right of the Download CTA. -->
+      <button
+        type="button"
+        class="nav__toggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+      >
+        <span class="nav__burger" aria-hidden="true"></span>
+      </button>
     </div>
   </div>
 </header>
@@ -131,6 +143,7 @@ const links = [
   }
 
   .nav__inner {
+    position: relative; /* anchors the mobile dropdown menu */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -261,6 +274,72 @@ const links = [
     outline-offset: 3px;
   }
 
+  /* ---------- Hamburger toggle (mobile only) ---------- */
+  .nav__toggle {
+    display: none; /* revealed ≤768px */
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    margin-right: -8px; /* pull the icon's optical centre to the edge */
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    color: var(--ink);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav__toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .nav--on-dark .nav__toggle {
+    color: #fff;
+  }
+
+  /* Three bars from one element + its pseudo-elements; morph to an X on open. */
+  .nav__burger,
+  .nav__burger::before,
+  .nav__burger::after {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition:
+      transform var(--dur-fast) var(--ease),
+      opacity var(--dur-fast) var(--ease);
+  }
+
+  .nav__burger {
+    position: relative;
+  }
+  .nav__burger::before,
+  .nav__burger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+  .nav__burger::before {
+    top: -7px;
+  }
+  .nav__burger::after {
+    top: 7px;
+  }
+
+  .nav--menu-open .nav__burger {
+    background: transparent;
+  }
+  .nav--menu-open .nav__burger::before {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav--menu-open .nav__burger::after {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
   /* ============================================================
      Light theme — applied (.nav--on-dark) while the bar floats over a
      dark section: white logo (above), white links + inverted CTA.
@@ -285,12 +364,64 @@ const links = [
       box-shadow var(--dur-fast) var(--ease);
   }
 
+  /* On phones the wide logo + centre jump-links + CTA can't share one row,
+     so the Download button overflowed off-screen (see mobile report). Below the
+     bar's natural breakpoint the jump-links collapse into a dropdown opened by
+     the hamburger toggle, which sits to the right of the Download CTA. */
+  @media (max-width: 768px) {
+    .nav__toggle {
+      display: inline-flex;
+    }
+
+    .nav__links {
+      position: absolute;
+      top: calc(100% - 4px);
+      right: clamp(20px, 4vw, 48px);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.15rem;
+      min-width: 190px;
+      padding: 0.4rem;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      /* hidden until the toggle adds .nav--menu-open */
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition:
+        opacity var(--dur-fast) var(--ease),
+        transform var(--dur-fast) var(--ease),
+        visibility var(--dur-fast) var(--ease);
+    }
+
+    .nav--menu-open .nav__links {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+
+    /* Stacked rows read as a menu: full-width hover, no underline, and dark
+       ink even over dark sections (the dropdown panel is always light). */
+    .nav .nav__links .nav__link {
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 9px;
+    }
+    .nav .nav__links .nav__link:hover {
+      color: var(--ink);
+      background: var(--paper-raised);
+    }
+    .nav__link::after {
+      display: none;
+    }
+  }
+
   @media (max-width: 480px) {
     .nav__logo {
       height: 22px;
-    }
-    .nav__link {
-      font-size: 0.85rem;
     }
     .nav__cta {
       padding: 0.5rem 0.9rem;
@@ -312,6 +443,29 @@ const links = [
 
 <script>
   const header = document.querySelector<HTMLElement>('.nav');
+
+  // ----- Mobile menu: hamburger toggles the jump-links dropdown (≤768px) -----
+  const toggle = document.querySelector<HTMLButtonElement>('.nav__toggle');
+  if (header && toggle) {
+    const setOpen = (open: boolean) => {
+      header.classList.toggle('nav--menu-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    };
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation(); // don't let the outside-click handler see this
+      setOpen(!header.classList.contains('nav--menu-open'));
+    });
+    // Close after picking a link, on outside click, or on Escape.
+    header
+      .querySelectorAll<HTMLAnchorElement>('.nav__links .nav__link')
+      .forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('click', (e) => {
+      if (!header.contains(e.target as Node)) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
 
   // ----- Adaptive theme: go light while the bar floats over a dark section -----
   const darkSections = Array.from(
