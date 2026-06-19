@@ -9,7 +9,10 @@ const explore = [
   { label: 'Use cases', href: '/#use-cases' },
   { label: 'How it works', href: '/#how-it-works' },
   { label: 'FAQ', href: '/#faq' },
-  { label: 'Care', href: '/care' },
+  // Trailing slash is deliberate: /care.html (legacy app-store stub) shadows
+  // the extensionless /care on GitHub Pages, so link the directory form
+  // directly to skip a redirect hop. See public/care.html.
+  { label: 'Care', href: '/care/' },
 ];
 const legal = [
   { label: 'Privacy policy', href: '/privacy' },

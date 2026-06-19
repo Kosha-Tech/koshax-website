@@ -1,15 +1,22 @@
 <!doctype html>
-<!-- Legacy URL from the old site (linked from app store listings for the
-     account-deletion requirement). Permanently moved to /care. -->
+<!-- Legacy URL from the old site (/care.html, linked from app store listings
+     for the account-deletion requirement). Redirects to the real care page.
+
+     IMPORTANT: the redirect target MUST keep its trailing slash (/care/). On
+     GitHub Pages this care.html file is ALSO served for the extensionless path
+     /care, shadowing the real care/index.html. Redirecting to "/care" makes
+     /care load this stub again -> infinite redirect loop. "/care/" resolves to
+     the real directory index (care/index.html), which care.html does not
+     shadow, so the loop is broken. -->
 <html lang="en-IN">
   <head>
     <meta charset="utf-8" />
     <title>Redirecting to KoshaX Care</title>
-    <meta http-equiv="refresh" content="0;url=/care" />
-    <link rel="canonical" href="https://www.koshax.com/care" />
-    <script>window.location.replace('/care' + window.location.hash);</script>
+    <meta http-equiv="refresh" content="0;url=/care/" />
+    <link rel="canonical" href="https://www.koshax.com/care/" />
+    <script>window.location.replace('/care/' + window.location.hash);</script>
   </head>
   <body>
-    <p>This page has moved to <a href="/care">koshax.com/care</a>.</p>
+    <p>This page has moved to <a href="/care/">koshax.com/care/</a>.</p>
   </body>
 </html>
