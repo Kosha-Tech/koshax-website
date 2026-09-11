@@ -8,6 +8,10 @@ export default defineConfig({
   // Astro emits meta-refresh pages at the old paths. (/care.html is handled
   // by a static file in public/ since it's a literal .html path.)
   redirects: {
+    '/chat': 'https://koshax.com/download',
+    '/home': 'https://koshax.com/download',
+    '/insights': 'https://koshax.com/download',
+    '/network': 'https://koshax.com/download',
     '/privacy-policy': '/privacy',
     '/terms-and-conditions': '/terms',
     '/pricing': '/',
