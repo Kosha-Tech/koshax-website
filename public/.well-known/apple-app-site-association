@@ -9,6 +9,10 @@
       {
         "appID": "Z8MN57GVQJ.com.koshax.app.stg",
         "paths": ["/chat", "/home", "/insights", "/network"]
+      },
+      {
+        "appID": "Z8MN57GVQJ.com.koshax.app.staging",
+        "paths": ["/chat", "/home", "/insights", "/network"]
       }
     ]
   }
