@@ -17,11 +17,16 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  // A page whose URL carries a credential (the pay link's token). It loads
+  // no analytics, sends no referrer and stays out of search: every one of
+  // those would hand the full URL to someone else.
+  sensitive?: boolean;
 }
 
 const {
   title = 'Kosha — Focus on what really matters',
   description = 'Kosha is the quiet assistant for everything outside work. It finds your important documents, blocks spam before it reaches you, and remembers the deadlines you shouldn’t have to.',
+  sensitive = false,
 } = Astro.props;
 ---
 
@@ -37,6 +42,15 @@ const {
     <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
+    {sensitive && (
+      <Fragment>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="referrer" content="no-referrer" />
+      </Fragment>
+    )}
+
+    {!sensitive && (
+      <Fragment>
     <!-- Analytics — same tags as the live site (index.html at repo root).
          The download CTA handler below reports into fbq/gtag, so these must
          load before launch for ClickDownloadCTA / click_download_cta events. -->
@@ -76,6 +90,8 @@ const {
       })(window, document, "clarity", "script", "wu4s52pv0b");
     </script>
     <!-- End Microsoft Clarity -->
+      </Fragment>
+    )}
   </head>
   <body>
     <slot />
