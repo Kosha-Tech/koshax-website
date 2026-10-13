@@ -1,0 +1,396 @@
+---
+// /pay — pick a plan and pay in the browser, opened from a link Kai sends
+// over WhatsApp or Telegram (?t=<token>). It is for people who cannot pay
+// inside the app, most often an iPhone with no payment method on the Apple ID.
+//
+// The token in the URL is the only credential: it stands in for a login on
+// the three backend calls below and nothing else. Hence `sensitive` — no
+// analytics, no referrer, not indexed — and no link to this page from
+// anywhere on the site.
+//
+// Flow: load plans → the customer picks one → the backend creates a Cashfree
+// subscription → cashfree.js opens the checkout in this tab → Cashfree returns
+// through the backend to this page with ?back=1 → wait for the payment to land.
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Pick a plan — KoshaX"
+  description="Pick a KoshaX plan and Kai picks up right where it left off."
+  sensitive
+>
+  <main class="pay">
+    <div class="container pay__inner">
+      <img class="pay__logo" src="/kosha-logo-blue.svg" alt="KoshaX" width="120" height="40" />
+
+      <section data-state="loading" aria-live="polite">
+        <p class="pay__sub">One moment…</p>
+      </section>
+
+      <section data-state="plans" hidden>
+        <h1 class="pay__title">Bring Kai back.</h1>
+        <p class="pay__sub">Pick a plan and Kai picks up right where it left off.</p>
+        <div class="pay__plans" data-plans></div>
+        <p class="pay__error" data-plan-error role="alert" hidden></p>
+        <p class="pay__note">
+          Paid securely through Cashfree. Your plan renews automatically until you cancel.
+        </p>
+      </section>
+
+      <section data-state="confirming" hidden aria-live="polite">
+        <h1 class="pay__title">Confirming your payment…</h1>
+        <p class="pay__sub" data-confirming-sub>This usually takes a few seconds.</p>
+        <button class="btn btn--ghost" type="button" data-show-plans hidden>
+          Didn’t finish paying? See the plans
+        </button>
+      </section>
+
+      <section data-state="subscribed" hidden>
+        <h1 class="pay__title">You’re all set.</h1>
+        <p class="pay__sub">Kai is back at work. Open the KoshaX app to carry on.</p>
+        <a class="btn btn--primary" href="https://koshax.com/chat?history=true">Open KoshaX</a>
+      </section>
+
+      <section data-state="expired" hidden>
+        <h1 class="pay__title">This link has expired.</h1>
+        <p class="pay__sub">Message Kai on WhatsApp and you’ll get a fresh one.</p>
+      </section>
+
+      <section data-state="error" hidden>
+        <h1 class="pay__title">Something went wrong.</h1>
+        <p class="pay__sub">Nothing was charged. Please try again in a moment.</p>
+        <button class="btn btn--primary" type="button" data-retry>Try again</button>
+      </section>
+
+      <noscript>
+        <p class="pay__sub">This page needs JavaScript to open the payment.</p>
+      </noscript>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .pay {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding-block: var(--section-y);
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--tint-peach) 50%, transparent),
+        color-mix(in srgb, var(--tint-lavender) 50%, transparent)
+      ),
+      var(--paper);
+  }
+
+  .pay__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 520px;
+  }
+
+  .pay__inner section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .pay__inner section[hidden] {
+    display: none;
+  }
+
+  .pay__logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 2rem;
+  }
+
+  .pay__title {
+    font-family: var(--font-display);
+    font-size: var(--t-h2);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0 0 0.75rem;
+  }
+
+  .pay__sub {
+    color: var(--ink-soft);
+    margin: 0 0 2rem;
+    max-width: 40ch;
+  }
+
+  .pay__plans {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: 100%;
+  }
+
+  /* One plan = one tap. Built by the script from the backend's price list. */
+  .pay__plans :global(.pay__plan) {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    background: var(--paper);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    font: inherit;
+    color: var(--ink-body);
+    cursor: pointer;
+    text-align: left;
+    transition: transform var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+      box-shadow var(--dur-fast) var(--ease);
+  }
+
+  .pay__plans :global(.pay__plan:hover:not(:disabled)) {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+
+  .pay__plans :global(.pay__plan:disabled) {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  .pay__plans :global(.pay__plan-name) {
+    font-family: var(--font-display);
+    font-size: var(--t-h3);
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .pay__plans :global(.pay__plan-price) {
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .pay__plans :global(.pay__plan-price strong) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .pay__note {
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+    margin: 1.5rem 0 0;
+    max-width: 44ch;
+  }
+
+  .pay__error {
+    color: var(--clay);
+    margin: 1rem 0 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pay__plans :global(.pay__plan),
+    .pay__plans :global(.pay__plan:hover:not(:disabled)) {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  type Plan = {
+    id: string;
+    name: string;
+    amount_paise: number;
+    interval_type: string;
+    intervals: number;
+  };
+  type PlansResponse = {
+    status: 'open' | 'subscribed';
+    cashfree_mode?: 'sandbox' | 'production';
+    plans?: Plan[];
+  };
+  type State = 'loading' | 'plans' | 'confirming' | 'subscribed' | 'expired' | 'error';
+
+  const CASHFREE_SDK = 'https://sdk.cashfree.com/js/v3/cashfree.js';
+  // How long to wait for the payment to show up after coming back from
+  // Cashfree, which tells us by webhook: 20 checks, 3 seconds apart.
+  const CONFIRM_CHECKS = 20;
+  const CONFIRM_INTERVAL_MS = 3000;
+
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('t') || '';
+  const cameBack = params.get('back') === '1';
+  // Which backend a link belongs to. A fixed list, never a host taken from
+  // the URL: this page must only ever open a checkout our own servers made.
+  const env = params.get('env');
+  const API_BASE =
+    env === 'stg'
+      ? 'https://stg.api.koshax.com'
+      : env === 'local' && window.location.hostname === 'localhost'
+        ? 'http://localhost:3000' // astro dev against a backend on this machine
+        : 'https://api.koshax.com';
+
+  const sections = document.querySelectorAll<HTMLElement>('[data-state]');
+  const show = (state: State) => {
+    sections.forEach((el) => {
+      el.hidden = el.dataset.state !== state;
+    });
+  };
+
+  class LinkExpired extends Error {}
+
+  const api = async (path: string, init: RequestInit = {}) => {
+    const res = await fetch(API_BASE + path, {
+      ...init,
+      headers: { 'Content-Type': 'application/json', 'X-Checkout-Token': token },
+    });
+    if (res.status === 401) throw new LinkExpired();
+    return res;
+  };
+
+  const loadPlans = async (): Promise<PlansResponse> => {
+    const res = await api('/api/v1/subscription/web');
+    if (!res.ok) throw new Error(`plans: ${res.status}`);
+    return res.json();
+  };
+
+  const rupees = (paise: number) => '₹' + new Intl.NumberFormat('en-IN').format(paise / 100);
+
+  const planName = (p: Plan) =>
+    p.intervals === 1 && p.interval_type === 'MONTH'
+      ? 'Monthly'
+      : p.intervals === 1 && p.interval_type === 'YEAR'
+        ? 'Yearly'
+        : p.name;
+
+  const planPeriod = (p: Plan) => {
+    const unit = p.interval_type.toLowerCase();
+    return p.intervals === 1 ? `/ ${unit}` : `every ${p.intervals} ${unit}s`;
+  };
+
+  let cashfreeSdk: Promise<void> | null = null;
+  const loadCashfree = () => {
+    cashfreeSdk ??= new Promise<void>((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = CASHFREE_SDK;
+      s.onload = () => resolve();
+      s.onerror = () => {
+        cashfreeSdk = null;
+        reject(new Error('cashfree sdk failed to load'));
+      };
+      document.head.appendChild(s);
+    });
+    return cashfreeSdk;
+  };
+
+  const planError = document.querySelector<HTMLElement>('[data-plan-error]')!;
+  const planList = document.querySelector<HTMLElement>('[data-plans]')!;
+
+  const startCheckout = async (plan: Plan) => {
+    const buttons = planList.querySelectorAll<HTMLButtonElement>('button');
+    buttons.forEach((b) => (b.disabled = true));
+    planError.hidden = true;
+    try {
+      const res = await api('/api/v1/subscription/web/checkout', {
+        method: 'POST',
+        body: JSON.stringify({ plan_id: plan.id }),
+      });
+      if (res.status === 409) return show('subscribed');
+      if (!res.ok) throw new Error(`checkout: ${res.status}`);
+      const session = await res.json();
+
+      await loadCashfree();
+      const cashfree = (window as any).Cashfree({ mode: session.cashfree_mode });
+      // Same tab: the customer comes back here through the backend's return
+      // address, and a new tab would be a popup the browser may block.
+      const result = await cashfree.subscriptionsCheckout({
+        subsSessionId: session.subscription_session_id,
+        redirectTarget: '_self',
+      });
+      if (result?.error) throw new Error(result.error.message || 'checkout did not open');
+    } catch (err) {
+      if (err instanceof LinkExpired) return show('expired');
+      console.error(err);
+      planError.textContent = 'We couldn’t open the payment. Nothing was charged — please try again.';
+      planError.hidden = false;
+      buttons.forEach((b) => (b.disabled = false));
+    }
+  };
+
+  const renderPlans = (plans: Plan[]) => {
+    // Built with textContent, never innerHTML: plan names come from an API.
+    planList.replaceChildren(
+      ...plans.map((p) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'pay__plan';
+
+        const name = document.createElement('span');
+        name.className = 'pay__plan-name';
+        name.textContent = planName(p);
+
+        const price = document.createElement('span');
+        price.className = 'pay__plan-price';
+        const amount = document.createElement('strong');
+        amount.textContent = rupees(p.amount_paise);
+        price.append(amount, ' ' + planPeriod(p));
+
+        btn.append(name, price);
+        btn.addEventListener('click', () => startCheckout(p));
+        return btn;
+      })
+    );
+  };
+
+  const showPlans = async () => {
+    const data = await loadPlans();
+    if (data.status === 'subscribed') return show('subscribed');
+    if (!data.plans?.length) throw new Error('no plans to sell');
+    renderPlans(data.plans);
+    show('plans');
+    // Fetched now so the tap on a plan goes straight to the payment.
+    loadCashfree().catch(() => {});
+  };
+
+  const confirmPayment = async () => {
+    show('confirming');
+    for (let i = 0; i < CONFIRM_CHECKS; i++) {
+      const data = await loadPlans();
+      if (data.status === 'subscribed') return show('subscribed');
+      await new Promise((r) => setTimeout(r, CONFIRM_INTERVAL_MS));
+    }
+    // Not an error: a mandate can take minutes to confirm, and they may
+    // simply have backed out of the payment.
+    document.querySelector<HTMLElement>('[data-confirming-sub]')!.textContent =
+      'This is taking longer than usual. If you paid, Kai will be back within a few minutes and you can close this page.';
+    document.querySelector<HTMLElement>('[data-show-plans]')!.hidden = false;
+  };
+
+  const run = async (step: () => Promise<void>) => {
+    try {
+      await step();
+    } catch (err) {
+      if (err instanceof LinkExpired) return show('expired');
+      console.error(err);
+      show('error');
+    }
+  };
+
+  document.querySelector('[data-show-plans]')!.addEventListener('click', () => run(showPlans));
+  document.querySelector('[data-retry]')!.addEventListener('click', () => {
+    show('loading');
+    run(cameBack ? confirmPayment : showPlans);
+  });
+
+  if (!token) {
+    show('expired');
+  } else {
+    run(cameBack ? confirmPayment : showPlans);
+  }
+</script>
